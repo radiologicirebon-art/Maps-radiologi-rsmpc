@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peta Navigasi Internal — RS Mitra Plumbon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#0F8C88;
+    --teal-dark:#0A5F5C;
+    --teal-deep:#093F3D;
+    --teal-pale:#E4F3F1;
+    --teal-pale2:#F1F8F7;
+    --orange:#F2921F;
+    --orange-dark:#C96F0C;
+    --orange-pale:#FCEBD3;
+    --ink:#122B29;
+    --ink-soft:#4A625F;
+    --paper:#F6FAF9;
+    --card:#FFFFFF;
+    --line:#CFE3E0;
+    --room-fill:#FFFFFF;
+    --room-stroke:#B9D3D0;
+    --room-fill-dim:#EEF5F4;
+    --danger-fill:#FFF6DC;
+    --danger-stroke:#E7C24A;
+    --font-display:'Fraunces', serif;
+    --font-body:'Manrope', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+    --radius:14px;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:
+      radial-gradient(1200px 500px at 85% -10%, var(--teal-pale2), transparent 60%),
+      var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    min-height:100vh;
+  }
+  .app{ max-width:1400px; margin:0 auto; padding:20px 20px 40px; }
+
+  /* ---------- Topbar ---------- */
+  .topbar{
+    display:flex; align-items:center; gap:18px;
+    padding:14px 20px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:0 1px 0 rgba(9,63,61,0.03);
+    margin-bottom:20px;
+  }
+  .topbar img{ height:46px; width:auto; display:block; }
+  .topbar .divider{ width:1px; height:34px; background:var(--line); }
+  .topbar .titles{ display:flex; flex-direction:column; gap:2px; }
+  .topbar .eyebrow{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--teal-dark); font-weight:600;
+  }
+  .topbar h1{
+    font-family:var(--font-display); font-weight:600; font-size:22px;
+    margin:0; color:var(--teal-deep); letter-spacing:.2px;
+  }
+  .topbar .sub{ font-size:13px; color:var(--ink-soft); margin-top:1px; }
+
+  /* ---------- Layout ---------- */
+  .layout{
+    display:grid;
+    grid-template-columns: 360px 1fr;
+    gap:20px;
+    align-items:start;
+  }
+  @media (max-width: 940px){
+    .layout{ grid-template-columns: 1fr; }
+  }
+
+  .panel{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:18px;
+    display:flex; flex-direction:column; gap:16px;
+    position:sticky; top:20px;
+  }
+  @media (max-width: 940px){ .panel{ position:static; } }
+
+  .panel h2{
+    font-family:var(--font-display); font-size:15px; font-weight:600;
+    margin:0 0 8px 0; color:var(--teal-deep);
+  }
+  .section-label{
+    font-family:var(--font-mono); font-size:10.5px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--ink-soft); font-weight:600;
+    margin-bottom:8px; display:block;
+  }
+
+  /* Route toggle */
+  .route-toggle{
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .route-btn{
+    display:flex; align-items:center; gap:10px;
+    width:100%; text-align:left;
+    padding:12px 14px;
+    border-radius:10px;
+    border:1.5px solid var(--line);
+    background:var(--room-fill-dim);
+    cursor:pointer;
+    font-family:var(--font-body); font-weight:700; font-size:13.5px; color:var(--ink);
+    transition:border-color .15s ease, background .15s ease, transform .1s ease;
+  }
+  .route-btn .arrow-ic{ font-size:16px; color:var(--teal); flex-shrink:0; }
+  .route-btn:hover{ border-color:var(--teal); }
+  .route-btn.active{
+    background:var(--teal-pale); border-color:var(--teal);
+    box-shadow: inset 0 0 0 1px var(--teal);
+  }
+  .route-btn.active .arrow-ic{ color:var(--orange); }
+
+  /* Controls */
+  .controls-row{ display:flex; gap:8px; flex-wrap:wrap; }
+  .btn{
+    flex:1 1 auto;
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    padding:11px 10px;
+    border-radius:10px;
+    border:1.5px solid transparent;
+    font-family:var(--font-body); font-weight:700; font-size:13px;
+    cursor:pointer;
+    transition:filter .15s ease, transform .08s ease;
+    white-space:nowrap;
+  }
+  .btn:active{ transform:scale(.97); }
+  .btn-primary{ background:var(--orange); color:#fff; }
+  .btn-primary:hover{ filter:brightness(1.06); }
+  .btn-primary:disabled{ background:#E7D8BE; cursor:not-allowed; }
+  .btn-ghost{ background:var(--teal-pale); color:var(--teal-deep); }
+  .btn-ghost:hover{ filter:brightness(0.98); background:#DCEEEC; }
+  .btn-icon{ flex:0 0 auto; width:42px; padding:11px 0; }
+
+  .voice-row{ display:flex; flex-direction:column; gap:6px; }
+  select{
+    width:100%; padding:9px 10px; border-radius:9px;
+    border:1.5px solid var(--line); background:#fff;
+    font-family:var(--font-body); font-size:12.5px; color:var(--ink);
+  }
+  .voice-hint{ font-size:11.5px; color:var(--ink-soft); line-height:1.4; }
+
+  /* Nav card (turn-by-turn) */
+  .nav-card{
+    background:linear-gradient(180deg, var(--teal-deep), var(--teal-dark));
+    border-radius:12px;
+    padding:16px;
+    color:#fff;
+    display:flex; flex-direction:column; gap:12px;
+    box-shadow:0 8px 24px -10px rgba(9,63,61,.55);
+  }
+  .nav-card .row1{ display:flex; align-items:center; gap:12px; }
+  .chevron-wrap{
+    width:46px; height:46px; border-radius:50%;
+    background:rgba(255,255,255,.12);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+    border:1px solid rgba(255,255,255,.22);
+  }
+  #chevron{ transition: transform .5s cubic-bezier(.4,0,.2,1); }
+  .nav-card .step-count{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.1em;
+    color:rgba(255,255,255,.65); text-transform:uppercase;
+  }
+  .nav-card .caption{
+    font-family:var(--font-body); font-weight:600; font-size:14.5px;
+    line-height:1.45; min-height:44px;
+  }
+  .dots{ display:flex; gap:5px; }
+  .dot{ width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.25); transition:background .2s ease, transform .2s ease; }
+  .dot.done{ background:var(--orange); }
+  .dot.current{ background:#fff; transform:scale(1.3); }
+
+  .legend{ display:flex; flex-direction:column; gap:7px; }
+  .legend-item{ display:flex; align-items:center; gap:8px; font-size:12px; color:var(--ink-soft); }
+  .swatch{ width:14px; height:14px; border-radius:4px; flex-shrink:0; border:1.5px solid var(--room-stroke); }
+  .swatch.start{ background:var(--orange-pale); border-color:var(--orange); }
+  .swatch.end{ background:var(--teal-pale); border-color:var(--teal); }
+  .swatch.route{ background:transparent; border:none; height:0; border-top:3px dashed var(--orange); align-self:center; }
+  .swatch.radiasi{ background:#FFF6DC; border-color:#E7C24A; }
+
+  .footnote{ font-size:11px; color:var(--ink-soft); line-height:1.5; border-top:1px dashed var(--line); padding-top:12px; }
+
+  /* ---------- Map ---------- */
+  .map-wrap{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:10px;
+    overflow:hidden;
+  }
+  svg#map{ width:100%; height:auto; display:block; }
+
+  .room-rect{ fill:var(--room-fill); stroke:var(--room-stroke); stroke-width:2.2; }
+  .room-rect.dim{ fill:var(--room-fill-dim); }
+  .room-rect.radiasi{ fill:var(--danger-fill); stroke:var(--danger-stroke); }
+  .room-rect.corridor{ fill:#FBFDFD; stroke:var(--line); stroke-width:2; stroke-dasharray:3 5; }
+  .room-rect.caffe{ fill:#FBF3E7; stroke:#E4C48C; }
+
+  .room-label{ font-family:var(--font-body); font-weight:700; fill:var(--ink); text-anchor:middle; }
+  .room-label.sub{ font-weight:600; fill:var(--ink-soft); }
+  .corridor-label{ font-family:var(--font-mono); font-weight:600; fill:#9FB8B5; letter-spacing:.12em; }
+  .zone-label{ font-family:var(--font-display); font-weight:600; fill:var(--teal-dark); }
+
+  .room-active-start{ stroke:var(--orange); stroke-width:4; fill:var(--orange-pale); }
+  .room-active-end{ stroke:var(--teal); stroke-width:4; fill:var(--teal-pale); }
+
+  .chair-row rect{ fill:#E7EFEE; }
+
+  .route-guide{ fill:none; stroke:#C9DAD8; stroke-width:5; stroke-dasharray:2 10; stroke-linecap:round; }
+  .route-progress{ fill:none; stroke:var(--orange); stroke-width:6; stroke-linecap:round; filter:drop-shadow(0 2px 4px rgba(242,146,31,.35)); }
+
+  #walker{ transition: none; }
+  .walker-pulse{ fill:var(--orange); opacity:.28; animation:pulse 1.6s ease-out infinite; transform-origin:center; }
+  @keyframes pulse{
+    0%{ transform:scale(.6); opacity:.5; }
+    100%{ transform:scale(2.6); opacity:0; }
+  }
+  .walker-dot{ fill:var(--teal-deep); stroke:#fff; stroke-width:3; }
+  .walker-chevron{ fill:var(--orange); }
+
+  .compass{ font-family:var(--font-mono); font-size:13px; fill:var(--ink-soft); }
+  .compass-ring{ fill:none; stroke:var(--line); stroke-width:2; }
+
+  /* radiation icon */
+  .rad-icon text{ font-size:20px; }
+
+  @media (prefers-reduced-motion: reduce){
+    .walker-pulse{ animation:none; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <img src="logo-rsmp.jpg" alt="Logo Rumah Sakit Mitra Plumbon">
+    <div class="divider"></div>
+    <div class="titles">
+      <span class="eyebrow">Peta Navigasi Internal</span>
+      <h1>Instalasi Radiologi ⇄ Ruang MRI</h1>
+      <span class="sub">Rumah Sakit Mitra Plumbon — pemandu arah suara untuk Sahabat MP</span>
+    </div>
+  </header>
+
+  <main class="layout">
+
+    <!-- ===== SIDE PANEL ===== -->
+    <aside class="panel">
+
+      <div>
+        <span class="section-label">Pilih rute</span>
+        <div class="route-toggle" id="routeToggle">
+          <button class="route-btn active" data-route="toMri">
+            <span class="arrow-ic">→</span> Radiologi 1 menuju Ruang MRI
+          </button>
+          <button class="route-btn" data-route="toRadio">
+            <span class="arrow-ic">→</span> Ruang MRI menuju Radiologi 1
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <span class="section-label">Kontrol perjalanan</span>
+        <div class="controls-row">
+          <button class="btn btn-primary" id="btnPlay">▶ Mulai Navigasi</button>
+          <button class="btn btn-icon btn-ghost" id="btnMute" title="Bisukan suara">🔊</button>
+          <button class="btn btn-icon btn-ghost" id="btnReset" title="Ulangi dari awal">⟲</button>
+        </div>
+      </div>
+
+      <div class="voice-row">
+        <span class="section-label">Suara pemandu (Bahasa Indonesia)</span>
+        <select id="voiceSelect"></select>
+        <span class="voice-hint" id="voiceHint">Mencari suara pria Indonesia pada perangkat Anda…</span>
+      </div>
+
+      <div>
+        <span class="section-label">Pemandu arah</span>
+        <div class="nav-card">
+          <div class="row1">
+            <div class="chevron-wrap">
+              <svg id="chevron" width="24" height="24" viewBox="0 0 24 24"><path d="M12 3 L20 19 L12 15 L4 19 Z" fill="#fff"/></svg>
+            </div>
+            <div style="flex:1">
+              <div class="step-count" id="stepCount">Siap memulai</div>
+            </div>
+          </div>
+          <div class="caption" id="caption">Tekan <b>Mulai Navigasi</b> untuk memulai arahan suara dari Sahabat MP.</div>
+          <div class="dots" id="dots"></div>
+        </div>
+      </div>
+
+      <div>
+        <span class="section-label">Keterangan</span>
+        <div class="legend">
+          <div class="legend-item"><span class="swatch start"></span> Titik awal</div>
+          <div class="legend-item"><span class="swatch end"></span> Titik tujuan</div>
+          <div class="legend-item"><span class="swatch route"></span> Jalur navigasi</div>
+          <div class="legend-item"><span class="swatch radiasi"></span> Ruang berisiko radiasi ☢</div>
+        </div>
+      </div>
+
+      <div class="footnote">
+        Peta bersifat skematik untuk keperluan pemanduan arah dan tidak berskala 1:1. Narasi suara memakai fitur bawaan peramban (Web Speech API); ketersediaan pilihan suara pria berbahasa Indonesia tergantung perangkat/OS Anda.
+      </div>
+    </aside>
+
+    <!-- ===== MAP ===== -->
+    <section class="map-wrap">
+      <svg id="map" viewBox="0 0 1600 940" xmlns="http://www.w3.org/2000/svg">
+
+        <!-- top corridor -->
+        <rect class="room-rect corridor" x="380" y="20" width="1020" height="110"></rect>
+        <text class="corridor-label" x="890" y="55" text-anchor="middle" font-size="14">KORIDOR UTARA</text>
+
+        <!-- left koridor vertical -->
+        <rect class="room-rect corridor" x="380" y="130" width="40" height="760"></rect>
+        <text class="corridor-label" x="400" y="520" text-anchor="middle" font-size="13" transform="rotate(-90 400 520)">KORIDOR</text>
+
+        <!-- mid koridor vertical (between radiologi block and IGD/MRI block) -->
+        <rect class="room-rect corridor" x="780" y="130" width="60" height="760"></rect>
+        <text class="corridor-label" x="810" y="520" text-anchor="middle" font-size="13" transform="rotate(-90 810 520)">KORIDOR</text>
+
+        <!-- right koridor vertical -->
+        <rect class="room-rect corridor" x="1400" y="20" width="60" height="870"></rect>
+        <text class="corridor-label" x="1430" y="470" text-anchor="middle" font-size="13" transform="rotate(-90 1430 470)">KORIDOR</text>
+
+        <!-- bottom corridor / waiting -->
+        <rect class="room-rect corridor" x="420" y="880" width="980" height="40"></rect>
+
+        <!-- ============ LEFT CLUSTER ============ -->
+        <rect class="room-rect" x="40" y="360" width="260" height="140"></rect>
+        <text class="room-label" x="170" y="435" font-size="16">Ruang Laboratorium</text>
+
+        <rect class="room-rect" x="40" y="500" width="260" height="100"></rect>
+        <text class="room-label" x="170" y="545" font-size="15">Ruang Panoramic</text>
+        <text x="255" y="580" font-size="18" text-anchor="middle">☢</text>
+
+        <rect class="room-rect" x="40" y="600" width="130" height="60"></rect>
+        <text class="room-label sub" x="105" y="635" font-size="12">Toilet Petugas</text>
+
+        <rect class="room-rect" x="170" y="600" width="130" height="60"></rect>
+        <text class="room-label sub" x="235" y="635" font-size="12">Toilet Pasien</text>
+
+        <!-- ============ MIDDLE CLUSTER (RADIOLOGI) ============ -->
+        <rect class="room-rect radiasi" x="420" y="360" width="340" height="110"></rect>
+        <text class="room-label" x="590" y="410" font-size="16">Ruang Radiologi 2</text>
+        <text x="720" y="450" font-size="20" text-anchor="middle">☢</text>
+
+        <rect class="room-rect radiasi room-active-start" id="room-radiologi1" x="420" y="470" width="170" height="130"></rect>
+        <text class="room-label" x="505" y="525" font-size="15">Ruang</text>
+        <text class="room-label" x="505" y="545" font-size="15">Radiologi 1</text>
+        <text x="440" y="580" font-size="18">☢</text>
+
+        <rect class="room-rect radiasi" x="590" y="470" width="170" height="130"></rect>
+        <text class="room-label" x="675" y="530" font-size="15">Ruang</text>
+        <text class="room-label" x="675" y="550" font-size="15">CT Scan</text>
+        <text x="725" y="580" font-size="18">☢</text>
+
+        <rect class="room-rect" x="420" y="600" width="340" height="110"></rect>
+        <text class="room-label" x="590" y="660" font-size="16">Ruang USG</text>
+
+        <rect class="room-rect caffe" x="420" y="780" width="340" height="100"></rect>
+        <text class="room-label" x="590" y="835" font-size="16">Toa Baja Caffe</text>
+
+        <!-- ============ BIG CLUSTER: MRI + IGD ============ -->
+        <rect class="room-rect room-active-end" id="room-mri" x="860" y="130" width="360" height="240"></rect>
+        <text class="zone-label" x="1040" y="245" font-size="22" text-anchor="middle">Ruang MRI</text>
+        <text class="zone-label" x="1040" y="272" font-size="16" text-anchor="middle">Zona 1 MRI</text>
+
+        <rect class="room-rect dim" x="860" y="370" width="360" height="180"></rect>
+        <text class="room-label" x="1040" y="465" font-size="16">Ruang Operator MRI</text>
+
+        <rect class="room-rect" x="1240" y="130" width="160" height="220"></rect>
+        <text class="room-label" x="1320" y="235" font-size="15">Zona 3</text>
+        <text class="room-label" x="1320" y="255" font-size="15">MRI</text>
+
+        <rect class="room-rect" x="860" y="550" width="220" height="340"></rect>
+        <text class="room-label" x="970" y="725" font-size="16">RUANG IGD</text>
+
+        <rect class="room-rect" x="1080" y="550" width="140" height="180"></rect>
+        <text class="room-label" x="1150" y="645" font-size="14">RUANG IGD</text>
+
+        <rect class="room-rect dim" x="1080" y="730" width="70" height="160"></rect>
+        <text class="room-label sub" x="1115" y="800" font-size="11">LIFT</text>
+        <text class="room-label sub" x="1115" y="815" font-size="11">IGD</text>
+
+        <rect class="room-rect" x="1150" y="730" width="70" height="160"></rect>
+        <text class="room-label sub" x="1185" y="800" font-size="11">RUANG</text>
+        <text class="room-label sub" x="1185" y="815" font-size="11">POLI</text>
+
+        <!-- ============ FAR RIGHT: POLI COLUMN ============ -->
+        <rect class="room-rect" x="1480" y="20" width="100" height="115"></rect>
+        <text class="room-label sub" x="1530" y="82" font-size="13">Ruang Poli</text>
+        <rect class="room-rect" x="1480" y="135" width="100" height="115"></rect>
+        <text class="room-label sub" x="1530" y="197" font-size="13">Ruang Poli</text>
+        <rect class="room-rect" x="1480" y="250" width="100" height="115"></rect>
+        <text class="room-label sub" x="1530" y="312" font-size="13">Ruang Poli</text>
+        <rect class="room-rect" x="1480" y="365" width="100" height="115"></rect>
+        <text class="room-label sub" x="1530" y="427" font-size="13">Ruang Poli</text>
+        <rect class="room-rect" x="1480" y="480" width="100" height="115"></rect>
+        <text class="room-label sub" x="1530" y="542" font-size="13">Ruang Poli</text>
+        <rect class="room-rect" x="1480" y="595" width="100" height="115"></rect>
+        <text class="room-label sub" x="1530" y="657" font-size="13">Ruang Poli</text>
+
+        <!-- waiting chairs hint rows -->
+        <g class="chair-row">
+          <rect x="440" y="895" width="24" height="16" rx="3"></rect>
+          <rect x="470" y="895" width="24" height="16" rx="3"></rect>
+          <rect x="500" y="895" width="24" height="16" rx="3"></rect>
+          <rect x="600" y="895" width="24" height="16" rx="3"></rect>
+          <rect x="630" y="895" width="24" height="16" rx="3"></rect>
+          <rect x="660" y="895" width="24" height="16" rx="3"></rect>
+          <rect x="900" y="895" width="24" height="16" rx="3"></rect>
+          <rect x="930" y="895" width="24" height="16" rx="3"></rect>
+          <rect x="960" y="895" width="24" height="16" rx="3"></rect>
+          <rect x="1180" y="895" width="24" height="16" rx="3"></rect>
+          <rect x="1210" y="895" width="24" height="16" rx="3"></rect>
+          <rect x="1240" y="895" width="24" height="16" rx="3"></rect>
+        </g>
+
+        <!-- compass -->
+        <g transform="translate(60,60)">
+          <circle class="compass-ring" cx="0" cy="0" r="26"></circle>
+          <text class="compass" x="0" y="-30" text-anchor="middle">U</text>
+          <text class="compass" x="0" y="42" text-anchor="middle">S</text>
+          <text class="compass" x="-38" y="5" text-anchor="middle">B</text>
+          <text class="compass" x="36" y="5" text-anchor="middle">T</text>
+          <path d="M0,-20 L5,3 L0,-3 L-5,3 Z" fill="var(--orange)"></path>
+        </g>
+
+        <!-- ===== ROUTE PATHS (drawn on top) ===== -->
+        <path id="routeGuide" class="route-guide" d=""></path>
+        <path id="routeProgress" class="route-progress" d="" stroke-dasharray="1" stroke-dashoffset="1"></path>
+
+        <!-- ===== WALKER (animated position marker) ===== -->
+        <g id="walker" transform="translate(505,535)">
+          <circle class="walker-pulse" r="14"></circle>
+          <circle class="walker-dot" r="13"></circle>
+          <path class="walker-chevron" d="M8,0 L-4,-6 L-1,0 L-4,6 Z"></path>
+        </g>
+
+      </svg>
+    </section>
+
+  </main>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- ROUTE DATA ---------------- */
+  var pointsForward = [
+    {x:505, y:535},
+    {x:420, y:535},
+    {x:400, y:300},
+    {x:400, y:80},
+    {x:900, y:80},
+    {x:1040,y:150},
+    {x:1040,y:250}
+  ];
+  var pointsReverse = pointsForward.slice().reverse();
+
+  var textForward = [
+    "Selamat datang, Sahabat MP. Posisi Anda sekarang berada di dalam Ruang Radiologi 1.",
+    "Silakan berjalan ke arah barat, keluar pintu menuju koridor utama.",
+    "Sekarang belok kanan, lalu berjalan lurus ke arah utara menyusuri koridor.",
+    "Terus lurus hingga Sahabat MP menemukan persimpangan koridor utara.",
+    "Belok kanan, lalu berjalan lurus ke arah timur melewati koridor menuju blok MRI.",
+    "Belok kanan sedikit, lalu masuk menuju pintu Ruang MRI di depan Sahabat MP.",
+    "Sahabat MP telah tiba di Ruang MRI, Zona 1. Selamat menjalani pemeriksaan, semoga lekas sembuh."
+  ];
+  var textReverse = [
+    "Selamat datang, Sahabat MP. Posisi Anda sekarang berada di dalam Ruang MRI, Zona 1.",
+    "Silakan berjalan keluar pintu menuju koridor di depan Ruang MRI.",
+    "Belok kiri, lalu berjalan lurus ke arah barat menyusuri koridor utara.",
+    "Terus lurus hingga Sahabat MP menemukan persimpangan koridor.",
+    "Belok kiri, lalu berjalan lurus ke arah selatan menyusuri koridor.",
+    "Belok kiri sedikit, lalu masuk menuju pintu Ruang Radiologi 1 di depan Sahabat MP.",
+    "Sahabat MP telah tiba kembali di Ruang Radiologi 1. Terima kasih telah menggunakan navigasi RS Mitra Plumbon."
+  ];
+
+  var routes = {
+    toMri:   { points: pointsForward, texts: textForward,  startId:"room-radiologi1", endId:"room-mri" },
+    toRadio: { points: pointsReverse, texts: textReverse,  startId:"room-mri",        endId:"room-radiologi1" }
+  };
+
+  /* ---------------- DOM REFS ---------------- */
+  var walker = document.getElementById('walker');
+  var routeGuide = document.getElementById('routeGuide');
+  var routeProgress = document.getElementById('routeProgress');
+  var captionEl = document.getElementById('caption');
+  var stepCountEl = document.getElementById('stepCount');
+  var dotsEl = document.getElementById('dots');
+  var chevronEl = document.getElementById('chevron');
+  var btnPlay = document.getElementById('btnPlay');
+  var btnMute = document.getElementById('btnMute');
+  var btnReset = document.getElementById('btnReset');
+  var voiceSelect = document.getElementById('voiceSelect');
+  var voiceHint = document.getElementById('voiceHint');
+  var roomRadiologi1 = document.getElementById('room-radiologi1');
+  var roomMri = document.getElementById('room-mri');
+  var routeButtons = document.querySelectorAll('.route-btn');
+
+  /* ---------------- STATE ---------------- */
+  var currentRouteKey = 'toMri';
+  var currentStep = 0;
+  var playing = false;
+  var muted = false;
+  var selectedVoice = null;
+  var animFrame = null;
+  var totalLen = 0;
+
+  /* ---------------- SETUP: dots ---------------- */
+  function buildDots(n){
+    dotsEl.innerHTML = '';
+    for(var i=0;i<n;i++){
+      var d = document.createElement('span');
+      d.className = 'dot';
+      dotsEl.appendChild(d);
+    }
+  }
+  function refreshDots(activeIdx){
+    var dots = dotsEl.querySelectorAll('.dot');
+    dots.forEach(function(d,i){
+      d.classList.remove('done','current');
+      if(i < activeIdx) d.classList.add('done');
+      else if(i === activeIdx) d.classList.add('current');
+    });
+  }
+
+  /* ---------------- PATH BUILD ---------------- */
+  function buildPathD(points){
+    var d = 'M ' + points[0].x + ' ' + points[0].y;
+    for(var i=1;i<points.length;i++){
+      d += ' L ' + points[i].x + ' ' + points[i].y;
+    }
+    return d;
+  }
+
+  function setRoute(key){
+    currentRouteKey = key;
+    var r = routes[key];
+    var d = buildPathD(r.points);
+    routeGuide.setAttribute('d', d);
+    routeProgress.setAttribute('d', d);
+    totalLen = routeProgress.getTotalLength();
+    routeProgress.setAttribute('stroke-dasharray', totalLen);
+    routeProgress.setAttribute('stroke-dashoffset', totalLen);
+
+    // reset walker to start
+    var p0 = r.points[0];
+    setWalker(p0.x, p0.y, angleBetween(r.points[0], r.points[1]));
+
+    // highlight rooms
+    roomRadiologi1.classList.remove('room-active-start','room-active-end');
+    roomMri.classList.remove('room-active-start','room-active-end');
+    document.getElementById(r.startId).classList.add('room-active-start');
+    document.getElementById(r.endId).classList.add('room-active-end');
+
+    buildDots(r.texts.length);
+    currentStep = 0;
+    refreshDots(0);
+    stepCountEl.textContent = 'Siap memulai — 7 langkah';
+    captionEl.textContent = 'Tekan "Mulai Navigasi" untuk memulai arahan suara dari Sahabat MP.';
+    chevronEl.style.transform = 'rotate(0deg)';
+
+    routeButtons.forEach(function(btn){
+      btn.classList.toggle('active', btn.getAttribute('data-route') === key);
+    });
+  }
+
+  function setWalker(x,y,angleDeg){
+    walker.setAttribute('transform','translate(' + x + ',' + y + ') rotate(' + angleDeg + ')');
+  }
+  function angleBetween(a,b){
+    return Math.atan2(b.y-a.y, b.x-a.x) * 180 / Math.PI;
+  }
+
+  /* ---------------- SPEECH ---------------- */
+  var availableVoices = [];
+  function loadVoices(){
+    availableVoices = ('speechSynthesis' in window) ? window.speechSynthesis.getVoices() : [];
+    populateVoiceSelect();
+  }
+  function populateVoiceSelect(){
+    voiceSelect.innerHTML = '';
+    if(!availableVoices.length){
+      var opt = document.createElement('option');
+      opt.textContent = 'Suara sistem (default perangkat)';
+      voiceSelect.appendChild(opt);
+      voiceHint.textContent = 'Peramban belum menyediakan daftar suara, atau fitur suara tidak didukung. Narasi tetap tampil sebagai teks.';
+      return;
+    }
+    // prioritize Indonesian voices, then everything else
+    var idVoices = availableVoices.filter(function(v){ return /id[-_]ID|Indonesia/i.test(v.lang + ' ' + v.name); });
+    var others = availableVoices.filter(function(v){ return idVoices.indexOf(v) === -1; });
+    var ordered = idVoices.concat(others);
+
+    ordered.forEach(function(v){
+      var opt = document.createElement('option');
+      opt.value = v.name;
+      opt.textContent = v.name + ' (' + v.lang + ')';
+      voiceSelect.appendChild(opt);
+    });
+
+    // auto-pick: id-ID voice with "male/pria" hint, else first id-ID voice, else first voice
+    var maleGuess = idVoices.find(function(v){ return /male|pria|laki/i.test(v.name); });
+    var best = maleGuess || idVoices[0] || ordered[0];
+    if(best){
+      voiceSelect.value = best.name;
+      selectedVoice = best;
+    }
+
+    if(idVoices.length && !maleGuess){
+      voiceHint.textContent = 'Menggunakan suara Indonesia "' + best.name + '". Nada diturunkan agar terdengar lebih maskulin. Pilih suara lain dari daftar bila tersedia.';
+    } else if(maleGuess){
+      voiceHint.textContent = 'Menggunakan suara pria Indonesia: "' + best.name + '".';
+    } else {
+      voiceHint.textContent = 'Suara Bahasa Indonesia tidak ditemukan di perangkat ini. Menggunakan suara terdekat yang tersedia.';
+    }
+  }
+  if('speechSynthesis' in window){
+    loadVoices();
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+  } else {
+    voiceHint.textContent = 'Peramban ini tidak mendukung suara (Web Speech API). Arahan akan tetap tampil sebagai teks di kartu panduan.';
+    btnMute.style.display = 'none';
+  }
+  voiceSelect.addEventListener('change', function(){
+    var v = availableVoices.find(function(v){ return v.name === voiceSelect.value; });
+    selectedVoice = v || null;
+  });
+
+  function estimateDuration(text){
+    return Math.max(1400, text.length * 55);
+  }
+
+  function speakStep(text, cb){
+    if(muted || !('speechSynthesis' in window)){
+      setTimeout(cb, estimateDuration(text));
+      return;
+    }
+    try{
+      window.speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(text);
+      u.lang = 'id-ID';
+      if(selectedVoice) u.voice = selectedVoice;
+      var isIndonesianVoice = selectedVoice && /id[-_]ID|Indonesia/i.test(selectedVoice.lang + ' ' + selectedVoice.name);
+      var isMaleTagged = selectedVoice && /male|pria|laki/i.test(selectedVoice.name);
+      u.pitch = isMaleTagged ? 1 : (isIndonesianVoice ? 0.75 : 0.85);
+      u.rate = 0.98;
+      u.volume = 1;
+      var done = false;
+      var finish = function(){ if(done) return; done = true; cb(); };
+      u.onend = finish;
+      u.onerror = finish;
+      window.speechSynthesis.speak(u);
+      // safety fallback in case onend never fires (some browsers)
+      setTimeout(finish, estimateDuration(text) + 4000);
+    }catch(e){
+      setTimeout(cb, estimateDuration(text));
+    }
+  }
+
+  /* ---------------- ANIMATION ---------------- */
+  function easeInOut(t){ return t<0.5 ? 2*t*t : -1+(4-2*t)*t; }
+
+  function animateSegment(from, to, cumBefore, segLen, onDone){
+    var duration = Math.max(900, segLen * 2.1);
+    var start = null;
+    var ang = angleBetween(from, to);
+
+    function frame(ts){
+      if(!playing) return;
+      if(start === null) start = ts;
+      var t = Math.min(1, (ts-start)/duration);
+      var e = easeInOut(t);
+      var x = from.x + (to.x-from.x)*e;
+      var y = from.y + (to.y-from.y)*e;
+      setWalker(x,y,ang);
+
+      var travelled = cumBefore + segLen*e;
+      routeProgress.setAttribute('stroke-dashoffset', totalLen - travelled);
+
+      if(t < 1){
+        animFrame = requestAnimationFrame(frame);
+      } else {
+        onDone();
+      }
+    }
+    animFrame = requestAnimationFrame(frame);
+  }
+
+  function dist(a,b){ return Math.hypot(b.x-a.x, b.y-a.y); }
+
+  function runStep(idx){
+    if(!playing) return;
+    var r = routes[currentRouteKey];
+    currentStep = idx;
+    refreshDots(idx);
+    stepCountEl.textContent = 'Langkah ' + (idx+1) + ' dari ' + r.texts.length;
+    captionEl.textContent = r.texts[idx];
+
+    speakStep(r.texts[idx], function(){
+      if(!playing) return;
+      if(idx >= r.points.length - 1){
+        // finished
+        playing = false;
+        btnPlay.textContent = '▶ Mulai Navigasi';
+        stepCountEl.textContent = 'Selesai — Sahabat MP telah tiba';
+        chevronEl.style.transform = 'rotate(0deg)';
+        return;
+      }
+      var from = r.points[idx];
+      var to = r.points[idx+1];
+      var cum = 0;
+      for(var i=0;i<idx;i++) cum += dist(r.points[i], r.points[i+1]);
+      var segLen = dist(from,to);
+      var ang = angleBetween(from,to);
+      chevronEl.style.transform = 'rotate(' + (ang+90) + 'deg)';
+      animateSegment(from, to, cum, segLen, function(){
+        runStep(idx+1);
+      });
+    });
+  }
+
+  /* ---------------- CONTROLS ---------------- */
+  routeButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if(playing) stopPlayback();
+      setRoute(btn.getAttribute('data-route'));
+    });
+  });
+
+  function stopPlayback(){
+    playing = false;
+    if(animFrame) cancelAnimationFrame(animFrame);
+    if('speechSynthesis' in window) window.speechSynthesis.cancel();
+    btnPlay.textContent = '▶ Mulai Navigasi';
+  }
+
+  btnPlay.addEventListener('click', function(){
+    if(playing){
+      stopPlayback();
+      return;
+    }
+    playing = true;
+    btnPlay.textContent = '⏸ Berhenti Sejenak';
+    if(currentStep >= routes[currentRouteKey].texts.length - 1){
+      setRoute(currentRouteKey);
+    }
+    runStep(currentStep);
+  });
+
+  btnReset.addEventListener('click', function(){
+    stopPlayback();
+    setRoute(currentRouteKey);
+  });
+
+  btnMute.addEventListener('click', function(){
+    muted = !muted;
+    btnMute.textContent = muted ? '🔇' : '🔊';
+    if(muted && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+  });
+
+  /* ---------------- INIT ---------------- */
+  setRoute('toMri');
+})();
+</script>
+</body>
+</html>
