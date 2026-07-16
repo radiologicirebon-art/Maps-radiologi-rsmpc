@@ -42,51 +42,62 @@
     font-family:var(--font-body);
     min-height:100vh;
   }
-  .app{ max-width:1400px; margin:0 auto; padding:20px 20px 40px; }
+  .app{ max-width:1400px; margin:0 auto; padding:14px 14px 28px; }
 
   /* ---------- Topbar ---------- */
   .topbar{
-    display:flex; align-items:center; gap:18px;
-    padding:14px 20px;
+    display:flex; align-items:center; gap:14px;
+    padding:12px 14px;
     background:var(--card);
     border:1px solid var(--line);
     border-radius:var(--radius);
     box-shadow:0 1px 0 rgba(9,63,61,0.03);
-    margin-bottom:20px;
+    margin-bottom:14px;
+    position:sticky; top:0; z-index:20;
   }
-  .topbar img{ height:46px; width:auto; display:block; }
-  .topbar .divider{ width:1px; height:34px; background:var(--line); }
-  .topbar .titles{ display:flex; flex-direction:column; gap:2px; }
+  .topbar img{ height:36px; width:auto; display:block; flex-shrink:0; }
+  .topbar .divider{ width:1px; height:30px; background:var(--line); flex-shrink:0; }
+  .topbar .titles{ display:flex; flex-direction:column; gap:1px; min-width:0; }
   .topbar .eyebrow{
-    font-family:var(--font-mono); font-size:11px; letter-spacing:.14em;
+    font-family:var(--font-mono); font-size:9.5px; letter-spacing:.12em;
     text-transform:uppercase; color:var(--teal-dark); font-weight:600;
   }
   .topbar h1{
-    font-family:var(--font-display); font-weight:600; font-size:22px;
-    margin:0; color:var(--teal-deep); letter-spacing:.2px;
+    font-family:var(--font-display); font-weight:600; font-size:16px;
+    margin:0; color:var(--teal-deep); letter-spacing:.1px;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
   }
-  .topbar .sub{ font-size:13px; color:var(--ink-soft); margin-top:1px; }
+  .topbar .sub{ font-size:11.5px; color:var(--ink-soft); margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  @media (min-width:640px){
+    .topbar img{ height:46px; }
+    .topbar .divider{ height:34px; }
+    .topbar h1{ font-size:22px; }
+    .topbar .sub{ font-size:13px; }
+  }
 
   /* ---------- Layout ---------- */
   .layout{
-    display:grid;
-    grid-template-columns: 360px 1fr;
-    gap:20px;
-    align-items:start;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
   }
-  @media (max-width: 940px){
-    .layout{ grid-template-columns: 1fr; }
+  .layout .map-wrap{ order:1; }
+  .layout .panel{ order:2; }
+
+  @media (min-width: 940px){
+    .layout{ display:grid; grid-template-columns: 360px 1fr; align-items:start; gap:20px; }
+    .layout .map-wrap{ order:2; }
+    .layout .panel{ order:1; }
   }
 
   .panel{
     background:var(--card);
     border:1px solid var(--line);
     border-radius:var(--radius);
-    padding:18px;
-    display:flex; flex-direction:column; gap:16px;
-    position:sticky; top:20px;
+    padding:16px;
+    display:flex; flex-direction:column; gap:14px;
   }
-  @media (max-width: 940px){ .panel{ position:static; } }
+  @media (min-width: 940px){ .panel{ position:sticky; top:78px; } }
 
   .panel h2{
     font-family:var(--font-display); font-size:15px; font-weight:600;
@@ -105,13 +116,16 @@
   .route-btn{
     display:flex; align-items:center; gap:10px;
     width:100%; text-align:left;
+    min-height:52px;
     padding:12px 14px;
-    border-radius:10px;
+    border-radius:12px;
     border:1.5px solid var(--line);
     background:var(--room-fill-dim);
     cursor:pointer;
-    font-family:var(--font-body); font-weight:700; font-size:13.5px; color:var(--ink);
+    font-family:var(--font-body); font-weight:700; font-size:14px; color:var(--ink);
     transition:border-color .15s ease, background .15s ease, transform .1s ease;
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
   }
   .route-btn .arrow-ic{ font-size:16px; color:var(--teal); flex-shrink:0; }
   .route-btn:hover{ border-color:var(--teal); }
@@ -126,13 +140,16 @@
   .btn{
     flex:1 1 auto;
     display:flex; align-items:center; justify-content:center; gap:6px;
-    padding:11px 10px;
-    border-radius:10px;
+    min-height:50px;
+    padding:12px 10px;
+    border-radius:12px;
     border:1.5px solid transparent;
-    font-family:var(--font-body); font-weight:700; font-size:13px;
+    font-family:var(--font-body); font-weight:700; font-size:14.5px;
     cursor:pointer;
     transition:filter .15s ease, transform .08s ease;
     white-space:nowrap;
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
   }
   .btn:active{ transform:scale(.97); }
   .btn-primary{ background:var(--orange); color:#fff; }
@@ -140,7 +157,8 @@
   .btn-primary:disabled{ background:#E7D8BE; cursor:not-allowed; }
   .btn-ghost{ background:var(--teal-pale); color:var(--teal-deep); }
   .btn-ghost:hover{ filter:brightness(0.98); background:#DCEEEC; }
-  .btn-icon{ flex:0 0 auto; width:42px; padding:11px 0; }
+  .btn-icon{ flex:0 0 auto; width:50px; padding:12px 0; font-size:18px; }
+  .btn-follow.active{ background:var(--teal); color:#fff; }
 
   .voice-row{ display:flex; flex-direction:column; gap:6px; }
   select{
@@ -196,10 +214,37 @@
     background:var(--card);
     border:1px solid var(--line);
     border-radius:var(--radius);
-    padding:10px;
+    padding:8px;
     overflow:hidden;
   }
-  svg#map{ width:100%; height:auto; display:block; }
+  .map-toolbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:4px 6px 8px;
+    gap:8px;
+  }
+  .map-toolbar .hint{ font-size:11px; color:var(--ink-soft); font-family:var(--font-mono); }
+  .map-toolbar .zoom-controls{ display:flex; gap:6px; }
+  .zbtn{
+    width:34px; height:34px; border-radius:9px; border:1.5px solid var(--line);
+    background:var(--room-fill-dim); font-size:16px; font-weight:700; color:var(--teal-dark);
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+  }
+  .zbtn.follow-on{ background:var(--teal); color:#fff; border-color:var(--teal); }
+
+  #mapScroll{
+    overflow:auto;
+    -webkit-overflow-scrolling:touch;
+    touch-action:pan-x pan-y pinch-zoom;
+    border-radius:10px;
+    background:var(--paper);
+    height:56vh;
+    max-height:560px;
+  }
+  @media (min-width:940px){
+    #mapScroll{ height:74vh; max-height:820px; }
+  }
+  svg#map{ display:block; height:100%; width:auto; min-width:1150px; }
 
   .room-rect{ fill:var(--room-fill); stroke:var(--room-stroke); stroke-width:2.2; }
   .room-rect.dim{ fill:var(--room-fill-dim); }
@@ -312,12 +357,23 @@
       </div>
 
       <div class="footnote">
-        Peta bersifat skematik untuk keperluan pemanduan arah dan tidak berskala 1:1. Narasi suara memakai fitur bawaan peramban (Web Speech API); ketersediaan pilihan suara pria berbahasa Indonesia tergantung perangkat/OS Anda.
+        Peta bersifat skematik untuk keperluan pemanduan arah dan tidak berskala 1:1. Narasi suara memakai fitur bawaan peramban (Web Speech API); ketersediaan pilihan suara pria berbahasa Indonesia tergantung perangkat/OS pasien.
+        <br><br>
+        <b>Untuk tim IT:</b> arahkan QR code di dekat pintu ruangan ke tautan ini dengan tambahan parameter, agar rute otomatis kepilih saat pasien scan — <span style="font-family:var(--font-mono)">?dari=radiologi</span> untuk barcode di Instalasi Radiologi, atau <span style="font-family:var(--font-mono)">?dari=mri</span> untuk barcode di Ruang MRI.
       </div>
     </aside>
 
     <!-- ===== MAP ===== -->
     <section class="map-wrap">
+      <div class="map-toolbar">
+        <span class="hint">👆 Geser peta dengan jari, cubit untuk zoom</span>
+        <div class="zoom-controls">
+          <button class="zbtn" id="zoomOut" title="Perkecil">−</button>
+          <button class="zbtn" id="zoomIn" title="Perbesar">+</button>
+          <button class="zbtn follow-on" id="btnFollow" title="Ikuti posisi berjalan">📍</button>
+        </div>
+      </div>
+      <div id="mapScroll">
       <svg id="map" viewBox="0 0 1600 940" xmlns="http://www.w3.org/2000/svg">
 
         <!-- top corridor -->
@@ -452,6 +508,7 @@
         </g>
 
       </svg>
+      </div>
     </section>
 
   </main>
@@ -513,6 +570,11 @@
   var roomRadiologi1 = document.getElementById('room-radiologi1');
   var roomMri = document.getElementById('room-mri');
   var routeButtons = document.querySelectorAll('.route-btn');
+  var mapScroll = document.getElementById('mapScroll');
+  var mapSvg = document.getElementById('map');
+  var zoomInBtn = document.getElementById('zoomIn');
+  var zoomOutBtn = document.getElementById('zoomOut');
+  var btnFollow = document.getElementById('btnFollow');
 
   /* ---------------- STATE ---------------- */
   var currentRouteKey = 'toMri';
@@ -522,6 +584,39 @@
   var selectedVoice = null;
   var animFrame = null;
   var totalLen = 0;
+  var mapZoomPx = 1150; // current rendered min-width of svg, in CSS px
+  var MAP_ZOOM_MIN = 700, MAP_ZOOM_MAX = 2600;
+  var followMode = true;
+
+  function applyZoom(px){
+    mapZoomPx = Math.max(MAP_ZOOM_MIN, Math.min(MAP_ZOOM_MAX, px));
+    mapSvg.style.minWidth = mapZoomPx + 'px';
+  }
+  zoomInBtn.addEventListener('click', function(){ applyZoom(mapZoomPx + 220); centerOnWalker(true); });
+  zoomOutBtn.addEventListener('click', function(){ applyZoom(mapZoomPx - 220); centerOnWalker(true); });
+  btnFollow.addEventListener('click', function(){
+    followMode = !followMode;
+    btnFollow.classList.toggle('follow-on', followMode);
+    if(followMode) centerOnWalker(true);
+  });
+
+  function centerOnWalker(smooth){
+    if(!followMode && !smooth) return;
+    var scaleX = mapSvg.getBoundingClientRect().width / 1600;
+    var scaleY = mapSvg.getBoundingClientRect().height / 940;
+    var m = /translate\(([-\d.]+),([-\d.]+)\)/.exec(walker.getAttribute('transform'));
+    if(!m) return;
+    var wx = parseFloat(m[1]) * scaleX;
+    var wy = parseFloat(m[2]) * scaleY;
+    mapScroll.scrollTo({
+      left: Math.max(0, wx - mapScroll.clientWidth/2),
+      top: Math.max(0, wy - mapScroll.clientHeight/2),
+      behavior: smooth ? 'smooth' : 'auto'
+    });
+  }
+
+  // if user manually drags the map, pause auto-follow until they tap the follow button again
+  mapScroll.addEventListener('pointerdown', function(){ followMode = false; btnFollow.classList.remove('follow-on'); });
 
   /* ---------------- SETUP: dots ---------------- */
   function buildDots(n){
@@ -683,6 +778,7 @@
     var start = null;
     var ang = angleBetween(from, to);
 
+    var lastCenter = 0;
     function frame(ts){
       if(!playing) return;
       if(start === null) start = ts;
@@ -695,9 +791,15 @@
       var travelled = cumBefore + segLen*e;
       routeProgress.setAttribute('stroke-dashoffset', totalLen - travelled);
 
+      if(followMode && ts - lastCenter > 220){
+        lastCenter = ts;
+        centerOnWalker(false);
+      }
+
       if(t < 1){
         animFrame = requestAnimationFrame(frame);
       } else {
+        if(followMode) centerOnWalker(true);
         onDone();
       }
     }
@@ -776,8 +878,37 @@
     if(muted && 'speechSynthesis' in window) window.speechSynthesis.cancel();
   });
 
+  /* ---------------- BARCODE / QR ENTRY POINT ---------------- */
+  // Contoh tautan barcode:
+  //   index.html?dari=radiologi   -> otomatis rute Radiologi 1 -> MRI
+  //   index.html?dari=mri         -> otomatis rute MRI -> Radiologi 1
+  //   index.html?route=toMri | toRadio  (alternatif langsung nama rute)
+  function detectRouteFromURL(){
+    try{
+      var params = new URLSearchParams(window.location.search);
+      var routeParam = (params.get('route') || '').toLowerCase();
+      var dariParam = (params.get('dari') || params.get('from') || '').toLowerCase();
+      if(routeParam === 'tomri' || routeParam === 'toradio'){
+        return routeParam === 'tomri' ? 'toMri' : 'toRadio';
+      }
+      if(dariParam){
+        if(/mri/.test(dariParam)) return 'toRadio';
+        if(/radio/.test(dariParam)) return 'toMri';
+      }
+    }catch(e){}
+    return 'toMri';
+  }
+
   /* ---------------- INIT ---------------- */
-  setRoute('toMri');
+  var initialRoute = detectRouteFromURL();
+  setRoute(initialRoute);
+  applyZoom(mapZoomPx);
+
+  if(initialRoute !== 'toMri'){
+    captionEl.textContent = 'Barcode terdeteksi dari Ruang MRI. Rute otomatis diarahkan menuju Ruang Radiologi 1. Tekan "Mulai Navigasi".';
+  } else if(new URLSearchParams(window.location.search).toString()){
+    captionEl.textContent = 'Barcode terdeteksi dari Ruang Radiologi. Rute otomatis diarahkan menuju Ruang MRI. Tekan "Mulai Navigasi".';
+  }
 })();
 </script>
 </body>
