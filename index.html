@@ -191,14 +191,6 @@
   .btn-icon{ flex:0 0 auto; width:50px; padding:12px 0; font-size:18px; }
   .btn-follow.active{ background:var(--teal); color:#fff; }
 
-  .voice-row{ display:flex; flex-direction:column; gap:6px; }
-  select{
-    width:100%; padding:9px 10px; border-radius:9px;
-    border:1.5px solid var(--line); background:#fff;
-    font-family:var(--font-body); font-size:12.5px; color:var(--ink);
-  }
-  .voice-hint{ font-size:11.5px; color:var(--ink-soft); line-height:1.4; }
-
   /* Nav card (turn-by-turn) */
   .nav-card{
     background:linear-gradient(180deg, var(--teal-deep), var(--teal-dark));
@@ -355,12 +347,6 @@
           <button class="btn btn-icon btn-ghost" id="btnMute" title="Bisukan suara">🔊</button>
           <button class="btn btn-icon btn-ghost" id="btnReset" title="Ulangi dari awal">⟲</button>
         </div>
-      </div>
-
-      <div class="voice-row">
-        <span class="section-label">Suara pemandu (Bahasa Indonesia)</span>
-        <select id="voiceSelect"></select>
-        <span class="voice-hint" id="voiceHint">Mencari suara pria Indonesia pada perangkat Anda…</span>
       </div>
 
       <div>
@@ -590,8 +576,6 @@
   var btnPlay = document.getElementById('btnPlay');
   var btnMute = document.getElementById('btnMute');
   var btnReset = document.getElementById('btnReset');
-  var voiceSelect = document.getElementById('voiceSelect');
-  var voiceHint = document.getElementById('voiceHint');
   var roomRadiologi1 = document.getElementById('room-radiologi1');
   var roomMri = document.getElementById('room-mri');
   var routeButtons = document.querySelectorAll('.route-btn');
@@ -716,53 +700,24 @@
     populateVoiceSelect();
   }
   function populateVoiceSelect(){
-    voiceSelect.innerHTML = '';
     if(!availableVoices.length){
-      var opt = document.createElement('option');
-      opt.textContent = 'Suara sistem (default perangkat)';
-      voiceSelect.appendChild(opt);
-      voiceHint.textContent = 'Peramban belum menyediakan daftar suara, atau fitur suara tidak didukung. Narasi tetap tampil sebagai teks.';
+      selectedVoice = null;
       return;
     }
     // prioritize Indonesian voices, then everything else
     var idVoices = availableVoices.filter(function(v){ return /id[-_]ID|Indonesia/i.test(v.lang + ' ' + v.name); });
-    var others = availableVoices.filter(function(v){ return idVoices.indexOf(v) === -1; });
-    var ordered = idVoices.concat(others);
-
-    ordered.forEach(function(v){
-      var opt = document.createElement('option');
-      opt.value = v.name;
-      opt.textContent = v.name + ' (' + v.lang + ')';
-      voiceSelect.appendChild(opt);
-    });
 
     // auto-pick: id-ID voice with "male/pria" hint, else first id-ID voice, else first voice
     var maleGuess = idVoices.find(function(v){ return /male|pria|laki/i.test(v.name); });
-    var best = maleGuess || idVoices[0] || ordered[0];
-    if(best){
-      voiceSelect.value = best.name;
-      selectedVoice = best;
-    }
-
-    if(idVoices.length && !maleGuess){
-      voiceHint.textContent = 'Menggunakan suara Indonesia "' + best.name + '". Nada diturunkan agar terdengar lebih maskulin. Pilih suara lain dari daftar bila tersedia.';
-    } else if(maleGuess){
-      voiceHint.textContent = 'Menggunakan suara pria Indonesia: "' + best.name + '".';
-    } else {
-      voiceHint.textContent = 'Suara Bahasa Indonesia tidak ditemukan di perangkat ini. Menggunakan suara terdekat yang tersedia.';
-    }
+    var best = maleGuess || idVoices[0] || availableVoices[0];
+    selectedVoice = best || null;
   }
   if('speechSynthesis' in window){
     loadVoices();
     window.speechSynthesis.onvoiceschanged = loadVoices;
   } else {
-    voiceHint.textContent = 'Peramban ini tidak mendukung suara (Web Speech API). Arahan akan tetap tampil sebagai teks di kartu panduan.';
     btnMute.style.display = 'none';
   }
-  voiceSelect.addEventListener('change', function(){
-    var v = availableVoices.find(function(v){ return v.name === voiceSelect.value; });
-    selectedVoice = v || null;
-  });
 
   function estimateDuration(text){
     return Math.max(1400, text.length * 55);
