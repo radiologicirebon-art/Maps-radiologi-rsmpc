@@ -36,13 +36,39 @@
   html,body{ margin:0; padding:0; }
   body{
     background:
-      radial-gradient(1200px 500px at 85% -10%, var(--teal-pale2), transparent 60%),
-      var(--paper);
+      radial-gradient(1200px 700px at 50% -10%, rgba(15,140,136,.16), transparent 60%),
+      linear-gradient(180deg, #0B2E2C, #071F1E);
     color:var(--ink);
     font-family:var(--font-body);
     min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:22px;
   }
-  .app{ max-width:1400px; margin:0 auto; padding:14px 14px 28px; }
+  .app{
+    width:100%;
+    max-width:1760px;
+    aspect-ratio:16/9;
+    margin:0 auto;
+    padding:14px;
+    background:var(--paper);
+    border-radius:22px;
+    box-shadow:0 40px 90px -30px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+  }
+  @media (max-width:939px){
+    body{ padding:0; }
+    .app{
+      aspect-ratio:auto;
+      max-width:none;
+      border-radius:0;
+      box-shadow:none;
+      min-height:100vh;
+    }
+  }
 
   /* ---------- Topbar ---------- */
   .topbar{
@@ -54,6 +80,7 @@
     box-shadow:0 1px 0 rgba(9,63,61,0.03);
     margin-bottom:14px;
     position:sticky; top:0; z-index:20;
+    flex-shrink:0;
   }
   .topbar img{ height:36px; width:auto; display:block; flex-shrink:0; }
   .topbar .divider{ width:1px; height:30px; background:var(--line); flex-shrink:0; }
@@ -80,14 +107,16 @@
     display:flex;
     flex-direction:column;
     gap:14px;
+    flex:1;
+    min-height:0;
   }
   .layout .map-wrap{ order:1; }
   .layout .panel{ order:2; }
 
   @media (min-width: 940px){
-    .layout{ display:grid; grid-template-columns: 360px 1fr; align-items:start; gap:20px; }
-    .layout .map-wrap{ order:2; }
-    .layout .panel{ order:1; }
+    .layout{ display:grid; grid-template-columns: 340px 1fr; align-items:stretch; gap:16px; height:100%; }
+    .layout .map-wrap{ order:2; height:100%; min-height:0; }
+    .layout .panel{ order:1; height:100%; min-height:0; }
   }
 
   .panel{
@@ -97,7 +126,9 @@
     padding:16px;
     display:flex; flex-direction:column; gap:14px;
   }
-  @media (min-width: 940px){ .panel{ position:sticky; top:78px; } }
+  @media (min-width: 940px){
+    .panel{ overflow-y:auto; }
+  }
 
   .panel h2{
     font-family:var(--font-display); font-size:15px; font-weight:600;
@@ -207,8 +238,6 @@
   .swatch.route{ background:transparent; border:none; height:0; border-top:3px dashed var(--orange); align-self:center; }
   .swatch.radiasi{ background:#FFF6DC; border-color:#E7C24A; }
 
-  .footnote{ font-size:11px; color:var(--ink-soft); line-height:1.5; border-top:1px dashed var(--line); padding-top:12px; }
-
   /* ---------- Map ---------- */
   .map-wrap{
     background:var(--card);
@@ -216,6 +245,8 @@
     border-radius:var(--radius);
     padding:8px;
     overflow:hidden;
+    display:flex;
+    flex-direction:column;
   }
   .map-toolbar{
     display:flex; align-items:center; justify-content:space-between;
@@ -240,9 +271,11 @@
     background:var(--paper);
     height:56vh;
     max-height:560px;
+    flex:1;
+    min-height:0;
   }
   @media (min-width:940px){
-    #mapScroll{ height:74vh; max-height:820px; }
+    #mapScroll{ height:auto; max-height:none; flex:1; }
   }
   svg#map{ display:block; height:100%; width:auto; min-width:1150px; }
 
@@ -356,11 +389,6 @@
         </div>
       </div>
 
-      <div class="footnote">
-        Peta bersifat skematik untuk keperluan pemanduan arah dan tidak berskala 1:1. Narasi suara memakai fitur bawaan peramban (Web Speech API); ketersediaan pilihan suara pria berbahasa Indonesia tergantung perangkat/OS pasien.
-        <br><br>
-        <b>Untuk tim IT:</b> arahkan QR code di dekat pintu ruangan ke tautan ini dengan tambahan parameter, agar rute otomatis kepilih saat pasien scan — <span style="font-family:var(--font-mono)">?dari=radiologi</span> untuk barcode di Instalasi Radiologi, atau <span style="font-family:var(--font-mono)">?dari=mri</span> untuk barcode di Ruang MRI.
-      </div>
     </aside>
 
     <!-- ===== MAP ===== -->
