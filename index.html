@@ -2,59 +2,69 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Peta Navigasi Internal — RS Mitra Plumbon</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Roboto+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --teal:#0F8C88;
     --teal-dark:#0A5F5C;
     --teal-deep:#093F3D;
     --teal-pale:#E4F3F1;
-    --teal-pale2:#F1F8F7;
     --orange:#F2921F;
     --orange-dark:#C96F0C;
     --orange-pale:#FCEBD3;
+    --arrow-blue:#29B6E8;
+    --arrow-blue-dark:#159AC7;
     --ink:#122B29;
     --ink-soft:#4A625F;
-    --paper:#F6FAF9;
-    --card:#FFFFFF;
-    --line:#CFE3E0;
+    --paper:#EEF4F3;
+    --surface:#FFFFFF;
+    --surface-2:#F5FAF9;
+    --line:#DCE9E7;
     --room-fill:#FFFFFF;
     --room-stroke:#B9D3D0;
     --room-fill-dim:#EEF5F4;
     --danger-fill:#FFF6DC;
     --danger-stroke:#E7C24A;
-    --font-display:'Fraunces', serif;
-    --font-body:'Manrope', sans-serif;
-    --font-mono:'IBM Plex Mono', monospace;
-    --radius:14px;
+    --taman-fill:#EAF7EC;
+    --taman-stroke:#8FCB9C;
+    --font-display:'Plus Jakarta Sans', sans-serif;
+    --font-body:'Roboto', sans-serif;
+    --font-mono:'Roboto Mono', monospace;
+    --r-xl:28px;
+    --r-lg:20px;
+    --r-md:14px;
+    --el1: 0 1px 2px rgba(9,63,61,.10), 0 1px 3px rgba(9,63,61,.12);
+    --el2: 0 4px 8px rgba(9,63,61,.10), 0 1px 3px rgba(9,63,61,.14);
+    --el3: 0 10px 24px rgba(9,63,61,.16), 0 3px 6px rgba(9,63,61,.10);
+    --el4: 0 20px 44px rgba(9,63,61,.24), 0 6px 12px rgba(9,63,61,.14);
   }
-  *{ box-sizing:border-box; }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   html,body{ margin:0; padding:0; }
   body{
     background:
-      radial-gradient(1200px 700px at 50% -10%, rgba(15,140,136,.16), transparent 60%),
-      linear-gradient(180deg, #0B2E2C, #071F1E);
+      radial-gradient(1100px 620px at 50% -8%, rgba(15,140,136,.20), transparent 60%),
+      linear-gradient(180deg, #0B2E2C 0%, #082523 55%, #061A19 100%);
     color:var(--ink);
     font-family:var(--font-body);
     min-height:100vh;
     display:flex;
     align-items:center;
     justify-content:center;
-    padding:22px;
+    padding:20px;
   }
   .app{
     width:100%;
-    max-width:1760px;
+    max-width:1780px;
     aspect-ratio:16/9;
     margin:0 auto;
     padding:14px;
     background:var(--paper);
-    border-radius:22px;
-    box-shadow:0 40px 90px -30px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+    border-radius:32px;
+    box-shadow:var(--el4), 0 0 0 1px rgba(255,255,255,.05);
     display:flex;
     flex-direction:column;
     overflow:hidden;
@@ -67,46 +77,51 @@
       border-radius:0;
       box-shadow:none;
       min-height:100vh;
+      min-height:100dvh;
     }
   }
 
-  /* ---------- Topbar ---------- */
+  /* ---------- Topbar (Android app-bar) ---------- */
   .topbar{
     display:flex; align-items:center; gap:14px;
-    padding:12px 14px;
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:var(--radius);
-    box-shadow:0 1px 0 rgba(9,63,61,0.03);
-    margin-bottom:14px;
+    padding:12px 16px;
+    background:linear-gradient(180deg, var(--surface), var(--surface-2));
+    border-radius:var(--r-lg);
+    box-shadow:var(--el2);
+    margin-bottom:12px;
     position:sticky; top:0; z-index:20;
     flex-shrink:0;
   }
-  .topbar img{ height:36px; width:auto; display:block; flex-shrink:0; }
-  .topbar .divider{ width:1px; height:30px; background:var(--line); flex-shrink:0; }
+  .topbar .logo-badge{
+    height:40px; width:40px; border-radius:12px;
+    background:linear-gradient(150deg, var(--teal), var(--teal-dark));
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:var(--el1);
+    flex-shrink:0;
+    color:#fff; font-family:var(--font-display); font-weight:800; font-size:16px;
+  }
   .topbar .titles{ display:flex; flex-direction:column; gap:1px; min-width:0; }
   .topbar .eyebrow{
     font-family:var(--font-mono); font-size:9.5px; letter-spacing:.12em;
     text-transform:uppercase; color:var(--teal-dark); font-weight:600;
   }
   .topbar h1{
-    font-family:var(--font-display); font-weight:600; font-size:16px;
+    font-family:var(--font-display); font-weight:800; font-size:15px;
     margin:0; color:var(--teal-deep); letter-spacing:.1px;
     white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
   }
-  .topbar .sub{ font-size:11.5px; color:var(--ink-soft); margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .topbar .sub{ font-size:11px; color:var(--ink-soft); margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   @media (min-width:640px){
-    .topbar img{ height:46px; }
-    .topbar .divider{ height:34px; }
-    .topbar h1{ font-size:22px; }
-    .topbar .sub{ font-size:13px; }
+    .topbar .logo-badge{ height:48px; width:48px; font-size:19px; border-radius:14px; }
+    .topbar h1{ font-size:21px; }
+    .topbar .sub{ font-size:12.5px; }
   }
 
   /* ---------- Layout ---------- */
   .layout{
     display:flex;
     flex-direction:column;
-    gap:14px;
+    gap:12px;
     flex:1;
     min-height:0;
   }
@@ -114,15 +129,15 @@
   .layout .panel{ order:2; }
 
   @media (min-width: 940px){
-    .layout{ display:grid; grid-template-columns: 340px 1fr; align-items:stretch; gap:16px; height:100%; }
+    .layout{ display:grid; grid-template-columns: 348px 1fr; align-items:stretch; gap:14px; height:100%; }
     .layout .map-wrap{ order:2; height:100%; min-height:0; }
     .layout .panel{ order:1; height:100%; min-height:0; }
   }
 
   .panel{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:var(--radius);
+    background:var(--surface);
+    border-radius:var(--r-xl);
+    box-shadow:var(--el2);
     padding:16px;
     display:flex; flex-direction:column; gap:14px;
   }
@@ -130,162 +145,193 @@
     .panel{ overflow-y:auto; }
   }
 
-  .panel h2{
-    font-family:var(--font-display); font-size:15px; font-weight:600;
-    margin:0 0 8px 0; color:var(--teal-deep);
-  }
   .section-label{
-    font-family:var(--font-mono); font-size:10.5px; letter-spacing:.12em;
+    font-family:var(--font-mono); font-size:10px; letter-spacing:.14em;
     text-transform:uppercase; color:var(--ink-soft); font-weight:600;
     margin-bottom:8px; display:block;
   }
 
-  /* Route toggle */
-  .route-toggle{
-    display:flex; flex-direction:column; gap:8px;
-  }
+  /* Route toggle -> Material segmented chips */
+  .route-toggle{ display:flex; flex-direction:column; gap:9px; }
   .route-btn{
-    display:flex; align-items:center; gap:10px;
+    display:flex; align-items:center; gap:12px;
     width:100%; text-align:left;
-    min-height:52px;
-    padding:12px 14px;
-    border-radius:12px;
-    border:1.5px solid var(--line);
-    background:var(--room-fill-dim);
+    min-height:58px;
+    padding:12px 16px;
+    border-radius:18px;
+    border:none;
+    background:var(--surface-2);
+    box-shadow: inset 0 0 0 1.5px var(--line);
     cursor:pointer;
-    font-family:var(--font-body); font-weight:700; font-size:14px; color:var(--ink);
-    transition:border-color .15s ease, background .15s ease, transform .1s ease;
-    -webkit-tap-highlight-color:transparent;
+    font-family:var(--font-body); font-weight:700; font-size:13.5px; color:var(--ink);
+    transition:box-shadow .18s ease, background .18s ease, transform .1s ease;
     touch-action:manipulation;
   }
-  .route-btn .arrow-ic{ font-size:16px; color:var(--teal); flex-shrink:0; }
-  .route-btn:hover{ border-color:var(--teal); }
+  .route-btn .arrow-ic{
+    width:32px; height:32px; border-radius:10px; flex-shrink:0;
+    background:var(--teal-pale); color:var(--teal-dark);
+    display:flex; align-items:center; justify-content:center; font-size:16px;
+  }
+  .route-btn:active{ transform:scale(.98); }
   .route-btn.active{
-    background:var(--teal-pale); border-color:var(--teal);
-    box-shadow: inset 0 0 0 1px var(--teal);
+    background:linear-gradient(135deg, var(--teal), var(--teal-dark));
+    color:#fff;
+    box-shadow:var(--el2);
   }
-  .route-btn.active .arrow-ic{ color:var(--orange); }
+  .route-btn.active .arrow-ic{ background:rgba(255,255,255,.2); color:#fff; }
 
-  /* Controls */
-  .controls-row{ display:flex; gap:8px; flex-wrap:wrap; }
+  /* Controls -> FAB style */
+  .controls-row{ display:flex; gap:10px; align-items:center; }
   .btn{
-    flex:1 1 auto;
-    display:flex; align-items:center; justify-content:center; gap:6px;
-    min-height:50px;
-    padding:12px 10px;
-    border-radius:12px;
-    border:1.5px solid transparent;
-    font-family:var(--font-body); font-weight:700; font-size:14.5px;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    border:none;
+    font-family:var(--font-body); font-weight:700;
     cursor:pointer;
-    transition:filter .15s ease, transform .08s ease;
-    white-space:nowrap;
-    -webkit-tap-highlight-color:transparent;
+    transition:filter .15s ease, transform .08s ease, box-shadow .15s ease;
     touch-action:manipulation;
   }
-  .btn:active{ transform:scale(.97); }
-  .btn-primary{ background:var(--orange); color:#fff; }
-  .btn-primary:hover{ filter:brightness(1.06); }
-  .btn-primary:disabled{ background:#E7D8BE; cursor:not-allowed; }
-  .btn-ghost{ background:var(--teal-pale); color:var(--teal-deep); }
-  .btn-ghost:hover{ filter:brightness(0.98); background:#DCEEEC; }
-  .btn-icon{ flex:0 0 auto; width:50px; padding:12px 0; font-size:18px; }
-  .btn-follow.active{ background:var(--teal); color:#fff; }
+  .btn:active{ transform:scale(.95); }
+  .btn-primary{
+    flex:1 1 auto;
+    min-height:56px;
+    border-radius:28px;
+    padding:14px 18px;
+    font-size:14.5px;
+    background:linear-gradient(135deg, var(--orange), var(--orange-dark));
+    color:#fff;
+    box-shadow:0 8px 18px -6px rgba(242,146,31,.55), var(--el2);
+  }
+  .btn-primary:disabled{ background:#E7D8BE; box-shadow:none; cursor:not-allowed; }
+  .btn-icon{
+    flex:0 0 auto; width:52px; height:52px; border-radius:50%;
+    background:var(--surface-2); box-shadow: inset 0 0 0 1.5px var(--line);
+    font-size:19px; color:var(--teal-dark);
+  }
+  .btn-icon.active{ background:var(--teal); color:#fff; box-shadow:var(--el2); }
 
-  /* Nav card (turn-by-turn) */
+  /* Nav card (turn-by-turn) — elevated 3D card */
   .nav-card{
-    background:linear-gradient(180deg, var(--teal-deep), var(--teal-dark));
-    border-radius:12px;
+    background:linear-gradient(160deg, var(--teal-dark) 0%, var(--teal-deep) 100%);
+    border-radius:var(--r-lg);
     padding:16px;
     color:#fff;
     display:flex; flex-direction:column; gap:12px;
-    box-shadow:0 8px 24px -10px rgba(9,63,61,.55);
+    box-shadow: var(--el3), inset 0 1px 0 rgba(255,255,255,.08);
+    position:relative;
+    overflow:hidden;
+  }
+  .nav-card::after{
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(220px 120px at 90% -10%, rgba(255,255,255,.10), transparent 60%);
+    pointer-events:none;
   }
   .nav-card .row1{ display:flex; align-items:center; gap:12px; }
   .chevron-wrap{
-    width:46px; height:46px; border-radius:50%;
-    background:rgba(255,255,255,.12);
+    width:48px; height:48px; border-radius:16px;
+    background:rgba(255,255,255,.14);
     display:flex; align-items:center; justify-content:center;
     flex-shrink:0;
-    border:1px solid rgba(255,255,255,.22);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.22), 0 4px 10px rgba(0,0,0,.18);
   }
   #chevron{ transition: transform .5s cubic-bezier(.4,0,.2,1); }
   .nav-card .step-count{
-    font-family:var(--font-mono); font-size:11px; letter-spacing:.1em;
-    color:rgba(255,255,255,.65); text-transform:uppercase;
+    font-family:var(--font-mono); font-size:10.5px; letter-spacing:.1em;
+    color:rgba(255,255,255,.68); text-transform:uppercase;
   }
   .nav-card .caption{
-    font-family:var(--font-body); font-weight:600; font-size:14.5px;
-    line-height:1.45; min-height:44px;
+    font-family:var(--font-body); font-weight:500; font-size:14px;
+    line-height:1.5; min-height:44px;
   }
+  .nav-card.paused{ background:linear-gradient(160deg, var(--orange-dark) 0%, #8a4d06 100%); }
+  .pause-badge{
+    display:none; align-items:center; gap:8px;
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.08em;
+    background:rgba(255,255,255,.14); padding:6px 10px; border-radius:10px; width:fit-content;
+  }
+  .nav-card.paused .pause-badge{ display:flex; }
+  .pause-badge .ring{
+    width:12px; height:12px; border-radius:50%;
+    border:2px solid rgba(255,255,255,.4); border-top-color:#fff;
+    animation:spin 1s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
   .dots{ display:flex; gap:5px; }
   .dot{ width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.25); transition:background .2s ease, transform .2s ease; }
   .dot.done{ background:var(--orange); }
   .dot.current{ background:#fff; transform:scale(1.3); }
 
-  .legend{ display:flex; flex-direction:column; gap:7px; }
-  .legend-item{ display:flex; align-items:center; gap:8px; font-size:12px; color:var(--ink-soft); }
-  .swatch{ width:14px; height:14px; border-radius:4px; flex-shrink:0; border:1.5px solid var(--room-stroke); }
+  .legend{ display:flex; flex-direction:column; gap:8px; }
+  .legend-item{ display:flex; align-items:center; gap:9px; font-size:12px; color:var(--ink-soft); font-weight:500; }
+  .swatch{ width:15px; height:15px; border-radius:5px; flex-shrink:0; border:1.5px solid var(--room-stroke); }
   .swatch.start{ background:var(--orange-pale); border-color:var(--orange); }
   .swatch.end{ background:var(--teal-pale); border-color:var(--teal); }
   .swatch.route{ background:transparent; border:none; height:0; border-top:3px dashed var(--orange); align-self:center; }
   .swatch.radiasi{ background:#FFF6DC; border-color:#E7C24A; }
+  .swatch.arrow{ background:var(--arrow-blue); border-color:var(--arrow-blue-dark); }
+  .swatch.taman{ background:var(--taman-fill); border-color:var(--taman-stroke); }
 
   /* ---------- Map ---------- */
   .map-wrap{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:var(--radius);
-    padding:8px;
+    background:var(--surface);
+    border-radius:var(--r-xl);
+    box-shadow:var(--el2);
+    padding:10px;
     overflow:hidden;
     display:flex;
     flex-direction:column;
   }
   .map-toolbar{
     display:flex; align-items:center; justify-content:space-between;
-    padding:4px 6px 8px;
+    padding:4px 8px 8px;
     gap:8px;
   }
-  .map-toolbar .hint{ font-size:11px; color:var(--ink-soft); font-family:var(--font-mono); }
-  .map-toolbar .zoom-controls{ display:flex; gap:6px; }
+  .map-toolbar .hint{ font-size:10.5px; color:var(--ink-soft); font-family:var(--font-mono); }
+  .map-toolbar .zoom-controls{ display:flex; gap:8px; }
   .zbtn{
-    width:34px; height:34px; border-radius:9px; border:1.5px solid var(--line);
-    background:var(--room-fill-dim); font-size:16px; font-weight:700; color:var(--teal-dark);
+    width:38px; height:38px; border-radius:14px;
+    background:var(--surface-2); box-shadow: inset 0 0 0 1.5px var(--line);
+    font-size:17px; font-weight:700; color:var(--teal-dark);
     display:flex; align-items:center; justify-content:center; cursor:pointer;
-    -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+    touch-action:manipulation;
   }
-  .zbtn.follow-on{ background:var(--teal); color:#fff; border-color:var(--teal); }
+  .zbtn.follow-on{ background:linear-gradient(135deg, var(--teal), var(--teal-dark)); color:#fff; box-shadow:var(--el1); }
 
   #mapScroll{
     overflow:auto;
     -webkit-overflow-scrolling:touch;
     touch-action:pan-x pan-y pinch-zoom;
-    border-radius:10px;
+    border-radius:16px;
     background:var(--paper);
     height:56vh;
-    max-height:560px;
+    max-height:600px;
     flex:1;
     min-height:0;
   }
   @media (min-width:940px){
     #mapScroll{ height:auto; max-height:none; flex:1; }
   }
-  svg#map{ display:block; height:100%; width:auto; min-width:1150px; }
+  svg#map{ display:block; height:100%; width:auto; min-width:1250px; filter:drop-shadow(0 10px 20px rgba(9,63,61,.08)); }
 
-  .room-rect{ fill:var(--room-fill); stroke:var(--room-stroke); stroke-width:2.2; }
+  .room-rect{ fill:var(--room-fill); stroke:var(--room-stroke); stroke-width:2.4; }
   .room-rect.dim{ fill:var(--room-fill-dim); }
   .room-rect.radiasi{ fill:var(--danger-fill); stroke:var(--danger-stroke); }
-  .room-rect.corridor{ fill:#FBFDFD; stroke:var(--line); stroke-width:2; stroke-dasharray:3 5; }
+  .room-rect.corridor{ fill:#FBFDFD; stroke:var(--line); stroke-width:2; stroke-dasharray:3 6; }
   .room-rect.caffe{ fill:#FBF3E7; stroke:#E4C48C; }
+  .room-rect.taman{ fill:var(--taman-fill); stroke:var(--taman-stroke); stroke-dasharray:5 5; }
+  .room-rect.admpin{ fill:var(--orange-pale); stroke:var(--orange); stroke-width:2.4; }
 
   .room-label{ font-family:var(--font-body); font-weight:700; fill:var(--ink); text-anchor:middle; }
   .room-label.sub{ font-weight:600; fill:var(--ink-soft); }
   .corridor-label{ font-family:var(--font-mono); font-weight:600; fill:#9FB8B5; letter-spacing:.12em; }
-  .zone-label{ font-family:var(--font-display); font-weight:600; fill:var(--teal-dark); }
+  .zone-label{ font-family:var(--font-display); font-weight:800; fill:var(--teal-dark); }
+  .taman-label{ font-family:var(--font-display); font-weight:800; fill:#3E8B52; }
 
-  .room-active-start{ stroke:var(--orange); stroke-width:4; fill:var(--orange-pale); }
-  .room-active-end{ stroke:var(--teal); stroke-width:4; fill:var(--teal-pale); }
+  .room-active-start{ stroke:var(--orange); stroke-width:4.5; fill:var(--orange-pale); }
+  .room-active-end{ stroke:var(--teal); stroke-width:4.5; fill:var(--teal-pale); }
 
   .chair-row rect{ fill:#E7EFEE; }
+  .chair-icon rect{ fill:#DDEAE8; stroke:#C6DAD7; stroke-width:1; }
 
   .route-guide{ fill:none; stroke:#C9DAD8; stroke-width:5; stroke-dasharray:2 10; stroke-linecap:round; }
   .route-progress{ fill:none; stroke:var(--orange); stroke-width:6; stroke-linecap:round; filter:drop-shadow(0 2px 4px rgba(242,146,31,.35)); }
@@ -302,11 +348,15 @@
   .compass{ font-family:var(--font-mono); font-size:13px; fill:var(--ink-soft); }
   .compass-ring{ fill:none; stroke:var(--line); stroke-width:2; }
 
-  /* radiation icon */
-  .rad-icon text{ font-size:20px; }
+  .nav-arrow{ fill:var(--arrow-blue); }
+  .nav-arrow-dark{ fill:var(--arrow-blue-dark); }
+
+  .adm-pin-label{ font-family:var(--font-body); font-weight:800; fill:#fff; text-anchor:middle; }
+  .adm-pin-bg{ fill:var(--orange); stroke:#fff; stroke-width:3; filter:drop-shadow(0 4px 8px rgba(242,146,31,.5)); }
 
   @media (prefers-reduced-motion: reduce){
     .walker-pulse{ animation:none; }
+    .pause-badge .ring{ animation:none; }
   }
 </style>
 </head>
@@ -314,11 +364,10 @@
 <div class="app">
 
   <header class="topbar">
-    <img src="logo-rsmp.jpg" alt="Logo Rumah Sakit Mitra Plumbon">
-    <div class="divider"></div>
+    <div class="logo-badge">MP</div>
     <div class="titles">
       <span class="eyebrow">Peta Navigasi Internal</span>
-      <h1>Instalasi Radiologi ⇄ Ruang MRI</h1>
+      <h1>Administrasi Radiologi ⇄ Ruang MRI</h1>
       <span class="sub">Rumah Sakit Mitra Plumbon — pemandu arah suara untuk Sahabat MP</span>
     </div>
   </header>
@@ -332,10 +381,10 @@
         <span class="section-label">Pilih rute</span>
         <div class="route-toggle" id="routeToggle">
           <button class="route-btn active" data-route="toMri">
-            <span class="arrow-ic">→</span> Radiologi 1 menuju Ruang MRI
+            <span class="arrow-ic">→</span> Adm. Radiologi menuju Ruang MRI
           </button>
           <button class="route-btn" data-route="toRadio">
-            <span class="arrow-ic">→</span> Ruang MRI menuju Radiologi 1
+            <span class="arrow-ic">→</span> Ruang MRI menuju Adm. Radiologi
           </button>
         </div>
       </div>
@@ -344,14 +393,14 @@
         <span class="section-label">Kontrol perjalanan</span>
         <div class="controls-row">
           <button class="btn btn-primary" id="btnPlay">▶ Mulai Navigasi</button>
-          <button class="btn btn-icon btn-ghost" id="btnMute" title="Bisukan suara">🔊</button>
-          <button class="btn btn-icon btn-ghost" id="btnReset" title="Ulangi dari awal">⟲</button>
+          <button class="btn btn-icon" id="btnMute" title="Bisukan suara">🔊</button>
+          <button class="btn btn-icon" id="btnReset" title="Ulangi dari awal">⟲</button>
         </div>
       </div>
 
       <div>
         <span class="section-label">Pemandu arah</span>
-        <div class="nav-card">
+        <div class="nav-card" id="navCard">
           <div class="row1">
             <div class="chevron-wrap">
               <svg id="chevron" width="24" height="24" viewBox="0 0 24 24"><path d="M12 3 L20 19 L12 15 L4 19 Z" fill="#fff"/></svg>
@@ -360,6 +409,7 @@
               <div class="step-count" id="stepCount">Siap memulai</div>
             </div>
           </div>
+          <div class="pause-badge"><span class="ring"></span> Menunggu ±20 detik</div>
           <div class="caption" id="caption">Tekan <b>Mulai Navigasi</b> untuk memulai arahan suara dari Sahabat MP.</div>
           <div class="dots" id="dots"></div>
         </div>
@@ -368,10 +418,12 @@
       <div>
         <span class="section-label">Keterangan</span>
         <div class="legend">
-          <div class="legend-item"><span class="swatch start"></span> Titik awal</div>
-          <div class="legend-item"><span class="swatch end"></span> Titik tujuan</div>
-          <div class="legend-item"><span class="swatch route"></span> Jalur navigasi</div>
+          <div class="legend-item"><span class="swatch start"></span> Titik awal (Adm. Radiologi)</div>
+          <div class="legend-item"><span class="swatch end"></span> Titik tujuan (Ruang MRI)</div>
+          <div class="legend-item"><span class="swatch route"></span> Jalur navigasi berjalan</div>
+          <div class="legend-item"><span class="swatch arrow"></span> Rambu arah koridor</div>
           <div class="legend-item"><span class="swatch radiasi"></span> Ruang berisiko radiasi ☢</div>
+          <div class="legend-item"><span class="swatch taman"></span> Taman</div>
         </div>
       </div>
 
@@ -388,117 +440,199 @@
         </div>
       </div>
       <div id="mapScroll">
-      <svg id="map" viewBox="0 0 1600 940" xmlns="http://www.w3.org/2000/svg">
+      <svg id="map" viewBox="0 0 1840 1080" xmlns="http://www.w3.org/2000/svg">
 
-        <!-- left koridor vertical (turun dari depan Radiologi ke koridor bawah) -->
-        <rect class="room-rect corridor" x="380" y="360" width="40" height="560"></rect>
-        <text class="corridor-label" x="400" y="640" text-anchor="middle" font-size="13" transform="rotate(-90 400 640)">KORIDOR</text>
+        <defs>
+          <symbol id="navArrow" viewBox="0 0 100 40">
+            <path d="M0,13 H62 L62,0 L100,20 L62,40 L62,27 H0 Z"></path>
+          </symbol>
+        </defs>
 
-        <!-- mid koridor vertical (antara blok radiologi dan blok IGD, dekoratif) -->
-        <rect class="room-rect corridor" x="780" y="360" width="60" height="560"></rect>
-        <text class="corridor-label" x="810" y="640" text-anchor="middle" font-size="13" transform="rotate(-90 810 640)">KORIDOR</text>
+        <!-- ============ TAMAN (kiri bawah) ============ -->
+        <rect class="room-rect taman" x="30" y="660" width="300" height="360" rx="10"></rect>
+        <text class="taman-label" x="70" y="720" font-size="30">Taman</text>
 
-        <!-- right koridor vertical (naik dari koridor bawah menuju level Ruang Operator MRI) -->
-        <rect class="room-rect corridor" x="1240" y="240" width="160" height="680"></rect>
-        <text class="corridor-label" x="1320" y="700" text-anchor="middle" font-size="13" transform="rotate(-90 1320 700)">KORIDOR</text>
-
-        <!-- bottom corridor / waiting -->
-        <rect class="room-rect corridor" x="380" y="880" width="1220" height="40"></rect>
-        <text class="corridor-label" x="700" y="905" text-anchor="middle" font-size="13">KORIDOR</text>
+        <!-- ============ KORIDOR - vertikal kiri (turun ke Taman/Toilet) ============ -->
+        <rect class="room-rect corridor" x="345" y="300" width="52" height="330"></rect>
+        <text class="corridor-label" x="371" y="470" text-anchor="middle" font-size="12" transform="rotate(-90 371 470)">KORIDOR</text>
+        <use href="#navArrow" class="nav-arrow" x="336" y="470" width="34" height="60" transform="rotate(90 353 500)"></use>
 
         <!-- ============ LEFT CLUSTER ============ -->
-        <rect class="room-rect" x="40" y="360" width="260" height="140"></rect>
-        <text class="room-label" x="170" y="435" font-size="16">Ruang Laboratorium</text>
+        <rect class="room-rect" x="30" y="300" width="300" height="120"></rect>
+        <text class="room-label" x="180" y="366" font-size="16">Ruang Laboratorium</text>
 
-        <rect class="room-rect" x="40" y="500" width="260" height="100"></rect>
-        <text class="room-label" x="170" y="545" font-size="15">Ruang Panoramic</text>
-        <text x="255" y="580" font-size="18" text-anchor="middle">☢</text>
+        <rect class="room-rect" x="30" y="420" width="300" height="100"></rect>
+        <text class="room-label" x="180" y="462" font-size="15">Ruang Panoramic</text>
+        <text x="290" y="495" font-size="18" text-anchor="middle">☢</text>
 
-        <rect class="room-rect" x="40" y="600" width="130" height="60"></rect>
-        <text class="room-label sub" x="105" y="635" font-size="12">Toilet Petugas</text>
+        <rect class="room-rect" x="30" y="520" width="150" height="60"></rect>
+        <text class="room-label sub" x="105" y="555" font-size="12">Toilet Petugas</text>
 
-        <rect class="room-rect" x="170" y="600" width="130" height="60"></rect>
-        <text class="room-label sub" x="235" y="635" font-size="12">Toilet Pasien</text>
+        <rect class="room-rect" x="180" y="520" width="150" height="60"></rect>
+        <text class="room-label sub" x="255" y="555" font-size="12">Toilet Pasien</text>
 
         <!-- ============ MIDDLE CLUSTER (RADIOLOGI) ============ -->
-        <rect class="room-rect radiasi" x="420" y="360" width="340" height="110"></rect>
-        <text class="room-label" x="590" y="410" font-size="16">Ruang Radiologi 2</text>
-        <text x="720" y="450" font-size="20" text-anchor="middle">☢</text>
+        <rect class="room-rect radiasi" x="420" y="300" width="340" height="110"></rect>
+        <text class="room-label" x="590" y="350" font-size="16">Ruang Radiologi 2</text>
+        <text x="720" y="390" font-size="20" text-anchor="middle">☢</text>
 
-        <rect class="room-rect radiasi room-active-start" id="room-radiologi1" x="420" y="470" width="170" height="130"></rect>
-        <text class="room-label" x="505" y="525" font-size="15">Ruang</text>
-        <text class="room-label" x="505" y="545" font-size="15">Radiologi 1</text>
-        <text x="440" y="580" font-size="18">☢</text>
+        <rect class="room-rect radiasi room-active-start" id="room-radiologi1" x="420" y="410" width="170" height="130"></rect>
+        <text class="room-label" x="505" y="465" font-size="15">Ruang</text>
+        <text class="room-label" x="505" y="485" font-size="15">Radiologi 1</text>
+        <text x="440" y="520" font-size="18">☢</text>
 
-        <rect class="room-rect radiasi" x="590" y="470" width="170" height="130"></rect>
-        <text class="room-label" x="675" y="530" font-size="15">Ruang</text>
-        <text class="room-label" x="675" y="550" font-size="15">CT Scan</text>
-        <text x="725" y="580" font-size="18">☢</text>
+        <rect class="room-rect radiasi" x="590" y="410" width="170" height="130"></rect>
+        <text class="room-label" x="675" y="470" font-size="15">Ruang</text>
+        <text class="room-label" x="675" y="490" font-size="15">CT Scan</text>
+        <text x="725" y="520" font-size="18">☢</text>
 
-        <rect class="room-rect" x="420" y="600" width="340" height="110"></rect>
-        <text class="room-label" x="590" y="660" font-size="16">Ruang USG</text>
+        <rect class="room-rect" x="420" y="540" width="340" height="90"></rect>
+        <text class="room-label" x="590" y="590" font-size="16">Ruang USG</text>
 
-        <rect class="room-rect caffe" x="420" y="780" width="340" height="100"></rect>
-        <text class="room-label" x="590" y="835" font-size="16">Toa Baja Caffe</text>
+        <!-- Ruang Tunggu USG (strip kecil di bawah Ruang USG, sesuai denah terbaru) -->
+        <rect class="room-rect dim" x="420" y="630" width="340" height="30"></rect>
+        <g class="chair-icon">
+          <rect x="450" y="634" width="14" height="10" rx="2"></rect>
+          <rect x="475" y="634" width="14" height="10" rx="2"></rect>
+          <rect x="500" y="634" width="14" height="10" rx="2"></rect>
+          <rect x="525" y="634" width="14" height="10" rx="2"></rect>
+        </g>
+        <text class="room-label sub" x="640" y="650" font-size="11">Ruang Tunggu USG</text>
 
-        <!-- ============ BIG CLUSTER: MRI + IGD ============ -->
-        <rect class="room-rect room-active-end" id="room-mri" x="860" y="20" width="360" height="240"></rect>
-        <text class="zone-label" x="1040" y="135" font-size="22" text-anchor="middle">Ruang MRI</text>
-        <text class="zone-label" x="1040" y="162" font-size="16" text-anchor="middle">Zona 1 MRI</text>
+        <!-- LOBI 1: area terbuka di atas klaster kiri/radiologi, sesuai denah terbaru -->
+        <text class="zone-label" x="195" y="180" font-size="42" font-weight="800">LOBI 1</text>
 
-        <rect class="room-rect dim" x="860" y="260" width="360" height="180"></rect>
-        <text class="room-label" x="1040" y="355" font-size="16">Ruang Operator MRI</text>
+        <!-- Pin ADM Radiologi: titik awal navigasi (di depan Radiologi 1 / meja registrasi) -->
+        <g id="admPin" transform="translate(505,410)">
+          <circle class="adm-pin-bg" r="17"></circle>
+          <text class="adm-pin-label" y="5" font-size="13">A</text>
+        </g>
+        <text class="room-label sub" x="505" y="392" font-size="10.5" fill="#C96F0C">ADM RADIOLOGI</text>
 
-        <rect class="room-rect" x="1240" y="20" width="160" height="220"></rect>
-        <text class="room-label" x="1320" y="125" font-size="15">Zona 3</text>
-        <text class="room-label" x="1320" y="145" font-size="15">MRI</text>
+        <!-- KORIDOR mid vertical (tanpa panah, sesuai denah) -->
+        <rect class="room-rect corridor" x="780" y="300" width="55" height="420"></rect>
+        <text class="corridor-label" x="807" y="510" text-anchor="middle" font-size="12" transform="rotate(-90 807 510)">KORIDOR</text>
 
-        <rect class="room-rect" x="860" y="440" width="220" height="440"></rect>
-        <text class="room-label" x="970" y="665" font-size="16">RUANG IGD</text>
+        <rect class="room-rect caffe" x="420" y="660" width="340" height="110"></rect>
+        <text class="room-label" x="590" y="720" font-size="16">Toa Baja Caffe</text>
 
-        <rect class="room-rect" x="1080" y="440" width="140" height="220"></rect>
-        <text class="room-label" x="1150" y="555" font-size="14">RUANG IGD</text>
+        <!-- panah menuju Toa Baja Caffe dari arah taman -->
+        <use href="#navArrow" class="nav-arrow" x="345" y="800" width="60" height="26"></use>
+        <!-- panah dari Toa Baja Caffe menuju koridor utama -->
+        <use href="#navArrow" class="nav-arrow" x="760" y="800" width="60" height="26"></use>
 
-        <rect class="room-rect dim" x="1080" y="660" width="70" height="220"></rect>
-        <text class="room-label sub" x="1115" y="765" font-size="11">LIFT</text>
-        <text class="room-label sub" x="1115" y="780" font-size="11">IGD</text>
+        <!-- ============ BOTTOM CORRIDOR (utama, panjang) ============ -->
+        <rect class="room-rect corridor" x="345" y="820" width="1145" height="50"></rect>
+        <text class="corridor-label" x="560" y="850" text-anchor="middle" font-size="13">KORIDOR</text>
+        <use href="#navArrow" class="nav-arrow" x="1010" y="833" width="70" height="24"></use>
 
-        <rect class="room-rect" x="1150" y="660" width="70" height="220"></rect>
-        <text class="room-label sub" x="1185" y="765" font-size="11">RUANG</text>
-        <text class="room-label sub" x="1185" y="780" font-size="11">POLI</text>
-
-        <!-- ============ FAR RIGHT: POLI COLUMN ============ -->
-        <rect class="room-rect" x="1420" y="20" width="100" height="115"></rect>
-        <text class="room-label sub" x="1470" y="82" font-size="13">Ruang Poli</text>
-        <rect class="room-rect" x="1420" y="135" width="100" height="115"></rect>
-        <text class="room-label sub" x="1470" y="197" font-size="13">Ruang Poli</text>
-        <rect class="room-rect" x="1420" y="250" width="100" height="115"></rect>
-        <text class="room-label sub" x="1470" y="312" font-size="13">Ruang Poli</text>
-        <rect class="room-rect" x="1420" y="365" width="100" height="115"></rect>
-        <text class="room-label sub" x="1470" y="427" font-size="13">Ruang Poli</text>
-        <rect class="room-rect" x="1420" y="480" width="100" height="115"></rect>
-        <text class="room-label sub" x="1470" y="542" font-size="13">Ruang Poli</text>
-        <rect class="room-rect" x="1420" y="595" width="100" height="115"></rect>
-        <text class="room-label sub" x="1470" y="657" font-size="13">Ruang Poli</text>
-
-        <!-- waiting chairs hint rows -->
+        <!-- ============ RUANG TUNGGU POLIKLINIK (bawah, panjang) ============ -->
         <g class="chair-row">
-          <rect x="440" y="895" width="24" height="16" rx="3"></rect>
-          <rect x="470" y="895" width="24" height="16" rx="3"></rect>
-          <rect x="500" y="895" width="24" height="16" rx="3"></rect>
-          <rect x="600" y="895" width="24" height="16" rx="3"></rect>
-          <rect x="630" y="895" width="24" height="16" rx="3"></rect>
-          <rect x="660" y="895" width="24" height="16" rx="3"></rect>
-          <rect x="900" y="895" width="24" height="16" rx="3"></rect>
-          <rect x="930" y="895" width="24" height="16" rx="3"></rect>
-          <rect x="960" y="895" width="24" height="16" rx="3"></rect>
-          <rect x="1180" y="895" width="24" height="16" rx="3"></rect>
-          <rect x="1210" y="895" width="24" height="16" rx="3"></rect>
-          <rect x="1240" y="895" width="24" height="16" rx="3"></rect>
+          <rect x="900" y="905" width="26" height="17" rx="3"></rect>
+          <rect x="932" y="905" width="26" height="17" rx="3"></rect>
+          <rect x="964" y="905" width="26" height="17" rx="3"></rect>
+          <rect x="1050" y="905" width="26" height="17" rx="3"></rect>
+          <rect x="1082" y="905" width="26" height="17" rx="3"></rect>
+          <rect x="1114" y="905" width="26" height="17" rx="3"></rect>
+          <rect x="1200" y="905" width="26" height="17" rx="3"></rect>
+          <rect x="1232" y="905" width="26" height="17" rx="3"></rect>
+          <rect x="1264" y="905" width="26" height="17" rx="3"></rect>
+          <rect x="900" y="960" width="26" height="17" rx="3"></rect>
+          <rect x="932" y="960" width="26" height="17" rx="3"></rect>
+          <rect x="964" y="960" width="26" height="17" rx="3"></rect>
+          <rect x="1050" y="960" width="26" height="17" rx="3"></rect>
+          <rect x="1082" y="960" width="26" height="17" rx="3"></rect>
+          <rect x="1114" y="960" width="26" height="17" rx="3"></rect>
+          <rect x="1200" y="960" width="26" height="17" rx="3"></rect>
+          <rect x="1232" y="960" width="26" height="17" rx="3"></rect>
+          <rect x="1264" y="960" width="26" height="17" rx="3"></rect>
+        </g>
+        <text class="room-label" x="1090" y="1030" font-size="26">RUANG TUNGGU POLIKLINIK</text>
+
+        <!-- ============ IGD CLUSTER ============ -->
+        <rect class="room-rect" x="860" y="530" width="300" height="290"></rect>
+        <text class="room-label" x="1010" y="680" font-size="16">RUANG IGD</text>
+
+        <rect class="room-rect" x="860" y="800" width="150" height="20"></rect>
+        <rect class="room-rect dim" x="860" y="820" width="0" height="0"></rect>
+
+        <rect class="room-rect" x="1160" y="530" width="240" height="130"></rect>
+        <text class="room-label" x="1280" y="600" font-size="14">RUANG IGD</text>
+
+        <rect class="room-rect dim" x="1160" y="660" width="120" height="160"></rect>
+        <text class="room-label sub" x="1220" y="745" font-size="11">LIFT</text>
+        <text class="room-label sub" x="1220" y="760" font-size="11">IGD</text>
+
+        <rect class="room-rect" x="1280" y="660" width="120" height="160"></rect>
+        <text class="room-label sub" x="1340" y="745" font-size="11">RUANG</text>
+        <text class="room-label sub" x="1340" y="760" font-size="11">POLI</text>
+
+        <!-- ============ MRI CLUSTER ============ -->
+        <rect class="room-rect room-active-end" id="room-mri" x="860" y="20" width="360" height="290"></rect>
+        <text class="zone-label" x="1040" y="150" font-size="22" text-anchor="middle">RUANG MRI</text>
+        <text class="zone-label" x="1040" y="178" font-size="16" text-anchor="middle">ZONA 1 MRI</text>
+
+        <rect class="room-rect" x="1240" y="20" width="200" height="250"></rect>
+        <text class="room-label" x="1340" y="135" font-size="16" text-anchor="middle">ZONA 3 MRI</text>
+
+        <rect class="room-rect dim" x="860" y="330" width="380" height="180"></rect>
+        <text class="room-label" x="1050" y="425" font-size="17">RUANG OPERATOR MRI</text>
+        <!-- panah menuju Ruang Operator MRI dari koridor kanan -->
+        <use href="#navArrow" class="nav-arrow" x="1265" y="400" width="70" height="26" transform="rotate(180 1300 413)"></use>
+
+        <!-- ============ KORIDOR vertikal kanan (naik ke MRI, dengan panah) ============ -->
+        <rect class="room-rect corridor" x="1240" y="290" width="160" height="530"></rect>
+        <text class="corridor-label" x="1320" y="620" text-anchor="middle" font-size="13" transform="rotate(-90 1320 620)">KORIDOR</text>
+        <use href="#navArrow" class="nav-arrow" x="1300" y="700" width="34" height="70" transform="rotate(-90 1317 735)"></use>
+
+        <!-- ============ RUANG TUNGGU POLIKLINIK (kolom kursi kanan) ============ -->
+        <rect class="room-rect dim" x="1400" y="290" width="180" height="530"></rect>
+        <text class="room-label" x="1490" y="520" font-size="17" transform="rotate(-90 1490 520)">RUANG TUNGGU POLIKLINIK</text>
+        <g class="chair-icon">
+          <rect x="1425" y="330" width="18" height="26" rx="3"></rect>
+          <rect x="1455" y="330" width="18" height="26" rx="3"></rect>
+          <rect x="1520" y="330" width="18" height="26" rx="3"></rect>
+          <rect x="1550" y="330" width="18" height="26" rx="3"></rect>
+          <rect x="1425" y="420" width="18" height="26" rx="3"></rect>
+          <rect x="1455" y="420" width="18" height="26" rx="3"></rect>
+          <rect x="1520" y="420" width="18" height="26" rx="3"></rect>
+          <rect x="1550" y="420" width="18" height="26" rx="3"></rect>
+          <rect x="1425" y="510" width="18" height="26" rx="3"></rect>
+          <rect x="1455" y="510" width="18" height="26" rx="3"></rect>
+          <rect x="1520" y="510" width="18" height="26" rx="3"></rect>
+          <rect x="1550" y="510" width="18" height="26" rx="3"></rect>
+          <rect x="1425" y="600" width="18" height="26" rx="3"></rect>
+          <rect x="1455" y="600" width="18" height="26" rx="3"></rect>
+          <rect x="1520" y="600" width="18" height="26" rx="3"></rect>
+          <rect x="1550" y="600" width="18" height="26" rx="3"></rect>
+          <rect x="1425" y="690" width="18" height="26" rx="3"></rect>
+          <rect x="1455" y="690" width="18" height="26" rx="3"></rect>
+          <rect x="1520" y="690" width="18" height="26" rx="3"></rect>
+          <rect x="1550" y="690" width="18" height="26" rx="3"></rect>
         </g>
 
+        <!-- ============ RUANG POLI kanan bawah (2 kotak, di bawah kolom kursi) ============ -->
+        <rect class="room-rect" x="1400" y="820" width="90" height="150"></rect>
+        <text class="room-label sub" x="1445" y="900" font-size="12">Ruang Poli</text>
+        <rect class="room-rect" x="1490" y="820" width="90" height="150"></rect>
+        <text class="room-label sub" x="1535" y="900" font-size="12">Ruang Poli</text>
+
+        <!-- ============ FAR RIGHT: KOLOM RUANG POLI ============ -->
+        <rect class="room-rect" x="1600" y="20" width="220" height="133"></rect>
+        <text class="room-label sub" x="1710" y="90" font-size="13">Ruang Poli</text>
+        <rect class="room-rect" x="1600" y="153" width="220" height="133"></rect>
+        <text class="room-label sub" x="1710" y="223" font-size="13">Ruang Poli</text>
+        <rect class="room-rect" x="1600" y="286" width="220" height="133"></rect>
+        <text class="room-label sub" x="1710" y="356" font-size="13">Ruang Poli</text>
+        <rect class="room-rect" x="1600" y="419" width="220" height="133"></rect>
+        <text class="room-label sub" x="1710" y="489" font-size="13">Ruang Poli</text>
+        <rect class="room-rect" x="1600" y="552" width="220" height="134"></rect>
+        <text class="room-label sub" x="1710" y="623" font-size="13">Ruang Poli</text>
+        <rect class="room-rect" x="1600" y="686" width="220" height="134"></rect>
+        <text class="room-label sub" x="1710" y="757" font-size="13">Ruang Poli</text>
+
         <!-- compass -->
-        <g transform="translate(60,60)">
+        <g transform="translate(70,70)">
           <circle class="compass-ring" cx="0" cy="0" r="26"></circle>
           <text class="compass" x="0" y="-30" text-anchor="middle">U</text>
           <text class="compass" x="0" y="42" text-anchor="middle">S</text>
@@ -512,7 +646,7 @@
         <path id="routeProgress" class="route-progress" d="" stroke-dasharray="1" stroke-dashoffset="1"></path>
 
         <!-- ===== WALKER (animated position marker) ===== -->
-        <g id="walker" transform="translate(505,535)">
+        <g id="walker" transform="translate(505,410)">
           <circle class="walker-pulse" r="14"></circle>
           <circle class="walker-dot" r="13"></circle>
           <path class="walker-chevron" d="M8,0 L-4,-6 L-1,0 L-4,6 Z"></path>
@@ -530,39 +664,40 @@
   "use strict";
 
   /* ---------------- ROUTE DATA ---------------- */
-  var pointsForward = [
-    {x:505, y:535},
-    {x:420, y:535},
-    {x:400, y:860},
-    {x:1330,y:900},
-    {x:1330,y:350},
-    {x:1040,y:350},
-    {x:1040,y:140}
+  // Titik lintasan sesuai denah: P0 Adm Radiologi -> P1 depan Toa Baja Caffe ->
+  // P2 masuk koridor utama -> P3 koridor kanan (dekat Ruang Tunggu Poliklinik 2) ->
+  // P4 puncak koridor kanan -> P5 Ruang Operator MRI -> P6 Ruang MRI Zona 1
+  var P = [
+    {x:505,  y:410},  // 0 - Adm Radiologi (depan R. Radiologi 1)
+    {x:505,  y:715},  // 1 - depan Toa Baja Caffe
+    {x:505,  y:845},  // 2 - masuk koridor utama (belok kiri/timur)
+    {x:1300, y:845},  // 3 - koridor kanan / R. Tunggu Poliklinik 2
+    {x:1300, y:400},  // 4 - puncak koridor kanan
+    {x:1040, y:400},  // 5 - dalam Ruang Operator MRI
+    {x:1040, y:150}   // 6 - dalam Ruang MRI Zona 1
   ];
-  var pointsReverse = pointsForward.slice().reverse();
 
-  var textForward = [
-    "Selamat datang, Sahabat MP. Posisi Anda sekarang berada di dalam Ruang Radiologi 1. Silakan berjalan ke arah barat, keluar pintu menuju koridor.",
-    "Belok kiri, lalu berjalan lurus ke arah selatan menyusuri koridor hingga mentok di ujung.",
-    "Belok kiri, lalu berjalan lurus ke arah timur menyusuri koridor utama yang panjang, di depan Ruang IGD.",
-    "Belok kiri, lalu berjalan lurus ke arah utara menyusuri koridor menuju Ruang Operator MRI.",
-    "Belok kiri, lalu masuk dan lewati Ruang Operator MRI.",
-    "Belok kanan, lalu masuk menuju pintu Ruang MRI di depan Sahabat MP.",
-    "Sahabat MP telah tiba di Ruang MRI, Zona 1. Selamat menjalani pemeriksaan, semoga lekas sembuh."
+  var narrationForward = [
+    { text:"Halo Sahabat MP, selamat datang di Instalasi Radiologi Rumah Sakit Mitra Plumbon. Saat ini Sahabat MP berada di Ruang Administrasi Radiologi. Mari saya pandu menuju Ruang MRI Rumah Sakit Mitra Plumbon. Dari lokasi saat ini, silakan berjalan ke arah selatan hingga menemukan Toa Baja Café. Setelah itu, belok kiri menuju Koridor Ruang Tunggu Poliklinik.", atPoint:0 },
+    { text:"Lanjutkan berjalan lurus sekitar 30 meter.", atPoint:2 },
+    { text:null, atPoint:3, pause:20000 },
+    { text:"Selanjutnya, belok kiri menuju Ruang MRI Rumah Sakit Mitra Plumbon. Saat ini Sahabat MP berada di Koridor Ruang Tunggu Poliklinik 2.", atPoint:3 },
+    { text:"Silakan belok kiri menuju Ruang Operator MRI. Petugas MRI siap menyambut dan membantu proses pemeriksaan Anda.", atPoint:4 },
+    { text:"Terima kasih telah mempercayakan pelayanan kesehatan Anda kepada Rumah Sakit Mitra Plumbon. Semoga pemeriksaan Anda berjalan dengan lancar.", atPoint:6 }
   ];
-  var textReverse = [
-    "Selamat datang, Sahabat MP. Posisi Anda sekarang berada di dalam Ruang MRI, Zona 1. Silakan berjalan ke arah selatan, keluar pintu menuju Ruang Operator MRI.",
-    "Belok kiri, lalu berjalan lurus ke arah timur, keluar dari Ruang Operator MRI menuju koridor.",
-    "Belok kanan, lalu berjalan lurus ke arah selatan menyusuri koridor panjang di sisi kanan.",
-    "Belok kanan, lalu berjalan lurus ke arah barat menyusuri koridor utama, di depan Ruang IGD.",
-    "Belok kanan, lalu berjalan lurus ke arah utara menyusuri koridor hingga sejajar dengan Ruang Radiologi 1.",
-    "Belok kanan, lalu masuk menuju pintu Ruang Radiologi 1 di depan Sahabat MP.",
-    "Sahabat MP telah tiba kembali di Ruang Radiologi 1. Terima kasih telah menggunakan navigasi RS Mitra Plumbon."
+
+  var narrationReverse = [
+    { text:"Halo Sahabat MP. Semoga pemeriksaan MRI Anda telah selesai dengan baik. Kini saya akan memandu Sahabat MP kembali menuju Ruang Administrasi Radiologi Rumah Sakit Mitra Plumbon. Silakan keluar dari Ruang MRI menuju Koridor Ruang Tunggu Poliklinik.", atPoint:6 },
+    { text:"Kemudian belok kanan dan berjalan lurus menyusuri koridor sekitar 30 meter hingga melewati area Ruang Tunggu Poliklinik.", atPoint:4 },
+    { text:null, atPoint:3, pause:20000 },
+    { text:"Lanjutkan berjalan lurus hingga menemukan Toa Baja Café di sisi kiri koridor.", atPoint:3 },
+    { text:"Dari Toa Baja Café, belok kanan menuju koridor Instalasi Radiologi. Ikuti koridor hingga tiba di Ruang Administrasi Radiologi.", atPoint:1 },
+    { text:"Petugas Administrasi Radiologi siap membantu proses administrasi maupun pengambilan hasil pemeriksaan apabila diperlukan. Terima kasih telah menggunakan layanan Instalasi Radiologi Rumah Sakit Mitra Plumbon. Semoga Sahabat MP selalu diberikan kesehatan.", atPoint:0 }
   ];
 
   var routes = {
-    toMri:   { points: pointsForward, texts: textForward,  startId:"room-radiologi1", endId:"room-mri" },
-    toRadio: { points: pointsReverse, texts: textReverse,  startId:"room-mri",        endId:"room-radiologi1" }
+    toMri:   { points:P, narration:narrationForward, startId:"room-radiologi1", endId:"room-mri" },
+    toRadio: { points:P, narration:narrationReverse,  startId:"room-mri",        endId:"room-radiologi1" }
   };
 
   /* ---------------- DOM REFS ---------------- */
@@ -573,11 +708,13 @@
   var stepCountEl = document.getElementById('stepCount');
   var dotsEl = document.getElementById('dots');
   var chevronEl = document.getElementById('chevron');
+  var navCardEl = document.getElementById('navCard');
   var btnPlay = document.getElementById('btnPlay');
   var btnMute = document.getElementById('btnMute');
   var btnReset = document.getElementById('btnReset');
   var roomRadiologi1 = document.getElementById('room-radiologi1');
   var roomMri = document.getElementById('room-mri');
+  var admPin = document.getElementById('admPin');
   var routeButtons = document.querySelectorAll('.route-btn');
   var mapScroll = document.getElementById('mapScroll');
   var mapSvg = document.getElementById('map');
@@ -587,14 +724,16 @@
 
   /* ---------------- STATE ---------------- */
   var currentRouteKey = 'toMri';
-  var currentStep = 0;
+  var currentNarrIdx = 0;
+  var currentPointIdx = 0;
   var playing = false;
   var muted = false;
   var selectedVoice = null;
   var animFrame = null;
+  var pauseTimer = null;
   var totalLen = 0;
-  var mapZoomPx = 1150; // current rendered min-width of svg, in CSS px
-  var MAP_ZOOM_MIN = 700, MAP_ZOOM_MAX = 2600;
+  var mapZoomPx = 1250;
+  var MAP_ZOOM_MIN = 760, MAP_ZOOM_MAX = 2800;
   var followMode = true;
 
   function applyZoom(px){
@@ -611,8 +750,8 @@
 
   function centerOnWalker(smooth){
     if(!followMode && !smooth) return;
-    var scaleX = mapSvg.getBoundingClientRect().width / 1600;
-    var scaleY = mapSvg.getBoundingClientRect().height / 940;
+    var scaleX = mapSvg.getBoundingClientRect().width / 1840;
+    var scaleY = mapSvg.getBoundingClientRect().height / 1080;
     var m = /translate\(([-\d.]+),([-\d.]+)\)/.exec(walker.getAttribute('transform'));
     if(!m) return;
     var wx = parseFloat(m[1]) * scaleX;
@@ -624,7 +763,6 @@
     });
   }
 
-  // if user manually drags the map, pause auto-follow until they tap the follow button again
   mapScroll.addEventListener('pointerdown', function(){ followMode = false; btnFollow.classList.remove('follow-on'); });
 
   /* ---------------- SETUP: dots ---------------- */
@@ -664,22 +802,24 @@
     routeProgress.setAttribute('stroke-dasharray', totalLen);
     routeProgress.setAttribute('stroke-dashoffset', totalLen);
 
-    // reset walker to start
-    var p0 = r.points[0];
-    setWalker(p0.x, p0.y, angleBetween(r.points[0], r.points[1]));
+    var startPoint = r.points[r.narration[0].atPoint];
+    currentPointIdx = r.narration[0].atPoint;
+    var nextPoint = r.points[r.narration.length>1 ? r.narration[1].atPoint : r.narration[0].atPoint];
+    setWalker(startPoint.x, startPoint.y, angleBetween(startPoint, nextPoint));
 
-    // highlight rooms
     roomRadiologi1.classList.remove('room-active-start','room-active-end');
     roomMri.classList.remove('room-active-start','room-active-end');
     document.getElementById(r.startId).classList.add('room-active-start');
     document.getElementById(r.endId).classList.add('room-active-end');
+    admPin.style.display = (key === 'toMri' || key === 'toRadio') ? 'block' : 'block';
 
-    buildDots(r.texts.length);
-    currentStep = 0;
+    buildDots(r.narration.length);
+    currentNarrIdx = 0;
     refreshDots(0);
-    stepCountEl.textContent = 'Siap memulai — 7 langkah';
+    stepCountEl.textContent = 'Siap memulai — ' + r.narration.length + ' langkah';
     captionEl.textContent = 'Tekan "Mulai Navigasi" untuk memulai arahan suara dari Sahabat MP.';
     chevronEl.style.transform = 'rotate(0deg)';
+    navCardEl.classList.remove('paused');
 
     routeButtons.forEach(function(btn){
       btn.classList.toggle('active', btn.getAttribute('data-route') === key);
@@ -704,10 +844,7 @@
       selectedVoice = null;
       return;
     }
-    // prioritize Indonesian voices, then everything else
     var idVoices = availableVoices.filter(function(v){ return /id[-_]ID|Indonesia/i.test(v.lang + ' ' + v.name); });
-
-    // auto-pick: id-ID voice with "male/pria" hint, else first id-ID voice, else first voice
     var maleGuess = idVoices.find(function(v){ return /male|pria|laki/i.test(v.name); });
     var best = maleGuess || idVoices[0] || availableVoices[0];
     selectedVoice = best || null;
@@ -724,6 +861,7 @@
   }
 
   function speakStep(text, cb){
+    if(!text){ cb(); return; }
     if(muted || !('speechSynthesis' in window)){
       setTimeout(cb, estimateDuration(text));
       return;
@@ -743,7 +881,6 @@
       u.onend = finish;
       u.onerror = finish;
       window.speechSynthesis.speak(u);
-      // safety fallback in case onend never fires (some browsers)
       setTimeout(finish, estimateDuration(text) + 4000);
     }catch(e){
       setTimeout(cb, estimateDuration(text));
@@ -753,10 +890,22 @@
   /* ---------------- ANIMATION ---------------- */
   function easeInOut(t){ return t<0.5 ? 2*t*t : -1+(4-2*t)*t; }
 
-  function animateSegment(from, to, cumBefore, segLen, onDone){
-    var duration = Math.max(900, segLen * 2.1);
+  function segLenFromStart(points, idx){
+    var cum = 0;
+    for(var i=0;i<idx;i++) cum += dist(points[i], points[i+1]);
+    return cum;
+  }
+  function dist(a,b){ return Math.hypot(b.x-a.x, b.y-a.y); }
+
+  function animateSegment(points, fromIdx, toIdx, onDone){
+    if(!playing){ return; }
+    var from = points[fromIdx], to = points[toIdx];
+    var cumBefore = segLenFromStart(points, fromIdx);
+    var segLen = dist(from,to);
+    var duration = Math.max(700, segLen * 2.0);
     var start = null;
     var ang = angleBetween(from, to);
+    chevronEl.style.transform = 'rotate(' + (ang+90) + 'deg)';
 
     var lastCenter = 0;
     function frame(ts){
@@ -780,42 +929,67 @@
         animFrame = requestAnimationFrame(frame);
       } else {
         if(followMode) centerOnWalker(true);
+        currentPointIdx = toIdx;
         onDone();
       }
     }
     animFrame = requestAnimationFrame(frame);
   }
 
-  function dist(a,b){ return Math.hypot(b.x-a.x, b.y-a.y); }
+  function animateThroughPoints(points, fromIdx, toIdx, onDone){
+    if(fromIdx === toIdx){ onDone(); return; }
+    var step = fromIdx < toIdx ? 1 : -1;
+    function next(idx){
+      if(!playing) return;
+      var nIdx = idx + step;
+      animateSegment(points, idx, nIdx, function(){
+        if(nIdx === toIdx){ onDone(); }
+        else{ next(nIdx); }
+      });
+    }
+    next(fromIdx);
+  }
 
-  function runStep(idx){
+  /* ---------------- STEP RUNNER ---------------- */
+  function runNarration(idx){
     if(!playing) return;
     var r = routes[currentRouteKey];
-    currentStep = idx;
+    currentNarrIdx = idx;
+    var n = r.narration[idx];
     refreshDots(idx);
-    stepCountEl.textContent = 'Langkah ' + (idx+1) + ' dari ' + r.texts.length;
-    captionEl.textContent = r.texts[idx];
+    stepCountEl.textContent = 'Langkah ' + (idx+1) + ' dari ' + r.narration.length;
 
-    speakStep(r.texts[idx], function(){
+    if(n.pause){
+      navCardEl.classList.add('paused');
+      captionEl.textContent = 'Mohon tunggu sebentar di lokasi ini.';
+      pauseTimer = setTimeout(function(){
+        if(!playing) return;
+        navCardEl.classList.remove('paused');
+        proceedAfter(idx);
+      }, n.pause);
+      return;
+    }
+
+    navCardEl.classList.remove('paused');
+    captionEl.textContent = n.text;
+    speakStep(n.text, function(){
       if(!playing) return;
-      if(idx >= r.points.length - 1){
-        // finished
-        playing = false;
-        btnPlay.textContent = '▶ Mulai Navigasi';
-        stepCountEl.textContent = 'Selesai — Sahabat MP telah tiba';
-        chevronEl.style.transform = 'rotate(0deg)';
-        return;
-      }
-      var from = r.points[idx];
-      var to = r.points[idx+1];
-      var cum = 0;
-      for(var i=0;i<idx;i++) cum += dist(r.points[i], r.points[i+1]);
-      var segLen = dist(from,to);
-      var ang = angleBetween(from,to);
-      chevronEl.style.transform = 'rotate(' + (ang+90) + 'deg)';
-      animateSegment(from, to, cum, segLen, function(){
-        runStep(idx+1);
-      });
+      proceedAfter(idx);
+    });
+  }
+
+  function proceedAfter(idx){
+    var r = routes[currentRouteKey];
+    if(idx >= r.narration.length - 1){
+      playing = false;
+      btnPlay.textContent = '▶ Mulai Navigasi';
+      stepCountEl.textContent = 'Selesai — Sahabat MP telah tiba';
+      chevronEl.style.transform = 'rotate(0deg)';
+      return;
+    }
+    var nextAtPoint = r.narration[idx+1].atPoint;
+    animateThroughPoints(r.points, currentPointIdx, nextAtPoint, function(){
+      runNarration(idx+1);
     });
   }
 
@@ -830,7 +1004,9 @@
   function stopPlayback(){
     playing = false;
     if(animFrame) cancelAnimationFrame(animFrame);
+    if(pauseTimer) clearTimeout(pauseTimer);
     if('speechSynthesis' in window) window.speechSynthesis.cancel();
+    navCardEl.classList.remove('paused');
     btnPlay.textContent = '▶ Mulai Navigasi';
   }
 
@@ -841,10 +1017,11 @@
     }
     playing = true;
     btnPlay.textContent = '⏸ Berhenti Sejenak';
-    if(currentStep >= routes[currentRouteKey].texts.length - 1){
+    var r = routes[currentRouteKey];
+    if(currentNarrIdx >= r.narration.length - 1 && stepCountEl.textContent.indexOf('Selesai') !== -1){
       setRoute(currentRouteKey);
     }
-    runStep(currentStep);
+    runNarration(currentNarrIdx);
   });
 
   btnReset.addEventListener('click', function(){
@@ -855,13 +1032,14 @@
   btnMute.addEventListener('click', function(){
     muted = !muted;
     btnMute.textContent = muted ? '🔇' : '🔊';
+    btnMute.classList.toggle('active', muted);
     if(muted && 'speechSynthesis' in window) window.speechSynthesis.cancel();
   });
 
   /* ---------------- BARCODE / QR ENTRY POINT ---------------- */
   // Contoh tautan barcode:
-  //   index.html?dari=radiologi   -> otomatis rute Radiologi 1 -> MRI
-  //   index.html?dari=mri         -> otomatis rute MRI -> Radiologi 1
+  //   index.html?dari=radiologi   -> otomatis rute Adm Radiologi -> MRI
+  //   index.html?dari=mri         -> otomatis rute MRI -> Adm Radiologi
   //   index.html?route=toMri | toRadio  (alternatif langsung nama rute)
   function detectRouteFromURL(){
     try{
@@ -873,7 +1051,7 @@
       }
       if(dariParam){
         if(/mri/.test(dariParam)) return 'toRadio';
-        if(/radio/.test(dariParam)) return 'toMri';
+        if(/radio|adm/.test(dariParam)) return 'toMri';
       }
     }catch(e){}
     return 'toMri';
@@ -885,9 +1063,9 @@
   applyZoom(mapZoomPx);
 
   if(initialRoute !== 'toMri'){
-    captionEl.textContent = 'Barcode terdeteksi dari Ruang MRI. Rute otomatis diarahkan menuju Ruang Radiologi 1. Tekan "Mulai Navigasi".';
+    captionEl.textContent = 'Barcode terdeteksi dari Ruang MRI. Rute otomatis diarahkan menuju Ruang Administrasi Radiologi. Tekan "Mulai Navigasi".';
   } else if(new URLSearchParams(window.location.search).toString()){
-    captionEl.textContent = 'Barcode terdeteksi dari Ruang Radiologi. Rute otomatis diarahkan menuju Ruang MRI. Tekan "Mulai Navigasi".';
+    captionEl.textContent = 'Barcode terdeteksi dari Ruang Administrasi Radiologi. Rute otomatis diarahkan menuju Ruang MRI. Tekan "Mulai Navigasi".';
   }
 })();
 </script>
