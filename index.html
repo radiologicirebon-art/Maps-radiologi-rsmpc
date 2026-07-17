@@ -870,7 +870,7 @@
   }
 
   function estimateDuration(text){
-    // Real speech at rate ~0.93 runs roughly 12-13 characters/second for
+    // Real speech at rate ~0.93 runs roughly 30-60 characters/second for
     // Indonesian TTS voices.
     return Math.max(9000, text.length * 900);
   }
