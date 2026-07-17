@@ -81,6 +81,7 @@
     }
   }
 
+  /* ---------- Topbar (Android app-bar) ---------- */
   .topbar{
     display:flex; align-items:center; gap:14px;
     padding:12px 16px;
@@ -116,6 +117,7 @@
     .topbar .sub{ font-size:12.5px; }
   }
 
+  /* ---------- Layout ---------- */
   .layout{
     display:flex;
     flex-direction:column;
@@ -149,6 +151,7 @@
     margin-bottom:8px; display:block;
   }
 
+  /* Route toggle -> Material segmented chips */
   .route-toggle{ display:flex; flex-direction:column; gap:9px; }
   .route-btn{
     display:flex; align-items:center; gap:12px;
@@ -177,6 +180,7 @@
   }
   .route-btn.active .arrow-ic{ background:rgba(255,255,255,.2); color:#fff; }
 
+  /* Controls -> FAB style */
   .controls-row{ display:flex; gap:10px; align-items:center; }
   .btn{
     display:flex; align-items:center; justify-content:center; gap:8px;
@@ -205,6 +209,7 @@
   }
   .btn-icon.active{ background:var(--teal); color:#fff; box-shadow:var(--el2); }
 
+  /* Nav card (turn-by-turn) — elevated 3D card */
   .nav-card{
     background:linear-gradient(160deg, var(--teal-dark) 0%, var(--teal-deep) 100%);
     border-radius:var(--r-lg);
@@ -266,6 +271,7 @@
   .swatch.arrow{ background:var(--arrow-blue); border-color:var(--arrow-blue-dark); }
   .swatch.taman{ background:var(--taman-fill); border-color:var(--taman-stroke); }
 
+  /* ---------- Map ---------- */
   .map-wrap{
     background:var(--surface);
     border-radius:var(--r-xl);
@@ -368,6 +374,7 @@
 
   <main class="layout">
 
+    <!-- ===== SIDE PANEL ===== -->
     <aside class="panel">
 
       <div>
@@ -422,6 +429,7 @@
 
     </aside>
 
+    <!-- ===== MAP ===== -->
     <section class="map-wrap">
       <div class="map-toolbar">
         <span class="hint">👆 Geser peta dengan jari, cubit untuk zoom</span>
@@ -441,171 +449,187 @@
         </defs>
 
         <!-- ============ TAMAN (kiri bawah) ============ -->
-        <rect class="room-rect taman" x="30" y="752" width="232" height="317" rx="10"></rect>
-        <text class="taman-label" x="55" y="810" font-size="28">Taman</text>
+        <rect class="room-rect taman" x="30" y="660" width="300" height="360" rx="10"></rect>
+        <text class="taman-label" x="70" y="720" font-size="30">Taman</text>
 
-        <!-- ============ KORIDOR - vertikal kiri (turun dari Radiologi menuju Taman/Caffe) ============ -->
-        <rect class="room-rect corridor" x="262" y="460" width="115" height="340"></rect>
-        <text class="corridor-label" x="320" y="640" text-anchor="middle" font-size="12" transform="rotate(-90 320 640)">KORIDOR</text>
-        <use href="#navArrow" class="nav-arrow" x="253" y="565" width="34" height="60" transform="rotate(90 270 595)"></use>
+        <!-- ============ KORIDOR - vertikal kiri (turun ke Taman/Toilet) ============ -->
+        <rect class="room-rect corridor" x="345" y="300" width="52" height="330"></rect>
+        <text class="corridor-label" x="371" y="470" text-anchor="middle" font-size="12" transform="rotate(-90 371 470)">KORIDOR</text>
+        <use href="#navArrow" class="nav-arrow" x="336" y="470" width="34" height="60" transform="rotate(90 353 500)"></use>
 
         <!-- ============ LEFT CLUSTER ============ -->
-        <rect class="room-rect" x="30" y="460" width="232" height="110"></rect>
-        <text class="room-label" x="146" y="521" font-size="15">Ruang Laboratorium</text>
+        <rect class="room-rect" x="30" y="300" width="300" height="120"></rect>
+        <text class="room-label" x="180" y="366" font-size="16">Ruang Laboratorium</text>
 
-        <rect class="room-rect" x="30" y="570" width="232" height="66"></rect>
-        <text class="room-label" x="146" y="606" font-size="14">Ruang Panoramic</text>
-        <text x="225" y="614" font-size="16" text-anchor="middle">☢</text>
+        <rect class="room-rect" x="30" y="420" width="300" height="100"></rect>
+        <text class="room-label" x="180" y="462" font-size="15">Ruang Panoramic</text>
+        <text x="290" y="495" font-size="18" text-anchor="middle">☢</text>
 
-        <rect class="room-rect" x="30" y="636" width="232" height="62"></rect>
-        <text class="room-label sub" x="146" y="672" font-size="12">Toilet Petugas</text>
+        <rect class="room-rect" x="30" y="520" width="150" height="60"></rect>
+        <text class="room-label sub" x="105" y="555" font-size="12">Toilet Petugas</text>
 
-        <rect class="room-rect" x="30" y="698" width="232" height="54"></rect>
-        <text class="room-label sub" x="146" y="729" font-size="12">Toilet Pasien</text>
+        <rect class="room-rect" x="180" y="520" width="150" height="60"></rect>
+        <text class="room-label sub" x="255" y="555" font-size="12">Toilet Pasien</text>
 
-        <!-- ============ RADIOLOGI CLUSTER ============ -->
-        <rect class="room-rect radiasi" x="377" y="460" width="208" height="110"></rect>
-        <text class="room-label" x="481" y="512" font-size="15">Ruang Radiologi 2</text>
-        <text x="565" y="548" font-size="18" text-anchor="middle">☢</text>
+        <!-- ============ MIDDLE CLUSTER (RADIOLOGI) ============ -->
+        <rect class="room-rect radiasi" x="420" y="300" width="340" height="110"></rect>
+        <text class="room-label" x="590" y="350" font-size="16">Ruang Radiologi 2</text>
+        <text x="720" y="390" font-size="20" text-anchor="middle">☢</text>
 
-        <rect class="room-rect radiasi room-active-start" id="room-radiologi1" x="377" y="570" width="104" height="114"></rect>
-        <text class="room-label" x="429" y="618" font-size="13">Ruang</text>
-        <text class="room-label" x="429" y="636" font-size="13">Radiologi 1</text>
-        <text x="392" y="664" font-size="15">☢</text>
+        <rect class="room-rect radiasi room-active-start" id="room-radiologi1" x="420" y="410" width="170" height="130"></rect>
+        <text class="room-label" x="505" y="465" font-size="15">Ruang</text>
+        <text class="room-label" x="505" y="485" font-size="15">Radiologi 1</text>
+        <text x="440" y="520" font-size="18">☢</text>
 
-        <rect class="room-rect radiasi" x="481" y="570" width="104" height="114"></rect>
-        <text class="room-label" x="533" y="618" font-size="13">Ruang</text>
-        <text class="room-label" x="533" y="636" font-size="13">CT Scan</text>
-        <text x="565" y="664" font-size="15">☢</text>
+        <rect class="room-rect radiasi" x="590" y="410" width="170" height="130"></rect>
+        <text class="room-label" x="675" y="470" font-size="15">Ruang</text>
+        <text class="room-label" x="675" y="490" font-size="15">CT Scan</text>
+        <text x="725" y="520" font-size="18">☢</text>
 
-        <rect class="room-rect" x="377" y="684" width="208" height="68"></rect>
-        <text class="room-label" x="481" y="723" font-size="15">Ruang USG</text>
+        <rect class="room-rect" x="420" y="540" width="340" height="90"></rect>
+        <text class="room-label" x="590" y="590" font-size="16">Ruang USG</text>
 
-        <rect class="room-rect dim" x="377" y="752" width="208" height="66"></rect>
+        <!-- Ruang Tunggu USG (strip kecil di bawah Ruang USG, sesuai denah terbaru) -->
+        <rect class="room-rect dim" x="420" y="630" width="340" height="30"></rect>
         <g class="chair-icon">
-          <rect x="400" y="775" width="14" height="10" rx="2"></rect>
-          <rect x="422" y="775" width="14" height="10" rx="2"></rect>
-          <rect x="444" y="775" width="14" height="10" rx="2"></rect>
-          <rect x="466" y="775" width="14" height="10" rx="2"></rect>
+          <rect x="450" y="634" width="14" height="10" rx="2"></rect>
+          <rect x="475" y="634" width="14" height="10" rx="2"></rect>
+          <rect x="500" y="634" width="14" height="10" rx="2"></rect>
+          <rect x="525" y="634" width="14" height="10" rx="2"></rect>
         </g>
-        <text class="room-label sub" x="530" y="805" font-size="10.5">Ruang Tunggu USG</text>
+        <text class="room-label sub" x="640" y="650" font-size="11">Ruang Tunggu USG</text>
 
-        <!-- LOBI 1 -->
-        <text class="zone-label" x="150" y="330" font-size="36" font-weight="800">LOBI 1</text>
+        <!-- LOBI 1: area terbuka di atas klaster kiri/radiologi, sesuai denah terbaru -->
+        <text class="zone-label" x="195" y="180" font-size="42" font-weight="800">LOBI 1</text>
 
-        <!-- Pin ADM Radiologi: titik awal navigasi (di Ruang Radiologi 1 / meja registrasi) -->
-        <g id="admPin" transform="translate(429,627)">
-          <circle class="adm-pin-bg" r="16"></circle>
-          <text class="adm-pin-label" y="5" font-size="12">A</text>
+        <!-- Pin ADM Radiologi: titik awal navigasi (di depan Radiologi 1 / meja registrasi) -->
+        <g id="admPin" transform="translate(505,410)">
+          <circle class="adm-pin-bg" r="17"></circle>
+          <text class="adm-pin-label" y="5" font-size="13">A</text>
         </g>
-        <text class="room-label sub" x="429" y="600" font-size="10" fill="#C96F0C">ADM RADIOLOGI</text>
+        <text class="room-label sub" x="505" y="392" font-size="10.5" fill="#C96F0C">ADM RADIOLOGI</text>
 
-        <!-- KORIDOR mid vertical (tanpa panah) -->
-        <rect class="room-rect corridor" x="585" y="460" width="82" height="392"></rect>
-        <text class="corridor-label" x="626" y="660" text-anchor="middle" font-size="11" transform="rotate(-90 626 660)">KORIDOR</text>
+        <!-- KORIDOR mid vertical (tanpa panah, sesuai denah) -->
+        <rect class="room-rect corridor" x="780" y="300" width="55" height="420"></rect>
+        <text class="corridor-label" x="807" y="510" text-anchor="middle" font-size="12" transform="rotate(-90 807 510)">KORIDOR</text>
 
-        <!-- ============ TOA BAJA CAFFE ============ -->
-        <rect class="room-rect caffe" x="262" y="944" width="270" height="125"></rect>
-        <text class="room-label" x="397" y="1012" font-size="15">Toa Baja Caffe</text>
+        <rect class="room-rect caffe" x="420" y="660" width="340" height="110"></rect>
+        <text class="room-label" x="590" y="720" font-size="16">Toa Baja Caffe</text>
 
-        <!-- ============ KORIDOR UTAMA (horizontal, panjang, dengan panah) ============ -->
-        <rect class="room-rect corridor" x="262" y="822" width="910" height="50"></rect>
-        <text class="corridor-label" x="420" y="852" text-anchor="middle" font-size="12">KORIDOR</text>
-        <use href="#navArrow" class="nav-arrow" x="700" y="835" width="60" height="24"></use>
-        <use href="#navArrow" class="nav-arrow" x="980" y="835" width="60" height="24"></use>
+        <!-- panah menuju Toa Baja Caffe dari arah taman -->
+        <use href="#navArrow" class="nav-arrow" x="345" y="800" width="60" height="26"></use>
+        <!-- panah dari Toa Baja Caffe menuju koridor utama -->
+        <use href="#navArrow" class="nav-arrow" x="760" y="800" width="60" height="26"></use>
 
-        <!-- ============ RUANG TUNGGU POLIKLINIK (bawah, panjang, di sisi kanan Caffe) ============ -->
+        <!-- ============ BOTTOM CORRIDOR (utama, panjang) ============ -->
+        <rect class="room-rect corridor" x="345" y="820" width="1145" height="50"></rect>
+        <text class="corridor-label" x="560" y="850" text-anchor="middle" font-size="13">KORIDOR</text>
+        <use href="#navArrow" class="nav-arrow" x="1010" y="833" width="70" height="24"></use>
+
+        <!-- ============ RUANG TUNGGU POLIKLINIK (bawah, panjang) ============ -->
         <g class="chair-row">
-          <rect x="565" y="985" width="24" height="16" rx="3"></rect>
-          <rect x="595" y="985" width="24" height="16" rx="3"></rect>
-          <rect x="625" y="985" width="24" height="16" rx="3"></rect>
-          <rect x="700" y="985" width="24" height="16" rx="3"></rect>
-          <rect x="730" y="985" width="24" height="16" rx="3"></rect>
-          <rect x="760" y="985" width="24" height="16" rx="3"></rect>
-          <rect x="835" y="985" width="24" height="16" rx="3"></rect>
-          <rect x="865" y="985" width="24" height="16" rx="3"></rect>
-          <rect x="895" y="985" width="24" height="16" rx="3"></rect>
-          <rect x="565" y="1030" width="24" height="16" rx="3"></rect>
-          <rect x="595" y="1030" width="24" height="16" rx="3"></rect>
-          <rect x="625" y="1030" width="24" height="16" rx="3"></rect>
-          <rect x="700" y="1030" width="24" height="16" rx="3"></rect>
-          <rect x="730" y="1030" width="24" height="16" rx="3"></rect>
-          <rect x="760" y="1030" width="24" height="16" rx="3"></rect>
-          <rect x="835" y="1030" width="24" height="16" rx="3"></rect>
-          <rect x="865" y="1030" width="24" height="16" rx="3"></rect>
-          <rect x="895" y="1030" width="24" height="16" rx="3"></rect>
+          <rect x="900" y="905" width="26" height="17" rx="3"></rect>
+          <rect x="932" y="905" width="26" height="17" rx="3"></rect>
+          <rect x="964" y="905" width="26" height="17" rx="3"></rect>
+          <rect x="1050" y="905" width="26" height="17" rx="3"></rect>
+          <rect x="1082" y="905" width="26" height="17" rx="3"></rect>
+          <rect x="1114" y="905" width="26" height="17" rx="3"></rect>
+          <rect x="1200" y="905" width="26" height="17" rx="3"></rect>
+          <rect x="1232" y="905" width="26" height="17" rx="3"></rect>
+          <rect x="1264" y="905" width="26" height="17" rx="3"></rect>
+          <rect x="900" y="960" width="26" height="17" rx="3"></rect>
+          <rect x="932" y="960" width="26" height="17" rx="3"></rect>
+          <rect x="964" y="960" width="26" height="17" rx="3"></rect>
+          <rect x="1050" y="960" width="26" height="17" rx="3"></rect>
+          <rect x="1082" y="960" width="26" height="17" rx="3"></rect>
+          <rect x="1114" y="960" width="26" height="17" rx="3"></rect>
+          <rect x="1200" y="960" width="26" height="17" rx="3"></rect>
+          <rect x="1232" y="960" width="26" height="17" rx="3"></rect>
+          <rect x="1264" y="960" width="26" height="17" rx="3"></rect>
         </g>
-        <text class="room-label" x="800" y="944" font-size="18">RUANG TUNGGU POLIKLINIK</text>
+        <text class="room-label" x="1090" y="1030" font-size="26">RUANG TUNGGU POLIKLINIK</text>
 
         <!-- ============ IGD CLUSTER ============ -->
-        <rect class="room-rect" x="667" y="460" width="210" height="292"></rect>
-        <text class="room-label" x="772" y="612" font-size="15">RUANG IGD</text>
+        <rect class="room-rect" x="860" y="530" width="300" height="290"></rect>
+        <text class="room-label" x="1010" y="680" font-size="16">RUANG IGD</text>
 
-        <rect class="room-rect" x="877" y="460" width="295" height="176"></rect>
-        <text class="room-label" x="1025" y="554" font-size="14">RUANG IGD</text>
+        <rect class="room-rect" x="860" y="800" width="150" height="20"></rect>
+        <rect class="room-rect dim" x="860" y="820" width="0" height="0"></rect>
 
-        <rect class="room-rect" x="877" y="636" width="145" height="116"></rect>
-        <text class="room-label sub" x="950" y="698" font-size="11">LIFT</text>
-        <text class="room-label sub" x="950" y="712" font-size="11">IGD</text>
+        <rect class="room-rect" x="1160" y="530" width="240" height="130"></rect>
+        <text class="room-label" x="1280" y="600" font-size="14">RUANG IGD</text>
 
-        <rect class="room-rect" x="1022" y="636" width="150" height="116"></rect>
-        <text class="room-label sub" x="1097" y="698" font-size="11">RUANG</text>
-        <text class="room-label sub" x="1097" y="712" font-size="11">POLI</text>
+        <rect class="room-rect dim" x="1160" y="660" width="120" height="160"></rect>
+        <text class="room-label sub" x="1220" y="745" font-size="11">LIFT</text>
+        <text class="room-label sub" x="1220" y="760" font-size="11">IGD</text>
+
+        <rect class="room-rect" x="1280" y="660" width="120" height="160"></rect>
+        <text class="room-label sub" x="1340" y="745" font-size="11">RUANG</text>
+        <text class="room-label sub" x="1340" y="760" font-size="11">POLI</text>
 
         <!-- ============ MRI CLUSTER ============ -->
-        <rect class="room-rect room-active-end" id="room-mri" x="877" y="20" width="295" height="296"></rect>
-        <text class="zone-label" x="1025" y="150" font-size="20" text-anchor="middle">RUANG MRI</text>
-        <text class="zone-label" x="1025" y="176" font-size="15" text-anchor="middle">ZONA 1 MRI</text>
+        <rect class="room-rect room-active-end" id="room-mri" x="860" y="20" width="360" height="290"></rect>
+        <text class="zone-label" x="1040" y="150" font-size="22" text-anchor="middle">RUANG MRI</text>
+        <text class="zone-label" x="1040" y="178" font-size="16" text-anchor="middle">ZONA 1 MRI</text>
 
-        <rect class="room-rect" x="1172" y="20" width="190" height="401"></rect>
-        <text class="room-label" x="1267" y="215" font-size="15" text-anchor="middle">ZONA 3 MRI</text>
+        <rect class="room-rect" x="1240" y="20" width="200" height="250"></rect>
+        <text class="room-label" x="1340" y="135" font-size="16" text-anchor="middle">ZONA 3 MRI</text>
 
-        <rect class="room-rect dim" x="877" y="316" width="295" height="144"></rect>
-        <text class="room-label" x="1025" y="395" font-size="15">RUANG OPERATOR MRI</text>
+        <rect class="room-rect dim" x="860" y="330" width="380" height="180"></rect>
+        <text class="room-label" x="1050" y="425" font-size="17">RUANG OPERATOR MRI</text>
         <!-- panah menuju Ruang Operator MRI dari koridor kanan -->
-        <use href="#navArrow" class="nav-arrow" x="1105" y="373" width="60" height="24" transform="rotate(180 1135 385)"></use>
+        <use href="#navArrow" class="nav-arrow" x="1265" y="400" width="70" height="26" transform="rotate(180 1300 413)"></use>
 
         <!-- ============ KORIDOR vertikal kanan (naik ke MRI, dengan panah) ============ -->
-        <rect class="room-rect corridor" x="1172" y="421" width="190" height="451"></rect>
-        <text class="corridor-label" x="1267" y="660" text-anchor="middle" font-size="12" transform="rotate(-90 1267 660)">KORIDOR</text>
-        <use href="#navArrow" class="nav-arrow" x="1250" y="605" width="34" height="70" transform="rotate(-90 1267 640)"></use>
-        <use href="#navArrow" class="nav-arrow" x="1250" y="500" width="34" height="70" transform="rotate(-90 1267 535)"></use>
+        <rect class="room-rect corridor" x="1240" y="290" width="160" height="530"></rect>
+        <text class="corridor-label" x="1320" y="620" text-anchor="middle" font-size="13" transform="rotate(-90 1320 620)">KORIDOR</text>
+        <use href="#navArrow" class="nav-arrow" x="1300" y="700" width="34" height="70" transform="rotate(-90 1317 735)"></use>
 
         <!-- ============ RUANG TUNGGU POLIKLINIK (kolom kursi kanan) ============ -->
-        <rect class="room-rect dim" x="1362" y="20" width="158" height="1049"></rect>
-        <text class="room-label" x="1441" y="520" font-size="16" transform="rotate(-90 1441 520)">RUANG TUNGGU POLIKLINIK</text>
+        <rect class="room-rect dim" x="1400" y="290" width="180" height="530"></rect>
+        <text class="room-label" x="1490" y="520" font-size="17" transform="rotate(-90 1490 520)">RUANG TUNGGU POLIKLINIK</text>
         <g class="chair-icon">
-          <rect x="1385" y="60" width="17" height="24" rx="3"></rect>
-          <rect x="1413" y="60" width="17" height="24" rx="3"></rect>
-          <rect x="1475" y="60" width="17" height="24" rx="3"></rect>
-          <rect x="1300" y="60" width="0" height="0"></rect>
-          <rect x="1385" y="230" width="17" height="24" rx="3"></rect>
-          <rect x="1413" y="230" width="17" height="24" rx="3"></rect>
-          <rect x="1475" y="230" width="17" height="24" rx="3"></rect>
-          <rect x="1385" y="400" width="17" height="24" rx="3"></rect>
-          <rect x="1413" y="400" width="17" height="24" rx="3"></rect>
-          <rect x="1475" y="400" width="17" height="24" rx="3"></rect>
-          <rect x="1385" y="700" width="17" height="24" rx="3"></rect>
-          <rect x="1413" y="700" width="17" height="24" rx="3"></rect>
-          <rect x="1475" y="700" width="17" height="24" rx="3"></rect>
-          <rect x="1385" y="880" width="17" height="24" rx="3"></rect>
-          <rect x="1413" y="880" width="17" height="24" rx="3"></rect>
-          <rect x="1475" y="880" width="17" height="24" rx="3"></rect>
+          <rect x="1425" y="330" width="18" height="26" rx="3"></rect>
+          <rect x="1455" y="330" width="18" height="26" rx="3"></rect>
+          <rect x="1520" y="330" width="18" height="26" rx="3"></rect>
+          <rect x="1550" y="330" width="18" height="26" rx="3"></rect>
+          <rect x="1425" y="420" width="18" height="26" rx="3"></rect>
+          <rect x="1455" y="420" width="18" height="26" rx="3"></rect>
+          <rect x="1520" y="420" width="18" height="26" rx="3"></rect>
+          <rect x="1550" y="420" width="18" height="26" rx="3"></rect>
+          <rect x="1425" y="510" width="18" height="26" rx="3"></rect>
+          <rect x="1455" y="510" width="18" height="26" rx="3"></rect>
+          <rect x="1520" y="510" width="18" height="26" rx="3"></rect>
+          <rect x="1550" y="510" width="18" height="26" rx="3"></rect>
+          <rect x="1425" y="600" width="18" height="26" rx="3"></rect>
+          <rect x="1455" y="600" width="18" height="26" rx="3"></rect>
+          <rect x="1520" y="600" width="18" height="26" rx="3"></rect>
+          <rect x="1550" y="600" width="18" height="26" rx="3"></rect>
+          <rect x="1425" y="690" width="18" height="26" rx="3"></rect>
+          <rect x="1455" y="690" width="18" height="26" rx="3"></rect>
+          <rect x="1520" y="690" width="18" height="26" rx="3"></rect>
+          <rect x="1550" y="690" width="18" height="26" rx="3"></rect>
         </g>
 
+        <!-- ============ RUANG POLI kanan bawah (2 kotak, di bawah kolom kursi) ============ -->
+        <rect class="room-rect" x="1400" y="820" width="90" height="150"></rect>
+        <text class="room-label sub" x="1445" y="900" font-size="12">Ruang Poli</text>
+        <rect class="room-rect" x="1490" y="820" width="90" height="150"></rect>
+        <text class="room-label sub" x="1535" y="900" font-size="12">Ruang Poli</text>
+
         <!-- ============ FAR RIGHT: KOLOM RUANG POLI ============ -->
-        <rect class="room-rect" x="1520" y="20" width="300" height="175"></rect>
-        <text class="room-label sub" x="1670" y="112" font-size="13">Ruang Poli</text>
-        <rect class="room-rect" x="1520" y="195" width="300" height="175"></rect>
-        <text class="room-label sub" x="1670" y="287" font-size="13">Ruang Poli</text>
-        <rect class="room-rect" x="1520" y="370" width="300" height="175"></rect>
-        <text class="room-label sub" x="1670" y="462" font-size="13">Ruang Poli</text>
-        <rect class="room-rect" x="1520" y="545" width="300" height="175"></rect>
-        <text class="room-label sub" x="1670" y="637" font-size="13">Ruang Poli</text>
-        <rect class="room-rect" x="1520" y="720" width="300" height="175"></rect>
-        <text class="room-label sub" x="1670" y="812" font-size="13">Ruang Poli</text>
-        <rect class="room-rect" x="1520" y="895" width="300" height="174"></rect>
-        <text class="room-label sub" x="1670" y="986" font-size="13">Ruang Poli</text>
+        <rect class="room-rect" x="1600" y="20" width="220" height="133"></rect>
+        <text class="room-label sub" x="1710" y="90" font-size="13">Ruang Poli</text>
+        <rect class="room-rect" x="1600" y="153" width="220" height="133"></rect>
+        <text class="room-label sub" x="1710" y="223" font-size="13">Ruang Poli</text>
+        <rect class="room-rect" x="1600" y="286" width="220" height="133"></rect>
+        <text class="room-label sub" x="1710" y="356" font-size="13">Ruang Poli</text>
+        <rect class="room-rect" x="1600" y="419" width="220" height="133"></rect>
+        <text class="room-label sub" x="1710" y="489" font-size="13">Ruang Poli</text>
+        <rect class="room-rect" x="1600" y="552" width="220" height="134"></rect>
+        <text class="room-label sub" x="1710" y="623" font-size="13">Ruang Poli</text>
+        <rect class="room-rect" x="1600" y="686" width="220" height="134"></rect>
+        <text class="room-label sub" x="1710" y="757" font-size="13">Ruang Poli</text>
 
         <!-- compass -->
         <g transform="translate(70,70)">
@@ -622,7 +646,7 @@
         <path id="routeProgress" class="route-progress" d="" stroke-dasharray="1" stroke-dashoffset="1"></path>
 
         <!-- ===== WALKER (animated position marker) ===== -->
-        <g id="walker" transform="translate(429,627)">
+        <g id="walker" transform="translate(505,410)">
           <circle class="walker-pulse" r="14"></circle>
           <circle class="walker-dot" r="13"></circle>
           <path class="walker-chevron" d="M8,0 L-4,-6 L-1,0 L-4,6 Z"></path>
@@ -640,84 +664,36 @@
   "use strict";
 
   /* ---------------- ROUTE DATA ---------------- */
-  // Titik lintasan disesuaikan dengan denah asli (hasil pengukuran ulang dari gambar):
-  // P0 Ruang Radiologi 1 / Adm Radiologi -> P1 turun koridor kiri menuju Toa Baja Caffe ->
-  // P2 masuk koridor utama (belok timur) -> P3 ujung koridor utama / koridor kanan ->
-  // P4 puncak koridor kanan -> P5 masuk Ruang Operator MRI -> P6 Ruang MRI Zona 1
+  // Titik lintasan sesuai denah: P0 Adm Radiologi -> P1 depan Toa Baja Caffe ->
+  // P2 masuk koridor utama -> P3 koridor kanan (dekat Ruang Tunggu Poliklinik 2) ->
+  // P4 puncak koridor kanan -> P5 Ruang Operator MRI -> P6 Ruang MRI Zona 1
   var P = [
-    {x:429,  y:627},  // 0 - Ruang Radiologi 1 / Adm Radiologi
-    {x:320,  y:800},  // 1 - depan Toa Baja Caffe (turun via koridor kiri)
-    {x:320,  y:851},  // 2 - masuk koridor utama (belok kiri/timur)
-    {x:1172, y:851},  // 3 - ujung koridor utama / koridor kanan
-    {x:1267, y:421},  // 4 - puncak koridor kanan
-    {x:1025, y:388},  // 5 - masuk Ruang Operator MRI
-    {x:1025, y:168}   // 6 - Ruang MRI Zona 1
+    {x:505,  y:410},  // 0 - Adm Radiologi (depan R. Radiologi 1)
+    {x:505,  y:715},  // 1 - depan Toa Baja Caffe
+    {x:505,  y:845},  // 2 - masuk koridor utama (belok kiri/timur)
+    {x:1300, y:845},  // 3 - koridor kanan / R. Tunggu Poliklinik 2
+    {x:1300, y:400},  // 4 - puncak koridor kanan
+    {x:1040, y:400},  // 5 - dalam Ruang Operator MRI
+    {x:1040, y:150}   // 6 - dalam Ruang MRI Zona 1
   ];
 
   var narrationForward = [
-  {
-    text: "Navigasi dimulai. Dari posisi Anda saat ini, berjalan lurus ke arah selatan.",
-    atPoint: 0
-  },
-  {
-    text: "Lanjutkan berjalan lurus menuju Toa Baja Café.",
-    atPoint: 1
-  },
-  {
-    text: "Dalam beberapa langkah, belok kiri menuju Koridor Ruang Tunggu Poliklinik.",
-    atPoint: 2
-  },
-  {
-    text: null,
-    atPoint: 3,
-    pause: 10000
-  },
-  {
-    text: "Lanjutkan berjalan lurus mengikuti koridor.",
-    atPoint: 3
-  },
-  {
-    text: "Ruang MRI berada di sebelah kiri. Silakan belok kiri.",
-    atPoint: 4
-  },
-  {
-    text: "Anda telah tiba di Ruang MRI Rumah Sakit Mitra Plumbon. Silakan masuk, petugas kami siap membantu proses pemeriksaan Anda.",
-    atPoint: 6
-  }
-];
+    { text:"Halo Sahabat MP, selamat datang di Instalasi Radiologi Rumah Sakit Mitra Plumbon. Saat ini Sahabat MP berada di Ruang Administrasi Radiologi. Mari saya pandu menuju Ruang MRI Rumah Sakit Mitra Plumbon. Dari lokasi saat ini, silakan berjalan ke arah selatan hingga menemukan Toa Baja Café. Setelah itu, belok kiri menuju Koridor Ruang Tunggu Poliklinik.", atPoint:0 },
+    { text:"Lanjutkan berjalan lurus sekitar 30 meter.", atPoint:2 },
+    { text:null, atPoint:3, pause:20000 },
+    { text:"Selanjutnya, belok kiri menuju Ruang MRI Rumah Sakit Mitra Plumbon. Saat ini Sahabat MP berada di Koridor Ruang Tunggu Poliklinik 2.", atPoint:3 },
+    { text:"Silakan belok kiri menuju Ruang Operator MRI. Petugas MRI siap menyambut dan membantu proses pemeriksaan Anda.", atPoint:4 },
+    { text:"Terima kasih telah mempercayakan pelayanan kesehatan Anda kepada Rumah Sakit Mitra Plumbon. Semoga pemeriksaan Anda berjalan dengan lancar.", atPoint:6 }
+  ];
 
   var narrationReverse = [
-   var narrationReverse = [
-  {
-    text: "Navigasi dimulai. Keluar dari Ruang MRI menuju koridor.",
-    atPoint: 6
-  },
-  {
-    text: "Belok kanan, kemudian lanjutkan berjalan lurus menyusuri koridor.",
-    atPoint: 5
-  },
-  {
-    text: null,
-    atPoint: 3,
-    pause: 10000
-  },
-  {
-    text: "Lanjutkan berjalan lurus hingga melewati Toa Baja Café.",
-    atPoint: 3
-  },
-  {
-    text: "Setelah melewati Toa Baja Café, belok kanan menuju Instalasi Radiologi.",
-    atPoint: 2
-  },
-  {
-    text: "Lanjutkan berjalan lurus hingga mencapai Ruang Administrasi Radiologi.",
-    atPoint: 1
-  },
-  {
-    text: "Anda telah tiba di Ruang Administrasi Radiologi. Terima kasih telah menggunakan layanan navigasi Rumah Sakit Mitra Plumbon.",
-    atPoint: 0
-  }
-];
+    { text:"Halo Sahabat MP. Semoga pemeriksaan MRI Anda telah selesai dengan baik. Kini saya akan memandu Sahabat MP kembali menuju Ruang Administrasi Radiologi Rumah Sakit Mitra Plumbon. Silakan keluar dari Ruang MRI menuju Koridor Ruang Tunggu Poliklinik.", atPoint:6 },
+    { text:"Kemudian belok kanan dan berjalan lurus menyusuri koridor sekitar 30 meter hingga melewati area Ruang Tunggu Poliklinik.", atPoint:4 },
+    { text:null, atPoint:3, pause:20000 },
+    { text:"Lanjutkan berjalan lurus hingga menemukan Toa Baja Café di sisi kiri koridor.", atPoint:3 },
+    { text:"Dari Toa Baja Café, belok kanan menuju koridor Instalasi Radiologi. Ikuti koridor hingga tiba di Ruang Administrasi Radiologi.", atPoint:1 },
+    { text:"Petugas Administrasi Radiologi siap membantu proses administrasi maupun pengambilan hasil pemeriksaan apabila diperlukan. Terima kasih telah menggunakan layanan Instalasi Radiologi Rumah Sakit Mitra Plumbon. Semoga Sahabat MP selalu diberikan kesehatan.", atPoint:0 }
+  ];
 
   var routes = {
     toMri:   { points:P, narration:narrationForward, startId:"room-radiologi1", endId:"room-mri" },
@@ -835,7 +811,7 @@
     roomMri.classList.remove('room-active-start','room-active-end');
     document.getElementById(r.startId).classList.add('room-active-start');
     document.getElementById(r.endId).classList.add('room-active-end');
-    admPin.style.display = 'block';
+    admPin.style.display = (key === 'toMri' || key === 'toRadio') ? 'block' : 'block';
 
     buildDots(r.narration.length);
     currentNarrIdx = 0;
@@ -1061,6 +1037,10 @@
   });
 
   /* ---------------- BARCODE / QR ENTRY POINT ---------------- */
+  // Contoh tautan barcode:
+  //   index.html?dari=radiologi   -> otomatis rute Adm Radiologi -> MRI
+  //   index.html?dari=mri         -> otomatis rute MRI -> Adm Radiologi
+  //   index.html?route=toMri | toRadio  (alternatif langsung nama rute)
   function detectRouteFromURL(){
     try{
       var params = new URLSearchParams(window.location.search);
