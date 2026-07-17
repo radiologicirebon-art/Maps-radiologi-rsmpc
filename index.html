@@ -848,9 +848,19 @@
       return;
     }
     var idVoices = availableVoices.filter(function(v){ return /id[-_]ID|Indonesia/i.test(v.lang + ' ' + v.name); });
-    var maleGuess = idVoices.find(function(v){ return /male|pria|laki/i.test(v.name); });
-    var best = maleGuess || idVoices[0] || availableVoices[0];
+    // Prefer Google's network-backed Indonesian voice ("Google Bahasa
+    // Indonesia" on Chrome/Android) — it's noticeably clearer and more
+    // natural than the local on-device voices most platforms ship with.
+    var googleNetworkVoice = idVoices.find(function(v){
+      return /google/i.test(v.name) && v.localService === false;
+    });
+    var googleNamedVoice = idVoices.find(function(v){ return /google/i.test(v.name); });
+    var networkVoice = idVoices.find(function(v){ return v.localService === false; });
+    var best = googleNetworkVoice || googleNamedVoice || networkVoice || idVoices[0] || availableVoices[0];
     selectedVoice = best || null;
+    if(selectedVoice && window.console){
+      console.log('[Peta Navigasi] Voice terpilih:', selectedVoice.name, '(' + selectedVoice.lang + ')', selectedVoice.localService ? '— lokal' : '— jaringan/cloud');
+    }
   }
   if('speechSynthesis' in window){
     loadVoices();
@@ -874,10 +884,12 @@
       var u = new SpeechSynthesisUtterance(text);
       u.lang = 'id-ID';
       if(selectedVoice) u.voice = selectedVoice;
-      var isIndonesianVoice = selectedVoice && /id[-_]ID|Indonesia/i.test(selectedVoice.lang + ' ' + selectedVoice.name);
-      var isMaleTagged = selectedVoice && /male|pria|laki/i.test(selectedVoice.name);
-      u.pitch = isMaleTagged ? 1 : (isIndonesianVoice ? 0.75 : 0.85);
-      u.rate = 0.98;
+      // Keep pitch at its natural value — artificially shifting it away
+      // from 1.0 makes synthetic voices sound more distorted, not more
+      // human. A gentle rate reduction (like turn-by-turn nav apps use)
+      // is what actually improves clarity/naturalness here.
+      u.pitch = 1;
+      u.rate = 0.93;
       u.volume = 1;
       var done = false;
       var finish = function(){ if(done) return; done = true; stopSpeechKeepAlive(); cb(); };
