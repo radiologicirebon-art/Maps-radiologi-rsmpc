@@ -647,7 +647,43 @@
   }
 
   function estimateDuration(text){
-    return Math.max(1400, text.length * 55);
+    return Math.max(1400, text.length * 90);
+  }
+
+  // Chrome/WebKit punya bug: utterance panjang (>~15 detik) sering terhenti
+  // di tengah jalan tanpa memicu onend. Untuk mengatasinya, teks dipecah
+  // per kalimat dan diucapkan berurutan sebagai beberapa utterance kecil,
+  // plus resume() berkala untuk mencegah speechSynthesis "tertidur".
+  var resumeGuard = null;
+  function startResumeGuard(){
+    stopResumeGuard();
+    resumeGuard = setInterval(function(){
+      try{
+        if(window.speechSynthesis.speaking && !window.speechSynthesis.paused){
+          window.speechSynthesis.pause();
+          window.speechSynthesis.resume();
+        }
+      }catch(e){}
+    }, 4000);
+  }
+  function stopResumeGuard(){
+    if(resumeGuard){ clearInterval(resumeGuard); resumeGuard = null; }
+  }
+
+  function splitIntoChunks(text){
+    // pecah berdasarkan tanda baca akhir kalimat, gabungkan kembali jika terlalu pendek
+    var raw = text.match(/[^.!?]+[.!?]*\s*/g) || [text];
+    var chunks = [];
+    var buf = '';
+    raw.forEach(function(part){
+      buf += part;
+      if(buf.trim().length >= 60){
+        chunks.push(buf.trim());
+        buf = '';
+      }
+    });
+    if(buf.trim().length) chunks.push(buf.trim());
+    return chunks.length ? chunks : [text];
   }
 
   function speakStep(text, cb){
@@ -656,25 +692,49 @@
       setTimeout(cb, estimateDuration(text));
       return;
     }
-    try{
-      window.speechSynthesis.cancel();
-      var u = new SpeechSynthesisUtterance(text);
-      u.lang = 'id-ID';
-      if(selectedVoice) u.voice = selectedVoice;
-      var isIndonesianVoice = selectedVoice && /id[-_]ID|Indonesia/i.test(selectedVoice.lang + ' ' + selectedVoice.name);
-      var isMaleTagged = selectedVoice && /male|pria|laki/i.test(selectedVoice.name);
-      u.pitch = isMaleTagged ? 1 : (isIndonesianVoice ? 0.75 : 0.85);
-      u.rate = 0.98;
-      u.volume = 1;
-      var done = false;
-      var finish = function(){ if(done) return; done = true; cb(); };
-      u.onend = finish;
-      u.onerror = finish;
-      window.speechSynthesis.speak(u);
-      setTimeout(finish, estimateDuration(text) + 4000);
-    }catch(e){
-      setTimeout(cb, estimateDuration(text));
+    var chunks = splitIntoChunks(text);
+    var i = 0;
+    var cancelled = false;
+
+    function speakNext(){
+      if(cancelled) return;
+      if(i >= chunks.length){
+        stopResumeGuard();
+        cb();
+        return;
+      }
+      var chunk = chunks[i++];
+      try{
+        var u = new SpeechSynthesisUtterance(chunk);
+        u.lang = 'id-ID';
+        if(selectedVoice) u.voice = selectedVoice;
+        var isIndonesianVoice = selectedVoice && /id[-_]ID|Indonesia/i.test(selectedVoice.lang + ' ' + selectedVoice.name);
+        var isMaleTagged = selectedVoice && /male|pria|laki/i.test(selectedVoice.name);
+        u.pitch = isMaleTagged ? 1 : (isIndonesianVoice ? 0.75 : 0.85);
+        u.rate = 0.98;
+        u.volume = 1;
+        var done = false;
+        var finish = function(){
+          if(done) return;
+          done = true;
+          speakNext();
+        };
+        u.onend = finish;
+        u.onerror = finish;
+        window.speechSynthesis.speak(u);
+        startResumeGuard();
+        // safety fallback jauh lebih longgar, hanya jaga-jaga jika onend tak pernah terpicu
+        setTimeout(finish, estimateDuration(chunk) + 6000);
+      }catch(e){
+        speakNext();
+      }
     }
+
+    window.speechSynthesis.cancel();
+    speakNext();
+
+    // simpan fungsi cancel agar bisa dihentikan paksa dari luar (stopPlayback)
+    speakStep._cancelCurrent = function(){ cancelled = true; stopResumeGuard(); };
   }
 
   /* ---------------- ANIMATION ---------------- */
@@ -795,6 +855,7 @@
     playing = false;
     if(animFrame) cancelAnimationFrame(animFrame);
     if(pauseTimer) clearTimeout(pauseTimer);
+    if(speakStep._cancelCurrent) speakStep._cancelCurrent();
     if('speechSynthesis' in window) window.speechSynthesis.cancel();
     navCardEl.classList.remove('paused');
     btnPlay.textContent = '▶ Mulai Navigasi';
@@ -823,7 +884,10 @@
     muted = !muted;
     btnMute.textContent = muted ? '🔇' : '🔊';
     btnMute.classList.toggle('active', muted);
-    if(muted && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+    if(muted && 'speechSynthesis' in window){
+      if(speakStep._cancelCurrent) speakStep._cancelCurrent();
+      window.speechSynthesis.cancel();
+    }
   });
 
   /* ---------------- BARCODE / QR ENTRY POINT ---------------- */
