@@ -870,13 +870,13 @@
   }
 
   function estimateDuration(text){
-    // Real speech at rate ~0.93 runs roughly 12-13 characters/second for
+    // Real speech at rate ~0.120 runs roughly 12-13 characters/second for
     // Indonesian TTS voices. The previous formula (55ms/char) under-shot
     // this, so the safety timeout below could fire *before* the voice
     // actually finished speaking — which force-advanced to the next line
     // and cut the current one off mid-sentence. This estimate plus a
     // generous buffer fixes that.
-    return Math.max(2000, text.length * 80);
+    return Math.max(2000, text.length * 120);
   }
 
   function speakStep(text, cb){
