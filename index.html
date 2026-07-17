@@ -876,7 +876,7 @@
     // actually finished speaking — which force-advanced to the next line
     // and cut the current one off mid-sentence. This estimate plus a
     // generous buffer fixes that.
-    return Math.max(2000, text.length * 120);
+     return Math.max(2500, text.length * 85) + 2000;
   }
 
   function speakStep(text, cb){
