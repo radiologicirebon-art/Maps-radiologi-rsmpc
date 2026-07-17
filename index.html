@@ -870,23 +870,26 @@
   }
 
   function estimateDuration(text){
-    // Real speech at rate ~0.120 runs roughly 12-13 characters/second for
-    // Indonesian TTS voices. The previous formula (55ms/char) under-shot
-    // this, so the safety timeout below could fire *before* the voice
-    // actually finished speaking — which force-advanced to the next line
-    // and cut the current one off mid-sentence. This estimate plus a
-    // generous buffer fixes that.
-     return Math.max(2500, text.length * 85) + 2000;
+    // Real speech at rate ~0.93 runs roughly 12-13 characters/second for
+    // Indonesian TTS voices.
+    return Math.max(1200, text.length * 80);
   }
 
-  function speakStep(text, cb){
-    if(!text){ cb(); return; }
-    if(muted || !('speechSynthesis' in window)){
-      setTimeout(cb, estimateDuration(text));
-      return;
-    }
+  // Splitting long narration into individual sentences and speaking them
+  // one-by-one (waiting for each to truly finish before starting the next)
+  // is far more reliable than speaking one long paragraph in a single
+  // utterance: short utterances rarely trigger Chrome's ~15s auto-stop bug,
+  // and if one sentence ever does stall, only that sentence is lost instead
+  // of the whole instruction getting cut off partway through.
+  function splitIntoSentences(text){
+    if(!text) return [];
+    var parts = text.match(/[^.!?]+[.!?]+(?:\s+|$)|[^.!?]+$/g);
+    if(!parts || !parts.length) return [text.trim()];
+    return parts.map(function(s){ return s.trim(); }).filter(Boolean);
+  }
+
+  function speakOneUtterance(text, cb){
     try{
-      window.speechSynthesis.cancel();
       var u = new SpeechSynthesisUtterance(text);
       u.lang = 'id-ID';
       if(selectedVoice) u.voice = selectedVoice;
@@ -902,27 +905,40 @@
       u.onstart = function(){ startSpeechKeepAlive(); };
       u.onend = finish;
       u.onerror = finish;
-      // Calling speak() immediately after cancel() can cause Chrome to
-      // silently drop the new utterance. A tiny delay lets the cancel
-      // settle first.
-      setTimeout(function(){
-        try{
-          window.speechSynthesis.speak(u);
-          // Don't rely solely on onstart (unreliable on some browsers,
-          // e.g. Safari/WebView) to trigger the anti-cutoff keep-alive —
-          // start it right away so long lines never get silently killed
-          // by Chrome's ~15s auto-stop bug even if onstart never fires.
-          startSpeechKeepAlive();
-        }
-        catch(e){ finish(); }
-      }, 30);
-      // Safety net only — generous buffer so it never fires before real
-      // speech (via onend) would have finished naturally.
-      setTimeout(finish, estimateDuration(text) + 8000);
+      window.speechSynthesis.speak(u);
+      // Don't rely solely on onstart (unreliable on some browsers, e.g.
+      // Safari/WebView) to trigger the anti-cutoff keep-alive.
+      startSpeechKeepAlive();
+      // Safety net only, sized per-sentence (short) so it never fires
+      // before a normal-length sentence would have finished naturally.
+      setTimeout(finish, estimateDuration(text) + 5000);
     }catch(e){
       setTimeout(cb, estimateDuration(text));
     }
   }
+
+  function speakStep(text, cb){
+    if(!text){ cb(); return; }
+    if(muted || !('speechSynthesis' in window)){
+      setTimeout(cb, estimateDuration(text));
+      return;
+    }
+    var sentences = splitIntoSentences(text);
+    if(!sentences.length){ cb(); return; }
+    window.speechSynthesis.cancel();
+    var i = 0;
+    function next(){
+      if(!playing){ stopSpeechKeepAlive(); return; }
+      if(i >= sentences.length){ cb(); return; }
+      var sentence = sentences[i++];
+      speakOneUtterance(sentence, next);
+    }
+    // Calling speak() immediately after cancel() can cause Chrome to
+    // silently drop the new utterance. A tiny delay lets the cancel
+    // settle first.
+    setTimeout(next, 30);
+  }
+
 
   /* ---------------- ANIMATION ---------------- */
   function easeInOut(t){ return t<0.5 ? 2*t*t : -1+(4-2*t)*t; }
