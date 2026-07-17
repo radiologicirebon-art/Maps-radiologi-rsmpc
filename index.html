@@ -655,22 +655,69 @@
   ];
 
   var narrationForward = [
-    { text:"Halo Sahabat MP, selamat datang di Instalasi Radiologi Rumah Sakit Mitra Plumbon. Saat ini Sahabat MP berada di Ruang Administrasi Radiologi. Mari saya pandu menuju Ruang MRI Rumah Sakit Mitra Plumbon. Dari lokasi saat ini, silakan berjalan ke arah selatan hingga menemukan Toa Baja Café. Setelah itu, belok kiri menuju Koridor Ruang Tunggu Poliklinik.", atPoint:0 },
-    { text:"Lanjutkan berjalan lurus sekitar 30 meter.", atPoint:2 },
-    { text:null, atPoint:3, pause:20000 },
-    { text:"Selanjutnya, belok kiri menuju Ruang MRI Rumah Sakit Mitra Plumbon. Saat ini Sahabat MP berada di Koridor Ruang Tunggu Poliklinik 2.", atPoint:3 },
-    { text:"Silakan belok kiri menuju Ruang Operator MRI. Petugas MRI siap menyambut dan membantu proses pemeriksaan Anda.", atPoint:4 },
-    { text:"Terima kasih telah mempercayakan pelayanan kesehatan Anda kepada Rumah Sakit Mitra Plumbon. Semoga pemeriksaan Anda berjalan dengan lancar.", atPoint:6 }
-  ];
+  {
+    text: "Navigasi dimulai. Dari posisi Anda saat ini, berjalan lurus ke arah selatan.",
+    atPoint: 0
+  },
+  {
+    text: "Lanjutkan berjalan lurus menuju Toa Baja Café.",
+    atPoint: 1
+  },
+  {
+    text: "Dalam beberapa langkah, belok kiri menuju Koridor Ruang Tunggu Poliklinik.",
+    atPoint: 2
+  },
+  {
+    text: null,
+    atPoint: 3,
+    pause: 10000
+  },
+  {
+    text: "Lanjutkan berjalan lurus mengikuti koridor.",
+    atPoint: 3
+  },
+  {
+    text: "Ruang MRI berada di sebelah kiri. Silakan belok kiri.",
+    atPoint: 4
+  },
+  {
+    text: "Anda telah tiba di Ruang MRI Rumah Sakit Mitra Plumbon. Silakan masuk, petugas kami siap membantu proses pemeriksaan Anda.",
+    atPoint: 6
+  }
+];
 
   var narrationReverse = [
-    { text:"Halo Sahabat MP. Semoga pemeriksaan MRI Anda telah selesai dengan baik. Kini saya akan memandu Sahabat MP kembali menuju Ruang Administrasi Radiologi Rumah Sakit Mitra Plumbon. Silakan keluar dari Ruang MRI menuju Koridor Ruang Tunggu Poliklinik.", atPoint:6 },
-    { text:"Kemudian belok kanan dan berjalan lurus menyusuri koridor sekitar 30 meter hingga melewati area Ruang Tunggu Poliklinik.", atPoint:4 },
-    { text:null, atPoint:3, pause:20000 },
-    { text:"Lanjutkan berjalan lurus hingga menemukan Toa Baja Café di sisi kiri koridor.", atPoint:3 },
-    { text:"Dari Toa Baja Café, belok kanan menuju koridor Instalasi Radiologi. Ikuti koridor hingga tiba di Ruang Administrasi Radiologi.", atPoint:1 },
-    { text:"Petugas Administrasi Radiologi siap membantu proses administrasi maupun pengambilan hasil pemeriksaan apabila diperlukan. Terima kasih telah menggunakan layanan Instalasi Radiologi Rumah Sakit Mitra Plumbon. Semoga Sahabat MP selalu diberikan kesehatan.", atPoint:0 }
-  ];
+   var narrationReverse = [
+  {
+    text: "Navigasi dimulai. Keluar dari Ruang MRI menuju koridor.",
+    atPoint: 6
+  },
+  {
+    text: "Belok kanan, kemudian lanjutkan berjalan lurus menyusuri koridor.",
+    atPoint: 5
+  },
+  {
+    text: null,
+    atPoint: 3,
+    pause: 10000
+  },
+  {
+    text: "Lanjutkan berjalan lurus hingga melewati Toa Baja Café.",
+    atPoint: 3
+  },
+  {
+    text: "Setelah melewati Toa Baja Café, belok kanan menuju Instalasi Radiologi.",
+    atPoint: 2
+  },
+  {
+    text: "Lanjutkan berjalan lurus hingga mencapai Ruang Administrasi Radiologi.",
+    atPoint: 1
+  },
+  {
+    text: "Anda telah tiba di Ruang Administrasi Radiologi. Terima kasih telah menggunakan layanan navigasi Rumah Sakit Mitra Plumbon.",
+    atPoint: 0
+  }
+];
 
   var routes = {
     toMri:   { points:P, narration:narrationForward, startId:"room-radiologi1", endId:"room-mri" },
