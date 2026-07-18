@@ -9,45 +9,50 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Roboto+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --teal:#0F8C88;
-    --teal-dark:#0A5F5C;
-    --teal-deep:#093F3D;
-    --teal-pale:#E4F3F1;
-    --orange:#F2921F;
-    --orange-dark:#C96F0C;
-    --orange-pale:#FCEBD3;
-    --arrow-blue:#29B6E8;
-    --arrow-blue-dark:#159AC7;
-    --ink:#122B29;
-    --ink-soft:#4A625F;
-    --paper:#EEF4F3;
+    /* Palet diselaraskan dengan gaya visual Google Maps: biru sebagai warna
+       rute/CTA/lokasi, merah untuk titik awal, hijau untuk titik tujuan,
+       amber untuk area berisiko, abu-abu netral untuk jalan/bangunan. */
+    --teal:#1A73E8;
+    --teal-dark:#0B57D0;
+    --teal-deep:#0B3D91;
+    --teal-pale:#E8F0FE;
+    --orange:#1A73E8;
+    --orange-dark:#0B57D0;
+    --orange-pale:#E8F0FE;
+    --arrow-blue:#1A73E8;
+    --arrow-blue-dark:#0B57D0;
+    --gm-start:#EA4335;
+    --gm-start-pale:#FCE8E6;
+    --ink:#202124;
+    --ink-soft:#5F6368;
+    --paper:#E8EAED;
     --surface:#FFFFFF;
-    --surface-2:#F5FAF9;
-    --line:#DCE9E7;
+    --surface-2:#F8F9FA;
+    --line:#DADCE0;
     --room-fill:#FFFFFF;
-    --room-stroke:#B9D3D0;
-    --room-fill-dim:#EEF5F4;
-    --danger-fill:#FFF6DC;
-    --danger-stroke:#E7C24A;
-    --taman-fill:#EAF7EC;
-    --taman-stroke:#8FCB9C;
+    --room-stroke:#DADCE0;
+    --room-fill-dim:#F1F3F4;
+    --danger-fill:#FEF7E0;
+    --danger-stroke:#F9AB00;
+    --taman-fill:#CEEAD6;
+    --taman-stroke:#81C995;
     --font-display:'Plus Jakarta Sans', sans-serif;
     --font-body:'Roboto', sans-serif;
     --font-mono:'Roboto Mono', monospace;
     --r-xl:28px;
     --r-lg:20px;
     --r-md:14px;
-    --el1: 0 1px 2px rgba(9,63,61,.10), 0 1px 3px rgba(9,63,61,.12);
-    --el2: 0 4px 8px rgba(9,63,61,.10), 0 1px 3px rgba(9,63,61,.14);
-    --el3: 0 10px 24px rgba(9,63,61,.16), 0 3px 6px rgba(9,63,61,.10);
-    --el4: 0 20px 44px rgba(9,63,61,.24), 0 6px 12px rgba(9,63,61,.14);
+    --el1: 0 1px 2px rgba(60,64,67,.15), 0 1px 3px rgba(60,64,67,.20);
+    --el2: 0 2px 6px rgba(60,64,67,.15), 0 1px 4px rgba(60,64,67,.18);
+    --el3: 0 8px 20px rgba(60,64,67,.20), 0 2px 6px rgba(60,64,67,.14);
+    --el4: 0 16px 36px rgba(60,64,67,.28), 0 4px 10px rgba(60,64,67,.16);
   }
   *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   html,body{ margin:0; padding:0; }
   body{
     background:
-      radial-gradient(1100px 620px at 50% -8%, rgba(15,140,136,.20), transparent 60%),
-      linear-gradient(180deg, #0B2E2C 0%, #082523 55%, #061A19 100%);
+      radial-gradient(1200px 700px at 50% -10%, rgba(26,115,232,.08), transparent 60%),
+      linear-gradient(180deg, #E8EAED 0%, #DDE1E6 100%);
     color:var(--ink);
     font-family:var(--font-body);
     min-height:100vh;
@@ -201,9 +206,9 @@
     font-size:14.5px;
     background:linear-gradient(135deg, var(--orange), var(--orange-dark));
     color:#fff;
-    box-shadow:0 8px 18px -6px rgba(242,146,31,.55), var(--el2);
+    box-shadow:0 8px 18px -6px rgba(26,115,232,.45), var(--el2);
   }
-  .btn-primary:disabled{ background:#E7D8BE; box-shadow:none; cursor:not-allowed; }
+  .btn-primary:disabled{ background:#DADCE0; color:#80868B; box-shadow:none; cursor:not-allowed; }
   .btn-icon{
     flex:0 0 auto; width:52px; height:52px; border-radius:50%;
     background:var(--surface-2); box-shadow: inset 0 0 0 1.5px var(--line);
@@ -226,24 +231,25 @@
     background:radial-gradient(220px 120px at 90% -10%, rgba(255,255,255,.10), transparent 60%);
     pointer-events:none;
   }
-  .nav-card .row1{ display:flex; align-items:center; gap:12px; }
+  .nav-card .row1{ display:flex; align-items:center; gap:14px; }
   .chevron-wrap{
-    width:48px; height:48px; border-radius:16px;
-    background:rgba(255,255,255,.14);
+    width:60px; height:60px; border-radius:18px;
+    background:rgba(255,255,255,.16);
     display:flex; align-items:center; justify-content:center;
     flex-shrink:0;
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,.22), 0 4px 10px rgba(0,0,0,.18);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.26), 0 4px 10px rgba(0,0,0,.18);
   }
+  .chevron-wrap svg{ width:34px; height:34px; }
   #chevron{ transition: transform .5s cubic-bezier(.4,0,.2,1); }
   .nav-card .step-count{
-    font-family:var(--font-mono); font-size:10.5px; letter-spacing:.1em;
-    color:rgba(255,255,255,.68); text-transform:uppercase;
+    font-family:var(--font-body); font-size:11.5px; letter-spacing:.06em;
+    color:rgba(255,255,255,.78); text-transform:uppercase; font-weight:700;
   }
   .nav-card .caption{
-    font-family:var(--font-body); font-weight:500; font-size:14px;
-    line-height:1.5; min-height:44px;
+    font-family:var(--font-display); font-weight:700; font-size:18px;
+    line-height:1.35; min-height:44px; letter-spacing:.1px;
   }
-  .nav-card.paused{ background:linear-gradient(160deg, var(--orange-dark) 0%, #8a4d06 100%); }
+  .nav-card.paused{ background:linear-gradient(160deg, #F9AB00 0%, #B06000 100%); }
   .pause-badge{
     display:none; align-items:center; gap:8px;
     font-family:var(--font-mono); font-size:11px; letter-spacing:.08em;
@@ -265,37 +271,47 @@
   .legend{ display:flex; flex-direction:column; gap:8px; }
   .legend-item{ display:flex; align-items:center; gap:9px; font-size:12px; color:var(--ink-soft); font-weight:500; }
   .swatch{ width:15px; height:15px; border-radius:5px; flex-shrink:0; border:1.5px solid var(--room-stroke); }
-  .swatch.start{ background:var(--orange-pale); border-color:var(--orange); }
+  .swatch.start{ background:var(--gm-start-pale); border-color:var(--gm-start); }
   .swatch.end{ background:var(--teal-pale); border-color:var(--teal); }
   .swatch.route{ background:transparent; border:none; height:0; border-top:3px dashed var(--orange); align-self:center; }
-  .swatch.radiasi{ background:#FFF6DC; border-color:#E7C24A; }
+  .swatch.radiasi{ background:var(--danger-fill); border-color:var(--danger-stroke); }
   .swatch.arrow{ background:var(--arrow-blue); border-color:var(--arrow-blue-dark); }
   .swatch.taman{ background:var(--taman-fill); border-color:var(--taman-stroke); }
 
   .map-wrap{
-    background:var(--surface);
+    background:var(--paper);
     border-radius:var(--r-xl);
     box-shadow:var(--el2);
-    padding:10px;
+    padding:0;
     overflow:hidden;
     display:flex;
     flex-direction:column;
+    position:relative;
   }
-  .map-toolbar{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:4px 8px 8px;
-    gap:8px;
+  .map-wrap .hint{
+    position:absolute; top:12px; left:50%; transform:translateX(-50%);
+    z-index:10; font-size:11px; color:var(--ink-soft); font-family:var(--font-body);
+    background:var(--surface); padding:6px 14px; border-radius:20px;
+    box-shadow:var(--el2); pointer-events:none; white-space:nowrap;
   }
-  .map-toolbar .hint{ font-size:10.5px; color:var(--ink-soft); font-family:var(--font-mono); }
-  .map-toolbar .zoom-controls{ display:flex; gap:8px; }
+  .fab-stack{
+    position:absolute; right:14px; bottom:14px; z-index:10;
+    display:flex; flex-direction:column; align-items:center; gap:12px;
+  }
+  .fab-group{
+    display:flex; flex-direction:column;
+    border-radius:14px; overflow:hidden; box-shadow:var(--el2);
+  }
+  .fab-group .zbtn{ border-radius:0; box-shadow:none; }
+  .fab-group .zbtn:not(:last-child){ border-bottom:1px solid var(--line); }
   .zbtn{
-    width:38px; height:38px; border-radius:14px;
-    background:var(--surface-2); box-shadow: inset 0 0 0 1.5px var(--line);
-    font-size:17px; font-weight:700; color:var(--teal-dark);
+    width:44px; height:44px; border-radius:50%;
+    background:var(--surface); box-shadow:var(--el2);
+    font-size:18px; font-weight:700; color:var(--ink-soft);
     display:flex; align-items:center; justify-content:center; cursor:pointer;
     touch-action:manipulation;
   }
-  .zbtn.follow-on{ background:linear-gradient(135deg, var(--teal), var(--teal-dark)); color:#fff; box-shadow:var(--el1); }
+  .zbtn.follow-on{ background:var(--surface); color:var(--teal); box-shadow:var(--el2); }
 
   #mapScroll{
     overflow:auto;
@@ -311,39 +327,39 @@
   @media (min-width:940px){
     #mapScroll{ height:auto; max-height:none; flex:1; }
   }
-  svg#map{ display:block; height:100%; width:auto; min-width:1250px; filter:drop-shadow(0 10px 20px rgba(9,63,61,.08)); }
+  svg#map{ display:block; height:100%; width:auto; min-width:1250px; filter:drop-shadow(0 10px 20px rgba(60,64,67,.10)); }
 
   .room-rect{ fill:var(--room-fill); stroke:var(--room-stroke); stroke-width:2.4; }
   .room-rect.dim{ fill:var(--room-fill-dim); }
   .room-rect.radiasi{ fill:var(--danger-fill); stroke:var(--danger-stroke); }
-  .room-rect.corridor{ fill:#FBFDFD; stroke:var(--line); stroke-width:2; stroke-dasharray:3 6; }
+  .room-rect.corridor{ fill:#F1F3F4; stroke:var(--line); stroke-width:2; }
   .room-rect.caffe{ fill:#FBF3E7; stroke:#E4C48C; }
   .room-rect.taman{ fill:var(--taman-fill); stroke:var(--taman-stroke); stroke-dasharray:5 5; }
   .room-rect.admpin{ fill:var(--orange-pale); stroke:var(--orange); stroke-width:2.4; }
 
   .room-label{ font-family:var(--font-body); font-weight:700; fill:var(--ink); text-anchor:middle; }
   .room-label.sub{ font-weight:600; fill:var(--ink-soft); }
-  .corridor-label{ font-family:var(--font-mono); font-weight:600; fill:#9FB8B5; letter-spacing:.12em; }
+  .corridor-label{ font-family:var(--font-mono); font-weight:600; fill:#9AA0A6; letter-spacing:.12em; }
   .zone-label{ font-family:var(--font-display); font-weight:800; fill:var(--teal-dark); }
-  .taman-label{ font-family:var(--font-display); font-weight:800; fill:#3E8B52; }
+  .taman-label{ font-family:var(--font-display); font-weight:800; fill:#1E8E3E; }
 
-  .room-active-start{ stroke:var(--orange); stroke-width:4.5; fill:var(--orange-pale); }
+  .room-active-start{ stroke:var(--gm-start); stroke-width:4.5; fill:var(--gm-start-pale); }
   .room-active-end{ stroke:var(--teal); stroke-width:4.5; fill:var(--teal-pale); }
 
   .chair-row rect{ fill:#E7EFEE; }
   .chair-icon rect{ fill:#DDEAE8; stroke:#C6DAD7; stroke-width:1; }
 
-  .route-guide{ fill:none; stroke:#C9DAD8; stroke-width:5; stroke-dasharray:2 10; stroke-linecap:round; }
-  .route-progress{ fill:none; stroke:var(--orange); stroke-width:6; stroke-linecap:round; filter:drop-shadow(0 2px 4px rgba(242,146,31,.35)); }
+  .route-guide{ fill:none; stroke:#DADCE0; stroke-width:9; stroke-linecap:round; }
+  .route-progress{ fill:none; stroke:var(--teal); stroke-width:7; stroke-linecap:round; filter:drop-shadow(0 2px 4px rgba(26,115,232,.35)); }
 
   #walker{ transition: none; }
-  .walker-pulse{ fill:var(--orange); opacity:.28; animation:pulse 1.6s ease-out infinite; transform-origin:center; }
+  .walker-pulse{ fill:var(--teal); opacity:.24; animation:pulse 1.6s ease-out infinite; transform-origin:center; }
   @keyframes pulse{
     0%{ transform:scale(.6); opacity:.5; }
     100%{ transform:scale(2.6); opacity:0; }
   }
-  .walker-dot{ fill:var(--teal-deep); stroke:#fff; stroke-width:3; }
-  .walker-chevron{ fill:var(--orange); }
+  .walker-dot{ fill:var(--teal); stroke:#fff; stroke-width:3; }
+  .walker-chevron{ fill:#fff; }
 
   .compass{ font-family:var(--font-mono); font-size:13px; fill:var(--ink-soft); }
   .compass-ring{ fill:none; stroke:var(--line); stroke-width:2; }
@@ -352,7 +368,7 @@
   .nav-arrow-dark{ fill:var(--arrow-blue-dark); }
 
   .adm-pin-label{ font-family:var(--font-body); font-weight:800; fill:#fff; text-anchor:middle; }
-  .adm-pin-bg{ fill:var(--orange); stroke:#fff; stroke-width:3; filter:drop-shadow(0 4px 8px rgba(242,146,31,.5)); }
+  .adm-pin-bg{ fill:var(--gm-start); stroke:#fff; stroke-width:3; filter:drop-shadow(0 4px 8px rgba(234,67,53,.5)); }
 
   @media (prefers-reduced-motion: reduce){
     .walker-pulse{ animation:none; }
@@ -429,12 +445,12 @@
     </aside>
 
     <section class="map-wrap">
-      <div class="map-toolbar">
-        <span class="hint">👆 Geser peta dengan jari, cubit untuk zoom</span>
-        <div class="zoom-controls">
-          <button class="zbtn" id="zoomOut" title="Perkecil">−</button>
+      <span class="hint">👆 Geser peta dengan jari, cubit untuk zoom</span>
+      <div class="fab-stack">
+        <button class="zbtn follow-on" id="btnFollow" title="Ikuti posisi berjalan">📍</button>
+        <div class="fab-group">
           <button class="zbtn" id="zoomIn" title="Perbesar">+</button>
-          <button class="zbtn follow-on" id="btnFollow" title="Ikuti posisi berjalan">📍</button>
+          <button class="zbtn" id="zoomOut" title="Perkecil">−</button>
         </div>
       </div>
       <div id="mapScroll">
@@ -780,4 +796,417 @@
     var r = routes[key];
     var d = buildPathD(r.points);
     routeGuide.setAttribute('d', d);
-    
+    routeProgress.setAttribute('d', d);
+    totalLen = routeProgress.getTotalLength();
+    routeProgress.setAttribute('stroke-dasharray', totalLen);
+    routeProgress.setAttribute('stroke-dashoffset', totalLen);
+
+    var startPoint = r.points[r.narration[0].atPoint];
+    currentPointIdx = r.narration[0].atPoint;
+    var nextPoint = r.points[r.narration.length>1 ? r.narration[1].atPoint : r.narration[0].atPoint];
+    setWalker(startPoint.x, startPoint.y, angleBetween(startPoint, nextPoint));
+
+    roomRadiologi1.classList.remove('room-active-start','room-active-end');
+    roomMri.classList.remove('room-active-start','room-active-end');
+    document.getElementById(r.startId).classList.add('room-active-start');
+    document.getElementById(r.endId).classList.add('room-active-end');
+    admPin.style.display = 'block';
+
+    buildDots(r.narration.length);
+    currentNarrIdx = 0;
+    refreshDots(0);
+    stepCountEl.textContent = 'Siap memulai — ' + r.narration.length + ' langkah';
+    captionEl.textContent = 'Tekan "Mulai Navigasi" untuk memulai arahan suara dari Sahabat MP.';
+    chevronEl.style.transform = 'rotate(0deg)';
+    navCardEl.classList.remove('paused');
+
+    routeButtons.forEach(function(btn){
+      btn.classList.toggle('active', btn.getAttribute('data-route') === key);
+    });
+  }
+
+  function setWalker(x,y,angleDeg){
+    walker.setAttribute('transform','translate(' + x + ',' + y + ') rotate(' + angleDeg + ')');
+  }
+  function angleBetween(a,b){
+    return Math.atan2(b.y-a.y, b.x-a.x) * 180 / Math.PI;
+  }
+
+  /* ---------------- SPEECH ---------------- */
+  // Chrome (desktop & Android) has a long-standing bug where speechSynthesis
+  // silently stops speaking after ~15 seconds of continuous utterance unless
+  // it is periodically paused/resumed. Our narration lines are long, so we
+  // run a keep-alive heartbeat while speaking to prevent the voice from
+  // cutting off mid-sentence.
+  var speechKeepAlive = null;
+  function startSpeechKeepAlive(){
+    stopSpeechKeepAlive();
+    if(!('speechSynthesis' in window)) return;
+    speechKeepAlive = setInterval(function(){
+      if(window.speechSynthesis.speaking && !window.speechSynthesis.paused){
+        window.speechSynthesis.pause();
+        window.speechSynthesis.resume();
+      }
+    }, 3000);
+  }
+  function stopSpeechKeepAlive(){
+    if(speechKeepAlive){ clearInterval(speechKeepAlive); speechKeepAlive = null; }
+  }
+
+  var availableVoices = [];
+  var voicesReady = false;
+  function loadVoices(){
+    availableVoices = ('speechSynthesis' in window) ? window.speechSynthesis.getVoices() : [];
+    if(availableVoices.length) voicesReady = true;
+    populateVoiceSelect();
+  }
+  // getVoices() sering mengembalikan array kosong tepat setelah halaman
+  // dimuat (baru terisi async lewat event 'voiceschanged'). Jika narasi
+  // sempat mulai sebelum daftar suara siap, browser akan memakai suara
+  // bawaan/default yang bisa kurang jelas atau salah lafal. Fungsi ini
+  // memberi kesempatan singkat bagi voices untuk siap sebelum berbicara.
+  function ensureVoicesReady(cb, attemptsLeft){
+    if(voicesReady || !('speechSynthesis' in window)){ cb(); return; }
+    if(attemptsLeft === undefined) attemptsLeft = 10;
+    loadVoices();
+    if(voicesReady || attemptsLeft <= 0){ cb(); return; }
+    setTimeout(function(){ ensureVoicesReady(cb, attemptsLeft-1); }, 150);
+  }
+  function populateVoiceSelect(){
+    if(!availableVoices.length){
+      selectedVoice = null;
+      return;
+    }
+    var idVoices = availableVoices.filter(function(v){ return /id[-_]ID|Indonesia/i.test(v.lang + ' ' + v.name); });
+    // Prefer Google's network-backed Indonesian voice ("Google Bahasa
+    // Indonesia" on Chrome/Android) — it's noticeably clearer and more
+    // natural than the local on-device voices most platforms ship with.
+    var googleNetworkVoice = idVoices.find(function(v){
+      return /google/i.test(v.name) && v.localService === false;
+    });
+    var googleNamedVoice = idVoices.find(function(v){ return /google/i.test(v.name); });
+    var networkVoice = idVoices.find(function(v){ return v.localService === false; });
+    var best = googleNetworkVoice || googleNamedVoice || networkVoice || idVoices[0] || availableVoices[0];
+    selectedVoice = best || null;
+    if(selectedVoice && window.console){
+      console.log('[Peta Navigasi] Voice terpilih:', selectedVoice.name, '(' + selectedVoice.lang + ')', selectedVoice.localService ? '— lokal' : '— jaringan/cloud');
+    }
+  }
+  if('speechSynthesis' in window){
+    loadVoices();
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+  } else {
+    btnMute.style.display = 'none';
+  }
+
+  function estimateDuration(text){
+    // Real speech at rate ~0.93 runs roughly 30-60 characters/second for
+    // Indonesian TTS voices, i.e. ~17-33ms per character. We use a generous
+    // ~55ms/char so the safety-net timeout in speakOneUtterance almost never
+    // fires before real speech genuinely finishes, while still recovering
+    // reasonably quickly if the engine truly gets stuck on a short chunk.
+    return Math.max(1200, text.length * 55);
+  }
+
+  // Splitting long narration into individual sentences and speaking them
+  // one-by-one (waiting for each to truly finish before starting the next)
+  // is far more reliable than speaking one long paragraph in a single
+  // utterance: short utterances rarely trigger Chrome's ~15s auto-stop bug,
+  // and if one sentence ever does stall, only that sentence is lost instead
+  // of the whole instruction getting cut off partway through.
+  //
+  // Some mobile/WebView TTS engines can still cut speech short on longer
+  // sentences (40+ words), even after sentence-splitting. To reduce that
+  // risk further, sentences longer than ~90 characters are additionally
+  // broken at natural pause points (commas, "dan", "kemudian", etc.) into
+  // smaller chunks, so no single utterance is very long.
+  var MAX_CHUNK_LEN = 90;
+  function splitIntoSentences(text){
+    if(!text) return [];
+    var parts = text.match(/[^.!?]+[.!?]+(?:\s+|$)|[^.!?]+$/g);
+    if(!parts || !parts.length) parts = [text];
+    var sentences = parts.map(function(s){ return s.trim(); }).filter(Boolean);
+    var chunks = [];
+    sentences.forEach(function(sentence){
+      if(sentence.length <= MAX_CHUNK_LEN){
+        chunks.push(sentence);
+        return;
+      }
+      // Break the long sentence on commas first.
+      var pieces = sentence.split(/,\s*/);
+      var buffer = '';
+      pieces.forEach(function(piece, idx){
+        var candidate = buffer ? buffer + ', ' + piece : piece;
+        if(candidate.length > MAX_CHUNK_LEN && buffer){
+          chunks.push(buffer + ',');
+          buffer = piece;
+        } else {
+          buffer = candidate;
+        }
+      });
+      if(buffer) chunks.push(buffer);
+    });
+    return chunks;
+  }
+
+  function speakOneUtterance(text, cb, isRetry){
+    try{
+      var u = new SpeechSynthesisUtterance(text);
+      u.lang = 'id-ID';
+      if(selectedVoice) u.voice = selectedVoice;
+      // Keep pitch at its natural value — artificially shifting it away
+      // from 1.0 makes synthetic voices sound more distorted, not more
+      // human. A gentle rate reduction (like turn-by-turn nav apps use)
+      // is what actually improves clarity/naturalness here.
+      u.pitch = 1;
+      u.rate = 0.93;
+      u.volume = 1;
+      var done = false;
+      var started = false;
+      var finish = function(){ if(done) return; done = true; stopSpeechKeepAlive(); cb(); };
+      u.onstart = function(){ started = true; startSpeechKeepAlive(); };
+      u.onend = finish;
+      u.onerror = finish;
+      window.speechSynthesis.speak(u);
+      // Don't rely solely on onstart (unreliable on some browsers, e.g.
+      // Safari/WebView) to trigger the anti-cutoff keep-alive.
+      startSpeechKeepAlive();
+      // Watchdog: some Android WebView / mobile browsers silently stop
+      // speaking (speechSynthesis.speaking becomes false) without ever
+      // firing onend or onerror, which used to leave that chunk of text
+      // unheard. If that happens shortly after starting, retry once
+      // before giving up on this chunk, instead of silently skipping it.
+      setTimeout(function(){
+        if(done) return;
+        if(started && !window.speechSynthesis.speaking && !isRetry){
+          window.speechSynthesis.cancel();
+          speakOneUtterance(text, cb, true);
+        }
+      }, 400);
+      // Safety net only, sized per-sentence (short) so it never fires
+      // before a normal-length sentence would have finished naturally.
+      setTimeout(finish, estimateDuration(text) + 5000);
+    }catch(e){
+      setTimeout(cb, estimateDuration(text));
+    }
+  }
+
+  function speakStep(text, cb){
+    if(!text){ cb(); return; }
+    if(muted || !('speechSynthesis' in window)){
+      setTimeout(cb, estimateDuration(text));
+      return;
+    }
+    var sentences = splitIntoSentences(text);
+    if(!sentences.length){ cb(); return; }
+    ensureVoicesReady(function(){
+      window.speechSynthesis.cancel();
+      var i = 0;
+      function next(){
+        if(!playing){ stopSpeechKeepAlive(); return; }
+        if(i >= sentences.length){ cb(); return; }
+        var sentence = sentences[i++];
+        // A tiny delay between chunks lets the previous cancel/speak call
+        // settle first — calling speak() back-to-back too quickly can
+        // cause some browsers (notably Chrome and some WebViews) to
+        // silently drop the new utterance instead of queuing it.
+        setTimeout(function(){ speakOneUtterance(sentence, next); }, 30);
+      }
+      next();
+    });
+  }
+
+
+  /* ---------------- ANIMATION ---------------- */
+  function easeInOut(t){ return t<0.5 ? 2*t*t : -1+(4-2*t)*t; }
+
+  function segLenFromStart(points, idx){
+    var cum = 0;
+    for(var i=0;i<idx;i++) cum += dist(points[i], points[i+1]);
+    return cum;
+  }
+  function dist(a,b){ return Math.hypot(b.x-a.x, b.y-a.y); }
+
+  function animateSegment(points, fromIdx, toIdx, onDone){
+    if(!playing){ return; }
+    var from = points[fromIdx], to = points[toIdx];
+    var cumBefore = segLenFromStart(points, fromIdx);
+    var segLen = dist(from,to);
+    var duration = Math.max(700, segLen * 2.0);
+    var start = null;
+    var ang = angleBetween(from, to);
+    chevronEl.style.transform = 'rotate(' + (ang+90) + 'deg)';
+
+    var lastCenter = 0;
+    function frame(ts){
+      if(!playing) return;
+      if(start === null) start = ts;
+      var t = Math.min(1, (ts-start)/duration);
+      var e = easeInOut(t);
+      var x = from.x + (to.x-from.x)*e;
+      var y = from.y + (to.y-from.y)*e;
+      setWalker(x,y,ang);
+
+      var travelled = cumBefore + segLen*e;
+      routeProgress.setAttribute('stroke-dashoffset', totalLen - travelled);
+
+      if(followMode && ts - lastCenter > 220){
+        lastCenter = ts;
+        centerOnWalker(false);
+      }
+
+      if(t < 1){
+        animFrame = requestAnimationFrame(frame);
+      } else {
+        if(followMode) centerOnWalker(true);
+        currentPointIdx = toIdx;
+        onDone();
+      }
+    }
+    animFrame = requestAnimationFrame(frame);
+  }
+
+  function animateThroughPoints(points, fromIdx, toIdx, onDone){
+    if(fromIdx === toIdx){ onDone(); return; }
+    var step = fromIdx < toIdx ? 1 : -1;
+    function next(idx){
+      if(!playing) return;
+      var nIdx = idx + step;
+      animateSegment(points, idx, nIdx, function(){
+        if(nIdx === toIdx){ onDone(); }
+        else{ next(nIdx); }
+      });
+    }
+    next(fromIdx);
+  }
+
+  /* ---------------- STEP RUNNER ---------------- */
+  function runNarration(idx){
+    if(!playing) return;
+    var r = routes[currentRouteKey];
+    currentNarrIdx = idx;
+    var n = r.narration[idx];
+    refreshDots(idx);
+    stepCountEl.textContent = 'Langkah ' + (idx+1) + ' dari ' + r.narration.length;
+
+    if(n.pause){
+      navCardEl.classList.add('paused');
+      captionEl.textContent = 'Mohon tunggu sebentar di lokasi ini.';
+      pauseTimer = setTimeout(function(){
+        if(!playing) return;
+        navCardEl.classList.remove('paused');
+        proceedAfter(idx);
+      }, n.pause);
+      return;
+    }
+
+    navCardEl.classList.remove('paused');
+    captionEl.textContent = n.text;
+    speakStep(n.text, function(){
+      if(!playing) return;
+      proceedAfter(idx);
+    });
+  }
+
+  function proceedAfter(idx){
+    var r = routes[currentRouteKey];
+    if(idx >= r.narration.length - 1){
+      playing = false;
+      btnPlay.textContent = '▶ Mulai Navigasi';
+      stepCountEl.textContent = 'Selesai — Sahabat MP telah tiba';
+      chevronEl.style.transform = 'rotate(0deg)';
+      return;
+    }
+    var nextAtPoint = r.narration[idx+1].atPoint;
+    animateThroughPoints(r.points, currentPointIdx, nextAtPoint, function(){
+      runNarration(idx+1);
+    });
+  }
+
+  /* ---------------- CONTROLS ---------------- */
+  routeButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if(playing) stopPlayback();
+      setRoute(btn.getAttribute('data-route'));
+    });
+  });
+
+  function stopPlayback(){
+    playing = false;
+    if(animFrame) cancelAnimationFrame(animFrame);
+    if(pauseTimer) clearTimeout(pauseTimer);
+    stopSpeechKeepAlive();
+    if('speechSynthesis' in window) window.speechSynthesis.cancel();
+    navCardEl.classList.remove('paused');
+    btnPlay.textContent = '▶ Mulai Navigasi';
+  }
+
+  btnPlay.addEventListener('click', function(){
+    if(playing){
+      stopPlayback();
+      return;
+    }
+    playing = true;
+    btnPlay.textContent = '⏸ Berhenti Sejenak';
+    var r = routes[currentRouteKey];
+    if(currentNarrIdx >= r.narration.length - 1 && stepCountEl.textContent.indexOf('Selesai') !== -1){
+      setRoute(currentRouteKey);
+    }
+    runNarration(currentNarrIdx);
+  });
+
+  btnReset.addEventListener('click', function(){
+    stopPlayback();
+    setRoute(currentRouteKey);
+  });
+
+  btnMute.addEventListener('click', function(){
+    muted = !muted;
+    btnMute.textContent = muted ? '🔇' : '🔊';
+    btnMute.classList.toggle('active', muted);
+    if(muted && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+  });
+
+  /* ---------------- BARCODE / QR ENTRY POINT ---------------- */
+  function detectRouteFromURL(){
+    try{
+      var params = new URLSearchParams(window.location.search);
+      var routeParam = (params.get('route') || '').toLowerCase();
+      var dariParam = (params.get('dari') || params.get('from') || '').toLowerCase();
+      if(routeParam === 'tomri' || routeParam === 'toradio'){
+        return routeParam === 'tomri' ? 'toMri' : 'toRadio';
+      }
+      if(dariParam){
+        if(/mri/.test(dariParam)) return 'toRadio';
+        if(/radio|adm/.test(dariParam)) return 'toMri';
+      }
+    }catch(e){}
+    return 'toMri';
+  }
+
+  /* ---------------- VISIBILITY SAFETY ---------------- */
+  // If the screen is locked or the browser tab is backgrounded mid-narration,
+  // speechSynthesis can end up in a stuck state on some mobile browsers.
+  // Stopping playback cleanly avoids the UI looking "frozen" when the user
+  // comes back.
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden && playing){
+      stopPlayback();
+      captionEl.textContent = 'Navigasi dijeda karena layar berpindah. Tekan "Mulai Navigasi" untuk melanjutkan.';
+    }
+  });
+
+  /* ---------------- INIT ---------------- */
+  var initialRoute = detectRouteFromURL();
+  setRoute(initialRoute);
+  applyZoom(mapZoomPx);
+
+  if(initialRoute !== 'toMri'){
+    captionEl.textContent = 'Barcode terdeteksi dari Ruang MRI. Rute otomatis diarahkan menuju Ruang Administrasi Radiologi. Tekan "Mulai Navigasi".';
+  } else if(new URLSearchParams(window.location.search).toString()){
+    captionEl.textContent = 'Barcode terdeteksi dari Ruang Administrasi Radiologi. Rute otomatis diarahkan menuju Ruang MRI. Tekan "Mulai Navigasi".';
+  }
+})();
+</script>
+</body>
+</html>
