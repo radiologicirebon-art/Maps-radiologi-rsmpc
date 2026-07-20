@@ -985,9 +985,13 @@
   /* ---------------- SPEECH ---------------- */
   // Chrome (desktop & Android) has a long-standing bug where speechSynthesis
   // silently stops speaking after ~15 seconds of continuous utterance unless
-  // it is periodically paused/resumed. Our narration lines are long, so we
-  // run a keep-alive heartbeat while speaking to prevent the voice from
-  // cutting off mid-sentence.
+  // it is periodically paused/resumed. This keep-alive heartbeat guards
+  // against that — but it must fire LESS often than our utterances are long,
+  // otherwise the pause()/resume() cycle itself creates an audible glitch
+  // mid-sentence (heard as the voice "cutting out"/"ilang-ilang"). Since our
+  // sentences are capped at ~90 characters (well under 15s of speech), a
+  // 12s interval means it essentially never fires during a normal-length
+  // utterance and only kicks in as a safety net for a rare unusually long one.
   var speechKeepAlive = null;
   function startSpeechKeepAlive(){
     stopSpeechKeepAlive();
@@ -997,7 +1001,7 @@
         window.speechSynthesis.pause();
         window.speechSynthesis.resume();
       }
-    }, 3000);
+    }, 12000);
   }
   function stopSpeechKeepAlive(){
     if(speechKeepAlive){ clearInterval(speechKeepAlive); speechKeepAlive = null; }
@@ -1028,18 +1032,22 @@
       return;
     }
     var idVoices = availableVoices.filter(function(v){ return /id[-_]ID|Indonesia/i.test(v.lang + ' ' + v.name); });
-    // Prefer Google's network-backed Indonesian voice ("Google Bahasa
-    // Indonesia" on Chrome/Android) — it's noticeably clearer and more
-    // natural than the local on-device voices most platforms ship with.
+    // Prefer an on-device (local) Indonesian voice over a network/cloud
+    // voice. A network voice ("Google Bahasa Indonesia" with
+    // localService === false) streams audio from Google's servers — any
+    // WiFi/data hiccup (very common walking through a hospital building)
+    // makes the voice cut in and out. A local voice is generated entirely
+    // on-device, so it keeps speaking smoothly even with a weak or
+    // unstable connection.
+    var localNamedVoice = idVoices.find(function(v){ return v.localService === true; });
     var googleNetworkVoice = idVoices.find(function(v){
       return /google/i.test(v.name) && v.localService === false;
     });
-    var googleNamedVoice = idVoices.find(function(v){ return /google/i.test(v.name); });
-    var networkVoice = idVoices.find(function(v){ return v.localService === false; });
-    var best = googleNetworkVoice || googleNamedVoice || networkVoice || idVoices[0] || availableVoices[0];
+    var anyIdVoice = idVoices[0];
+    var best = localNamedVoice || googleNetworkVoice || anyIdVoice || availableVoices[0];
     selectedVoice = best || null;
     if(selectedVoice && window.console){
-      console.log('[Peta Navigasi] Voice terpilih:', selectedVoice.name, '(' + selectedVoice.lang + ')', selectedVoice.localService ? '— lokal' : '— jaringan/cloud');
+      console.log('[Peta Navigasi] Voice terpilih:', selectedVoice.name, '(' + selectedVoice.lang + ')', selectedVoice.localService ? '— lokal (stabil, tanpa internet)' : '— jaringan/cloud (butuh koneksi stabil)');
     }
   }
   if('speechSynthesis' in window){
@@ -1126,13 +1134,19 @@
       // firing onend or onerror, which used to leave that chunk of text
       // unheard. If that happens shortly after starting, retry once
       // before giving up on this chunk, instead of silently skipping it.
+      // The check delay must scale with the text length — a short phrase
+      // can legitimately finish (and stop "speaking") within a few hundred
+      // milliseconds, and checking too early would wrongly treat that as
+      // "stuck" and re-speak text that was already heard, sounding like a
+      // stutter/repeat instead of a cutoff.
+      var watchdogDelay = Math.min(1500, Math.max(600, estimateDuration(text) * 0.6));
       setTimeout(function(){
         if(done) return;
         if(started && !window.speechSynthesis.speaking && !isRetry){
           window.speechSynthesis.cancel();
           speakOneUtterance(text, cb, true);
         }
-      }, 400);
+      }, watchdogDelay);
       // Safety net only, sized per-sentence (short) so it never fires
       // before a normal-length sentence would have finished naturally.
       setTimeout(finish, estimateDuration(text) + 5000);
